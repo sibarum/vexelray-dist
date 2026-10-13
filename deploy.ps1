@@ -19,8 +19,9 @@ $ErrorActionPreference = 'Stop'
 
 $dist = $PSScriptRoot
 $root = Split-Path $dist -Parent
-$jar  = Join-Path $root 'vexelray-installer\installer-core\target\installer-core-0.1.0-SNAPSHOT-cli.jar'
-if (-not (Test-Path $jar)) { throw "Not built: $jar (mvn install in vexelray-installer)" }
+$jar  = Get-ChildItem (Join-Path $root 'vexelray-installer\installer-core\target') -Filter 'installer-core-*-cli.jar' -ErrorAction SilentlyContinue |
+        Sort-Object LastWriteTime -Descending | Select-Object -First 1 -ExpandProperty FullName
+if (-not $jar) { throw 'Not built: the installer CLI jar (mvn install in vexelray-installer)' }
 $askedForToken = $false
 if ($Publish -and -not $env:GITHUB_TOKEN) {
     # A fine-grained token with Contents: read and write on sibarum/vexelray-dist. Asked for, not stored:
