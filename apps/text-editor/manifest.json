@@ -1,0 +1,214 @@
+{
+  "schemaVersion": 1,
+  "id": "text-editor",
+  "name": "Vex",
+  "publisher": "sibarum",
+  "description": "A tabbed text editor with a file navigator, on the VexelRay stack.",
+  "repo": "sibarum/vexelray-dist",
+  "latest": "0.1.0",
+  "tools": {
+    "install.ps1": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/text-editor/install.ps1",
+      "sha256": "265416f2c7435bb18a358b3f26a66f7d8ef896438057d38b3b5ec0c0ba78cbab"
+    },
+    "uninstall.ps1": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/text-editor/uninstall.ps1",
+      "sha256": "928d5a5914f4834f9619916dcd167e35f99a9218087968330989a9af87884bbc"
+    },
+    "update.ps1": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/text-editor/update.ps1",
+      "sha256": "984f36b86ef7c13e530197790e1a0f02a148e78a18d439907e4c08f378aec36f"
+    }
+  },
+  "versions": [
+    {
+      "version": "0.1.0",
+      "publishedAt": "2026-10-13T22:23:26Z",
+      "notes": "",
+      "installer": {
+        "install.ps1": "265416f2c7435bb18a358b3f26a66f7d8ef896438057d38b3b5ec0c0ba78cbab",
+        "uninstall.ps1": "928d5a5914f4834f9619916dcd167e35f99a9218087968330989a9af87884bbc",
+        "update.ps1": "984f36b86ef7c13e530197790e1a0f02a148e78a18d439907e4c08f378aec36f"
+      },
+      "platforms": {
+        "windows": {
+          "installDir": "%LOCALAPPDATA%\\Programs\\Vex",
+          "binaries": [
+            {
+              "name": "text-editor",
+              "version": "0.1.0",
+              "kind": "native",
+              "file": "text-editor.exe",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/text-editor-v0.1.0/text-editor.exe",
+              "sha256": "add1245dfbf5432d8b95b1ebc6fe8f3673617c2882032ed582c8e0948911c3ea",
+              "size": 70967296,
+              "installPath": "{installDir}\\text-editor.exe",
+              "executable": true,
+              "addToPath": true,
+              "icon": {
+                "file": "text-editor.ico",
+                "url": "https://github.com/sibarum/vexelray-dist/releases/download/text-editor-v0.1.0/text-editor.ico",
+                "sha256": "4e18013e4a24c98d9b41f22b2a6c5b9bc85c0b528929e46f4e357b1cf79194fc",
+                "size": 25998,
+                "installPath": "{installDir}\\text-editor.ico"
+              },
+              "shortcuts": {
+                "desktop": true,
+                "startMenu": true,
+                "label": "Vex",
+                "gui": false
+              },
+              "fileAssociations": [
+                {
+                  "extension": ".txt",
+                  "progId": "text-editor.txt",
+                  "description": "Text Document",
+                  "contentType": "text/plain"
+                },
+                {
+                  "extension": ".log",
+                  "progId": "text-editor.log",
+                  "description": "Log File",
+                  "contentType": "text/plain"
+                },
+                {
+                  "extension": ".md",
+                  "progId": "text-editor.md",
+                  "description": "Markdown Document",
+                  "contentType": "text/markdown"
+                },
+                {
+                  "extension": ".markdown",
+                  "progId": "text-editor.markdown",
+                  "description": "Markdown Document",
+                  "contentType": "text/markdown"
+                },
+                {
+                  "extension": ".json",
+                  "progId": "text-editor.json",
+                  "description": "JSON File",
+                  "contentType": "application/json"
+                },
+                {
+                  "extension": ".jsonc",
+                  "progId": "text-editor.jsonc",
+                  "description": "JSON with Comments File"
+                },
+                {
+                  "extension": ".xml",
+                  "progId": "text-editor.xml",
+                  "description": "XML Document",
+                  "contentType": "application/xml"
+                },
+                {
+                  "extension": ".xsd",
+                  "progId": "text-editor.xsd",
+                  "description": "XML Schema"
+                },
+                {
+                  "extension": ".xsl",
+                  "progId": "text-editor.xsl",
+                  "description": "XSL Stylesheet"
+                },
+                {
+                  "extension": ".yaml",
+                  "progId": "text-editor.yaml",
+                  "description": "YAML File",
+                  "contentType": "application/yaml"
+                },
+                {
+                  "extension": ".yml",
+                  "progId": "text-editor.yml",
+                  "description": "YAML File",
+                  "contentType": "application/yaml"
+                },
+                {
+                  "extension": ".ini",
+                  "progId": "text-editor.ini",
+                  "description": "Configuration Settings"
+                },
+                {
+                  "extension": ".properties",
+                  "progId": "text-editor.properties",
+                  "description": "Properties File"
+                },
+                {
+                  "extension": ".html",
+                  "progId": "text-editor.html",
+                  "description": "HTML Document"
+                },
+                {
+                  "extension": ".htm",
+                  "progId": "text-editor.htm",
+                  "description": "HTML Document"
+                },
+                {
+                  "extension": ".css",
+                  "progId": "text-editor.css",
+                  "description": "CSS Stylesheet"
+                },
+                {
+                  "extension": ".mjs",
+                  "progId": "text-editor.mjs",
+                  "description": "JavaScript Module"
+                },
+                {
+                  "extension": ".cjs",
+                  "progId": "text-editor.cjs",
+                  "description": "CommonJS Module"
+                },
+                {
+                  "extension": ".java",
+                  "progId": "text-editor.java",
+                  "description": "Java Source File"
+                },
+                {
+                  "extension": ".py",
+                  "progId": "text-editor.py",
+                  "description": "Python Source File"
+                },
+                {
+                  "extension": ".pyi",
+                  "progId": "text-editor.pyi",
+                  "description": "Python Stub File"
+                },
+                {
+                  "extension": ".sh",
+                  "progId": "text-editor.sh",
+                  "description": "Shell Script"
+                },
+                {
+                  "extension": ".bash",
+                  "progId": "text-editor.bash",
+                  "description": "Bash Script"
+                },
+                {
+                  "extension": ".psd1",
+                  "progId": "text-editor.psd1",
+                  "description": "PowerShell Data File"
+                },
+                {
+                  "extension": ".diff",
+                  "progId": "text-editor.diff",
+                  "description": "Diff File",
+                  "contentType": "text/x-diff"
+                },
+                {
+                  "extension": ".patch",
+                  "progId": "text-editor.patch",
+                  "description": "Patch File",
+                  "contentType": "text/x-diff"
+                },
+                {
+                  "extension": ".dockerfile",
+                  "progId": "text-editor.dockerfile",
+                  "description": "Dockerfile"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

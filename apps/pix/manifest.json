@@ -1,0 +1,192 @@
+{
+  "schemaVersion": 1,
+  "id": "pix",
+  "name": "Pix",
+  "publisher": "sibarum",
+  "description": "An image viewer: one picture, as large as the window allows, and the rest of its folder a key press away.",
+  "repo": "sibarum/vexelray-dist",
+  "latest": "0.1.0",
+  "tools": {
+    "install.ps1": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/pix/install.ps1",
+      "sha256": "b093c9dfffaf8c3d8b5d80088f588bf09d01bc448ba7d6053c1685ac424805d8"
+    },
+    "uninstall.ps1": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/pix/uninstall.ps1",
+      "sha256": "eb48af7a27e5a8f74cbe0f8755fbd4d498ac88256ce63a06f3da2c3de3bf8746"
+    },
+    "update.ps1": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/pix/update.ps1",
+      "sha256": "e4c494b1f3a70f4347f05363a4802bc8e67463fe027288cc16575f2e8a5cd390"
+    }
+  },
+  "versions": [
+    {
+      "version": "0.1.0",
+      "publishedAt": "2026-10-13T22:23:26Z",
+      "notes": "",
+      "installer": {
+        "install.ps1": "b093c9dfffaf8c3d8b5d80088f588bf09d01bc448ba7d6053c1685ac424805d8",
+        "uninstall.ps1": "eb48af7a27e5a8f74cbe0f8755fbd4d498ac88256ce63a06f3da2c3de3bf8746",
+        "update.ps1": "e4c494b1f3a70f4347f05363a4802bc8e67463fe027288cc16575f2e8a5cd390"
+      },
+      "platforms": {
+        "windows": {
+          "installDir": "%LOCALAPPDATA%\\Programs\\Pix",
+          "binaries": [
+            {
+              "name": "pix",
+              "version": "0.1.0",
+              "kind": "native",
+              "file": "pix.exe",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/pix-v0.1.0/pix.exe",
+              "sha256": "1193ec69470640932a86e3b996324e977bd43b8bc9960d47722dbf594c34b9dd",
+              "size": 43536384,
+              "installPath": "{installDir}\\pix.exe",
+              "executable": true,
+              "addToPath": true,
+              "icon": {
+                "file": "pix.ico",
+                "url": "https://github.com/sibarum/vexelray-dist/releases/download/pix-v0.1.0/pix.ico",
+                "sha256": "6080a1877f62a0c3519c81d21bcda66ae68cee4b902ffdf36ac26411ecb2ff28",
+                "size": 25450,
+                "installPath": "{installDir}\\pix.ico"
+              },
+              "shortcuts": {
+                "desktop": true,
+                "startMenu": true,
+                "label": "Pix",
+                "gui": false
+              },
+              "fileAssociations": [
+                {
+                  "extension": ".png",
+                  "progId": "pix.png",
+                  "description": "PNG Image",
+                  "contentType": "image/png"
+                },
+                {
+                  "extension": ".apng",
+                  "progId": "pix.apng",
+                  "description": "Animated PNG Image",
+                  "contentType": "image/apng"
+                },
+                {
+                  "extension": ".jpg",
+                  "progId": "pix.jpg",
+                  "description": "JPEG Image",
+                  "contentType": "image/jpeg"
+                },
+                {
+                  "extension": ".jpeg",
+                  "progId": "pix.jpeg",
+                  "description": "JPEG Image",
+                  "contentType": "image/jpeg"
+                },
+                {
+                  "extension": ".jfif",
+                  "progId": "pix.jfif",
+                  "description": "JPEG Image",
+                  "contentType": "image/jpeg"
+                },
+                {
+                  "extension": ".gif",
+                  "progId": "pix.gif",
+                  "description": "GIF Image",
+                  "contentType": "image/gif"
+                },
+                {
+                  "extension": ".webp",
+                  "progId": "pix.webp",
+                  "description": "WebP Image",
+                  "contentType": "image/webp"
+                },
+                {
+                  "extension": ".avif",
+                  "progId": "pix.avif",
+                  "description": "AVIF Image",
+                  "contentType": "image/avif"
+                },
+                {
+                  "extension": ".bmp",
+                  "progId": "pix.bmp",
+                  "description": "Bitmap Image",
+                  "contentType": "image/bmp"
+                },
+                {
+                  "extension": ".tif",
+                  "progId": "pix.tif",
+                  "description": "TIFF Image",
+                  "contentType": "image/tiff"
+                },
+                {
+                  "extension": ".tiff",
+                  "progId": "pix.tiff",
+                  "description": "TIFF Image",
+                  "contentType": "image/tiff"
+                },
+                {
+                  "extension": ".svg",
+                  "progId": "pix.svg",
+                  "description": "SVG Image",
+                  "contentType": "image/svg+xml"
+                },
+                {
+                  "extension": ".ico",
+                  "progId": "pix.ico",
+                  "description": "Icon",
+                  "contentType": "image/x-icon"
+                },
+                {
+                  "extension": ".tga",
+                  "progId": "pix.tga",
+                  "description": "Targa Image"
+                },
+                {
+                  "extension": ".qoi",
+                  "progId": "pix.qoi",
+                  "description": "QOI Image"
+                },
+                {
+                  "extension": ".pnm",
+                  "progId": "pix.pnm",
+                  "description": "Portable Anymap Image"
+                },
+                {
+                  "extension": ".pbm",
+                  "progId": "pix.pbm",
+                  "description": "Portable Bitmap Image"
+                },
+                {
+                  "extension": ".pgm",
+                  "progId": "pix.pgm",
+                  "description": "Portable Graymap Image"
+                },
+                {
+                  "extension": ".ppm",
+                  "progId": "pix.ppm",
+                  "description": "Portable Pixmap Image"
+                },
+                {
+                  "extension": ".dds",
+                  "progId": "pix.dds",
+                  "description": "DirectDraw Surface"
+                },
+                {
+                  "extension": ".exr",
+                  "progId": "pix.exr",
+                  "description": "OpenEXR Image"
+                },
+                {
+                  "extension": ".hdr",
+                  "progId": "pix.hdr",
+                  "description": "Radiance HDR Image"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

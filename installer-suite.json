@@ -1,0 +1,18 @@
+{
+  "id": "vexelray",
+  "name": "VexelRay",
+  "description": "Desktop applications built on the VexelRay stack: a file explorer, a text editor, an image viewer, a terminal, a calculator, and fluid and rigid-body simulations. They are separate programs that know about each other, so a file in the explorer opens in the editor or the viewer, and the editor can show a file in the explorer.",
+
+  "repo": "sibarum/vexelray-dist",
+  "branch": "main",
+
+  "members": [
+    { "config": "../vexplore/installer.json", "page": "https://github.com/sibarum/vexelray-framework/blob/main/docs/apps/vexplore.md" },
+    { "config": "../text-editor-vexel-demo/installer.json", "page": "https://github.com/sibarum/vexelray-framework/blob/main/docs/apps/text-editor.md" },
+    { "config": "../Pix/installer.json", "page": "https://github.com/sibarum/vexelray-framework/blob/main/docs/apps/pix.md" },
+    { "config": "../mainframe/installer.json", "page": "https://github.com/sibarum/vexelray-framework/blob/main/docs/apps/mainframe.md" },
+    { "config": "../calculator-vexel-demo/installer.json", "page": "https://github.com/sibarum/vexelray-framework/blob/main/docs/apps/calculator.md" },
+    { "config": "../vexelray-sim-fluid/installer.json", "page": "https://github.com/sibarum/vexelray-sim-fluid" },
+    { "config": "../vexelray-sim-rigid/installer.json", "page": "https://github.com/sibarum/vexelray-sim-rigid" }
+  ]
+}

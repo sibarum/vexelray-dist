@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "id": "vexplore",
+  "name": "Vexplore",
+  "publisher": "sibarum",
+  "description": "A file explorer that suggests instead of asking.",
+  "repo": "sibarum/vexelray-dist",
+  "latest": "0.1.0",
+  "tools": {
+    "install.ps1": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexplore/install.ps1",
+      "sha256": "679496cc2262ef88a42a898ca04204034b5eb4bd82ed2dac1f3078c52b2df127"
+    },
+    "uninstall.ps1": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexplore/uninstall.ps1",
+      "sha256": "2bd95c2469af9f1f683e153d5d1897bf5768dca2c4924a63cab95c8ca06cf9b6"
+    },
+    "update.ps1": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexplore/update.ps1",
+      "sha256": "ed5280c3cae863ae0c290ec60653997a35a2904a7eda615a66eb438e2680cf4c"
+    }
+  },
+  "versions": [
+    {
+      "version": "0.1.0",
+      "publishedAt": "2026-10-13T22:23:26Z",
+      "notes": "",
+      "installer": {
+        "install.ps1": "679496cc2262ef88a42a898ca04204034b5eb4bd82ed2dac1f3078c52b2df127",
+        "uninstall.ps1": "2bd95c2469af9f1f683e153d5d1897bf5768dca2c4924a63cab95c8ca06cf9b6",
+        "update.ps1": "ed5280c3cae863ae0c290ec60653997a35a2904a7eda615a66eb438e2680cf4c"
+      },
+      "platforms": {
+        "windows": {
+          "installDir": "%LOCALAPPDATA%\\Programs\\Vexplore",
+          "binaries": [
+            {
+              "name": "vexplore",
+              "version": "0.1.0",
+              "kind": "native",
+              "file": "vexplore.exe",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/vexplore-v0.1.0/vexplore.exe",
+              "sha256": "e437327879a1f3bf2c6522befdb0022e0dbf28b9d3a442e2d62b274eeaa283b0",
+              "size": 45690880,
+              "installPath": "{installDir}\\vexplore.exe",
+              "executable": true,
+              "addToPath": true,
+              "icon": {
+                "file": "vexplore.ico",
+                "url": "https://github.com/sibarum/vexelray-dist/releases/download/vexplore-v0.1.0/vexplore.ico",
+                "sha256": "a24f59cc8fb21271cfbdfa87b35b9c45ed461bef5f7603584942fd046fb5f806",
+                "size": 22384,
+                "installPath": "{installDir}\\vexplore.ico"
+              },
+              "shortcuts": {
+                "desktop": true,
+                "startMenu": true,
+                "label": "Vexplore",
+                "gui": false
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

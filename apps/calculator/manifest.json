@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "id": "calculator",
+  "name": "Calculator",
+  "publisher": "sibarum",
+  "description": "A small calculator window onto cott-engine.",
+  "repo": "sibarum/vexelray-dist",
+  "latest": "0.1.0",
+  "tools": {
+    "install.ps1": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/calculator/install.ps1",
+      "sha256": "9aeb9462b885119176a2a2fd65d00351380631e6a4982b74a27def07e21155a0"
+    },
+    "uninstall.ps1": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/calculator/uninstall.ps1",
+      "sha256": "abdfe9661bd5e2dbf7fc24d8ce7cc6b99292c5f1f492c9dd68fbc3d7859482f3"
+    },
+    "update.ps1": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/calculator/update.ps1",
+      "sha256": "449501680b8e825a65fb7799bb5e34a89a258c9ca7bef5001ce8b4e4e3e7b3be"
+    }
+  },
+  "versions": [
+    {
+      "version": "0.1.0",
+      "publishedAt": "2026-10-13T22:23:27Z",
+      "notes": "",
+      "installer": {
+        "install.ps1": "9aeb9462b885119176a2a2fd65d00351380631e6a4982b74a27def07e21155a0",
+        "uninstall.ps1": "abdfe9661bd5e2dbf7fc24d8ce7cc6b99292c5f1f492c9dd68fbc3d7859482f3",
+        "update.ps1": "449501680b8e825a65fb7799bb5e34a89a258c9ca7bef5001ce8b4e4e3e7b3be"
+      },
+      "platforms": {
+        "windows": {
+          "installDir": "%LOCALAPPDATA%\\Programs\\Calculator",
+          "binaries": [
+            {
+              "name": "calculator",
+              "version": "0.1.0",
+              "kind": "native",
+              "file": "calculator.exe",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/calculator-v0.1.0/calculator.exe",
+              "sha256": "d3f2038b3aa62f8757c1379f42b5e153bbcf09bb2c3aa27d655a64fa3ee06c0f",
+              "size": 40308736,
+              "installPath": "{installDir}\\calculator.exe",
+              "executable": true,
+              "addToPath": true,
+              "icon": {
+                "file": "calculator.ico",
+                "url": "https://github.com/sibarum/vexelray-dist/releases/download/calculator-v0.1.0/calculator.ico",
+                "sha256": "c93ef49f4a01767da7dcfd7ee7cba8a4fe0cdd30abf29694570fd649875f0582",
+                "size": 26499,
+                "installPath": "{installDir}\\calculator.ico"
+              },
+              "shortcuts": {
+                "desktop": true,
+                "startMenu": true,
+                "label": "Calculator",
+                "gui": false
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

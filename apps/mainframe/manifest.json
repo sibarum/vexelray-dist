@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "id": "mainframe",
+  "name": "MainFrame",
+  "publisher": "sibarum",
+  "description": "A terminal window that wraps the native Windows shell over ConPTY, built on the VexelRay stack.",
+  "repo": "sibarum/vexelray-dist",
+  "latest": "0.1.0",
+  "tools": {
+    "install.ps1": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/mainframe/install.ps1",
+      "sha256": "7b11a476d07b8c1c12f5feb9077c4e7d99baeaa431e135a459cf22b1b9e9ec40"
+    },
+    "uninstall.ps1": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/mainframe/uninstall.ps1",
+      "sha256": "efcc0bb017c08a1130d981da9e3e580adfa7fec8eaa024bba553fb22ea0facb4"
+    },
+    "update.ps1": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/mainframe/update.ps1",
+      "sha256": "4519c4b922984d31b9c1cf72f6d9dc94683c60658d659d95acd522941696e394"
+    }
+  },
+  "versions": [
+    {
+      "version": "0.1.0",
+      "publishedAt": "2026-10-13T22:23:27Z",
+      "notes": "",
+      "installer": {
+        "install.ps1": "7b11a476d07b8c1c12f5feb9077c4e7d99baeaa431e135a459cf22b1b9e9ec40",
+        "uninstall.ps1": "efcc0bb017c08a1130d981da9e3e580adfa7fec8eaa024bba553fb22ea0facb4",
+        "update.ps1": "4519c4b922984d31b9c1cf72f6d9dc94683c60658d659d95acd522941696e394"
+      },
+      "platforms": {
+        "windows": {
+          "installDir": "%LOCALAPPDATA%\\Programs\\MainFrame",
+          "binaries": [
+            {
+              "name": "mainframe",
+              "version": "0.1.0",
+              "kind": "native",
+              "file": "mainframe.exe",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/mainframe-v0.1.0/mainframe.exe",
+              "sha256": "2146ae230c5f61ce231ec3eefba94bf107e5e29756ffced0dcc398ec7e610e80",
+              "size": 40771584,
+              "installPath": "{installDir}\\mainframe.exe",
+              "executable": true,
+              "addToPath": true,
+              "icon": {
+                "file": "mainframe.ico",
+                "url": "https://github.com/sibarum/vexelray-dist/releases/download/mainframe-v0.1.0/mainframe.ico",
+                "sha256": "8a18b4537d5689974c75f311b9f71b0c6eb7fa38818aabd94bc8ed48da3d75ee",
+                "size": 24959,
+                "installPath": "{installDir}\\mainframe.ico"
+              },
+              "shortcuts": {
+                "desktop": true,
+                "startMenu": true,
+                "label": "MainFrame",
+                "gui": false
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

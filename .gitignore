@@ -1,0 +1,5 @@
+# Binaries go to GitHub Releases, never into git
+exe/
+assets/
+*.exe
+logs/

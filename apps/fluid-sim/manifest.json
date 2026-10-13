@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "id": "fluid-sim",
+  "name": "Fluid Sim",
+  "publisher": "sibarum",
+  "description": "Fluid simulation experiments on the VexelRay stack: dam breaks, mixing, heat and a 3D dam break, live on the GPU.",
+  "repo": "sibarum/vexelray-dist",
+  "latest": "0.1.0",
+  "tools": {
+    "install.ps1": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/fluid-sim/install.ps1",
+      "sha256": "ec45a4b7b1da94ff08a2ac4258df136a8b45fdbd0ab8dfe954cddabe18b712fe"
+    },
+    "uninstall.ps1": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/fluid-sim/uninstall.ps1",
+      "sha256": "09023ed66f6e50ae5de70484c629f7b84be49088cf783a1c371affca55e60c89"
+    },
+    "update.ps1": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/fluid-sim/update.ps1",
+      "sha256": "864f07942494a3b344802668147902e4b78e68cf46723ebbada686b12e7f68b1"
+    }
+  },
+  "versions": [
+    {
+      "version": "0.1.0",
+      "publishedAt": "2026-10-13T22:23:28Z",
+      "notes": "",
+      "installer": {
+        "install.ps1": "ec45a4b7b1da94ff08a2ac4258df136a8b45fdbd0ab8dfe954cddabe18b712fe",
+        "uninstall.ps1": "09023ed66f6e50ae5de70484c629f7b84be49088cf783a1c371affca55e60c89",
+        "update.ps1": "864f07942494a3b344802668147902e4b78e68cf46723ebbada686b12e7f68b1"
+      },
+      "platforms": {
+        "windows": {
+          "installDir": "%LOCALAPPDATA%\\Programs\\Fluid Sim",
+          "binaries": [
+            {
+              "name": "fluid-sim",
+              "version": "0.1.0",
+              "kind": "native",
+              "file": "fluid-sim.exe",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/fluid-sim-v0.1.0/fluid-sim.exe",
+              "sha256": "6caff4af78d12b6549ce48c360b6b4c003701e45a2129c44612701b0561299bb",
+              "size": 60502016,
+              "installPath": "{installDir}\\fluid-sim.exe",
+              "executable": true,
+              "addToPath": false,
+              "icon": {
+                "file": "fluid-sim.ico",
+                "url": "https://github.com/sibarum/vexelray-dist/releases/download/fluid-sim-v0.1.0/fluid-sim.ico",
+                "sha256": "b2a9a4d502678628ab72fc947b0fb119334de8b228519e75a04f7aca0698de29",
+                "size": 28361,
+                "installPath": "{installDir}\\fluid-sim.ico"
+              },
+              "shortcuts": {
+                "desktop": true,
+                "startMenu": true,
+                "label": "Fluid Sim",
+                "gui": false
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
