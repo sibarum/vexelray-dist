@@ -3,3 +3,4 @@ exe/
 assets/
 *.exe
 logs/
+__pycache__/
