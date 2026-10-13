@@ -11,7 +11,8 @@
     exe\               every exe in one place                                                (ignored)
 
   -Publish also creates each release (tag <id>-v<version>) on sibarum/vexelray-dist and uploads its files.
-  It needs a GitHub token in $env:GITHUB_TOKEN. Commit and push afterwards: the manifests name the uploads.
+  It uses $env:GITHUB_TOKEN if set, and otherwise asks for a token (input hidden, never stored): a fine-grained
+  token with Contents: read and write on vexelray-dist. Commit and push afterwards: the manifests name the uploads.
 #>
 param([switch]$Publish)
 $ErrorActionPreference = 'Stop'
@@ -20,7 +21,17 @@ $dist = $PSScriptRoot
 $root = Split-Path $dist -Parent
 $jar  = Join-Path $root 'vexelray-installer\installer-core\target\installer-core-0.1.0-SNAPSHOT-cli.jar'
 if (-not (Test-Path $jar)) { throw "Not built: $jar (mvn install in vexelray-installer)" }
-if ($Publish -and -not $env:GITHUB_TOKEN) { throw 'Set $env:GITHUB_TOKEN to publish.' }
+$askedForToken = $false
+if ($Publish -and -not $env:GITHUB_TOKEN) {
+    # A fine-grained token with Contents: read and write on sibarum/vexelray-dist. Asked for, not stored:
+    # it lives in this process's environment only for the run, and is cleared at the end.
+    $secure = Read-Host -Prompt 'GitHub token (Contents: read and write on vexelray-dist)' -AsSecureString
+    $env:GITHUB_TOKEN = [Runtime.InteropServices.Marshal]::PtrToStringBSTR(
+        [Runtime.InteropServices.Marshal]::SecureStringToBSTR($secure))
+    if (-not $env:GITHUB_TOKEN) { throw 'No token given.' }
+    $askedForToken = $true
+}
+try {
 
 $suite = Get-Content (Join-Path $dist 'installer-suite.json') -Raw | ConvertFrom-Json
 New-Item -ItemType Directory -Force (Join-Path $dist 'exe') | Out-Null
@@ -41,3 +52,6 @@ foreach ($m in $suite.members) {
 Write-Host '== suite'
 & java -jar $jar --suite (Join-Path $dist 'installer-suite.json') --out $dist
 if ($LASTEXITCODE -ne 0) { throw 'Generating the suite failed' }
+} finally {
+    if ($askedForToken) { Remove-Item Env:GITHUB_TOKEN -ErrorAction SilentlyContinue }
+}
