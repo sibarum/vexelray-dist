@@ -57,7 +57,7 @@ A particular version or folder applies to one application, so this script ignore
 Run the install command again, or update one application from its folder:
 
 ```powershell
-& "%LOCALAPPDATA%\Programs\Vexplore\update.cmd"
+& "$env:LOCALAPPDATA\Programs\Vexplore\update.cmd"
 ```
 
 ### Uninstall
@@ -66,7 +66,7 @@ Use **Settings > Apps**, where each application has its own entry, or run the un
 folders:
 
 ```powershell
-& "%LOCALAPPDATA%\Programs\Vexplore\uninstall.cmd" -Id vexplore
+& "$env:LOCALAPPDATA\Programs\Vexplore\uninstall.cmd" -Id vexplore
 ```
 
 `-List` shows every install it knows about. Each application's install record is in `%LOCALAPPDATA%\vexelray-installer\installs`,

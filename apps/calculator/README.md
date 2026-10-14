@@ -57,7 +57,7 @@ as `cmd.exe /c path args...`.
 ### Update
 
 ```powershell
-& "%LOCALAPPDATA%\Programs\Calculator\update.cmd"
+& "$env:LOCALAPPDATA\Programs\Calculator\update.cmd"
 ```
 
 Checks GitHub for newer versions of the binaries and installs them after asking. Use
@@ -68,7 +68,7 @@ Checks GitHub for newer versions of the binaries and installs them after asking.
 Use **Settings > Apps > Calculator > Uninstall**, or:
 
 ```powershell
-& "%LOCALAPPDATA%\Programs\Calculator\uninstall.cmd"
+& "$env:LOCALAPPDATA\Programs\Calculator\uninstall.cmd"
 ```
 
 The uninstaller reads the install manifests in `%LOCALAPPDATA%\vexelray-installer\installs`, so it removes exactly

@@ -56,7 +56,7 @@ as `cmd.exe /c path args...`.
 ### Update
 
 ```powershell
-& "%LOCALAPPDATA%\Programs\Rigid Sim\update.cmd"
+& "$env:LOCALAPPDATA\Programs\Rigid Sim\update.cmd"
 ```
 
 Checks GitHub for newer versions of the binaries and installs them after asking. Use
@@ -67,7 +67,7 @@ Checks GitHub for newer versions of the binaries and installs them after asking.
 Use **Settings > Apps > Rigid Sim > Uninstall**, or:
 
 ```powershell
-& "%LOCALAPPDATA%\Programs\Rigid Sim\uninstall.cmd"
+& "$env:LOCALAPPDATA\Programs\Rigid Sim\uninstall.cmd"
 ```
 
 The uninstaller reads the install manifests in `%LOCALAPPDATA%\vexelray-installer\installs`, so it removes exactly

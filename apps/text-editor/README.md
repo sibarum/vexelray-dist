@@ -58,7 +58,7 @@ as `cmd.exe /c path args...`.
 ### Update
 
 ```powershell
-& "%LOCALAPPDATA%\Programs\Vex\update.cmd"
+& "$env:LOCALAPPDATA\Programs\Vex\update.cmd"
 ```
 
 Checks GitHub for newer versions of the binaries and installs them after asking. Use
@@ -69,7 +69,7 @@ Checks GitHub for newer versions of the binaries and installs them after asking.
 Use **Settings > Apps > Vex > Uninstall**, or:
 
 ```powershell
-& "%LOCALAPPDATA%\Programs\Vex\uninstall.cmd"
+& "$env:LOCALAPPDATA\Programs\Vex\uninstall.cmd"
 ```
 
 The uninstaller reads the install manifests in `%LOCALAPPDATA%\vexelray-installer\installs`, so it removes exactly

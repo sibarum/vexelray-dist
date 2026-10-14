@@ -57,7 +57,7 @@ as `cmd.exe /c path args...`.
 ### Update
 
 ```powershell
-& "%LOCALAPPDATA%\Programs\Vexplore\update.cmd"
+& "$env:LOCALAPPDATA\Programs\Vexplore\update.cmd"
 ```
 
 Checks GitHub for newer versions of the binaries and installs them after asking. Use
@@ -68,7 +68,7 @@ Checks GitHub for newer versions of the binaries and installs them after asking.
 Use **Settings > Apps > Vexplore > Uninstall**, or:
 
 ```powershell
-& "%LOCALAPPDATA%\Programs\Vexplore\uninstall.cmd"
+& "$env:LOCALAPPDATA\Programs\Vexplore\uninstall.cmd"
 ```
 
 The uninstaller reads the install manifests in `%LOCALAPPDATA%\vexelray-installer\installs`, so it removes exactly
