@@ -6,13 +6,34 @@
   "repo": "sibarum/vexelray-dist",
   "branch": "main",
 
+  "site": {
+    "url": "https://sibarum.github.io",
+    "badge": "0.1.0 · experimental prerelease",
+    "tagline": "Seven desktop applications drawn live on the GPU, which know about each other. One line installs them all.",
+    "requirements": "Needs Windows 10 or 11 (64-bit) and a graphics card with an up-to-date driver: everything here draws with Vulkan.",
+    "feedbackUrl": "https://github.com/sibarum/vexelray-framework/issues/new",
+    "accentColor": "#2563eb",
+    "links": [
+      { "label": "Framework", "url": "https://sibarum.github.io/vexelray-framework/" },
+      { "label": "GitHub", "url": "https://github.com/sibarum/vexelray-dist" }
+    ]
+  },
+
   "members": [
-    { "config": "../vexplore/installer.json", "page": "https://github.com/sibarum/vexelray-framework/blob/main/docs/apps/vexplore.md" },
-    { "config": "../text-editor-vexel-demo/installer.json", "page": "https://github.com/sibarum/vexelray-framework/blob/main/docs/apps/text-editor.md" },
-    { "config": "../Pix/installer.json", "page": "https://github.com/sibarum/vexelray-framework/blob/main/docs/apps/pix.md" },
-    { "config": "../mainframe/installer.json", "page": "https://github.com/sibarum/vexelray-framework/blob/main/docs/apps/mainframe.md" },
-    { "config": "../calculator-vexel-demo/installer.json", "page": "https://github.com/sibarum/vexelray-framework/blob/main/docs/apps/calculator.md" },
-    { "config": "../vexelray-sim-fluid/installer.json", "page": "https://github.com/sibarum/vexelray-sim-fluid" },
+    { "config": "../vexplore/installer.json", "page": "https://sibarum.github.io/vexelray-framework/apps/vexplore.html",
+      "image": "../vexelray-framework/docs/apps/img/01-select-condition-action.png",
+      "imageAlt": "Vexplore: one video clicked, the suggestion rail offering all nine videos here and a move" },
+    { "config": "../text-editor-vexel-demo/installer.json", "page": "https://sibarum.github.io/vexelray-framework/apps/text-editor.html" },
+    { "config": "../Pix/installer.json", "page": "https://sibarum.github.io/vexelray-framework/apps/pix.html",
+      "image": "../vexelray-framework/docs/apps/img/pix-viewer.png",
+      "imageAlt": "Pix: a picture, and under it the file's name, the filmstrip of its neighbours, and the controls" },
+    { "config": "../mainframe/installer.json", "page": "https://sibarum.github.io/vexelray-framework/apps/mainframe.html" },
+    { "config": "../calculator-vexel-demo/installer.json", "page": "https://sibarum.github.io/vexelray-framework/apps/calculator.html",
+      "image": "../vexelray-framework/docs/apps/img/calculator.png",
+      "imageAlt": "Calculator: two lines answered, each with its readings, and x^2-4 plotted" },
+    { "config": "../vexelray-sim-fluid/installer.json", "page": "https://github.com/sibarum/vexelray-sim-fluid",
+      "image": "../vexelray-sim-fluid/docs/images/water-on-mercury.png",
+      "imageAlt": "A dam break of water onto mercury: water (blue) rides on mercury (red)" },
     { "config": "../vexelray-sim-rigid/installer.json", "page": "https://github.com/sibarum/vexelray-sim-rigid" }
   ]
 }

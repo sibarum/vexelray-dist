@@ -1,11 +1,13 @@
 # Deploying VexelRay
 
-How the applications get from the sibling checkouts to the one-line installer. [README.md](README.md) is the
-install page that users see; it is generated, so this file is the one to edit.
+How the applications get from the sibling checkouts to the one-line installer. The page users see is
+[sibarum.github.io](https://sibarum.github.io), and [README.md](README.md) is the same instructions for this repo;
+both are generated, so this file is the one to edit.
 
 ```
 build.cmd ──► native exes in each app's target\ ──► deploy.ps1 ──► apps\<id>\, install.ps1, README.md   (git)
-                                                              └──► assets\, exe\  ──► -Publish ──► GitHub releases
+                                                              ├──► assets\, exe\  ──► -Publish ──► GitHub releases
+                                                              └──► ..\sibarum.github.io\  (git, served by GitHub Pages)
 ```
 
 ## What lives where
@@ -16,19 +18,21 @@ build.cmd ──► native exes in each app's target\ ──► deploy.ps1 ─�
 | `installer-suite.json` (here) | which apps the suite installs, in order, and where each links to |
 | `apps/<id>/` (here, committed) | each app's `install.ps1`, `uninstall.ps1`, `update.ps1`, `manifest.json` and install page |
 | `install.ps1`, `README.md` (here, committed) | the suite: runs each app's installer in turn |
+| `../sibarum.github.io` (its own repo, committed) | the landing page at https://sibarum.github.io: `index.html`, the icons and screenshots in `img/`, and a copy of the suite's `install.ps1`, so the command is shorter. Generated from `installer-suite.json` (its `site` section, and each member's `image`) |
 | releases on `sibarum/vexelray-dist` | the binaries, one release per app version, tagged `<id>-v<version>` (`pix-v0.1.0`) |
 | `exe/`, `assets/`, `logs/` (here, ignored) | build output; never committed |
 
 `install.ps1` never changes between releases. It reads the app's `manifest.json`, which names each file's
 download URL and SHA-256, so publishing a version is: upload the files, then commit the manifests that name them.
 
-The public install page is on the framework's GitHub Pages site,
-[`vexelray-framework/docs/install/index.md`](https://github.com/sibarum/vexelray-framework/blob/main/docs/install/index.md),
-written by hand. It only needs changing when the list of apps or the one-liner does.
+The landing page's copy of `install.ps1` differs from this one only in the URL its comment names. Both URLs keep
+working: installs and updaters read the manifests from this repo whichever command installed them. The framework's
+docs site links to the landing page from `vexelray-framework/docs/install/index.md` and its home page.
 
 ## One-time setup
 
-- Every repository checked out side by side in one folder, this one included.
+- Every repository checked out side by side in one folder, this one included. `sibarum.github.io` too, or `deploy.ps1`
+  skips the landing page with a warning.
 - GraalVM 25 as `JAVA_HOME`, and Maven.
 - Visual Studio 2026 (18) Community with the C++ workload: native-image links with MSVC's `link.exe` and the icons
   are compiled with `rc.exe`. `build.cmd` sets this up itself with `vcvars64.bat`.
@@ -59,13 +63,15 @@ written by hand. It only needs changing when the list of apps or the one-liner d
    .\deploy.ps1 -Publish
    ```
 5. **Commit and push.** Until the manifests are pushed, nobody sees the new version; once they are, the install
-   command and every app's updater offer it. GitHub's raw host caches for a few minutes.
+   command and every app's updater offer it. GitHub's raw host caches for a few minutes. Push the landing page as
+   well when it changed (a new app, a new description or screenshot); GitHub Pages publishes it within a minute.
    ```powershell
    git add -A; git commit -m "Pix 0.1.1"; git push
+   git -C ..\sibarum.github.io add -A; git -C ..\sibarum.github.io commit -m "Pix 0.1.1"; git -C ..\sibarum.github.io push
    ```
 6. **Try it** on a machine (or a user account) without the apps:
    ```powershell
-   irm https://raw.githubusercontent.com/sibarum/vexelray-dist/main/install.ps1 | iex
+   irm https://sibarum.github.io/install.ps1 | iex
    ```
 
 ## Adding an app to the suite
@@ -73,7 +79,8 @@ written by hand. It only needs changing when the list of apps or the one-liner d
 1. Give its repo an `installer.json` like the others: `"repo": "sibarum/vexelray-dist"`, `"repoPath": "apps/<id>"`,
    `"releasesRepo": "sibarum/vexelray-dist"`, `"tagFormat": "<id>-v{version}"`.
 2. Add it to `installer-suite.json` (`config` is relative to this folder) and to the app list in `build.cmd`.
-3. Add it to the table on the install page in `vexelray-framework/docs/install/index.md`, and to the home page.
+3. Give it an `image` (a screenshot, relative to this folder) and `imageAlt` in `installer-suite.json` if it has one;
+   the landing page shows its icon otherwise. Add it to the framework docs' home page, `vexelray-framework/docs/index.md`.
 4. Release as above.
 
 ## Source releases (tags on every repository)

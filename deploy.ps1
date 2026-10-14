@@ -9,6 +9,8 @@
     install.ps1, README.md                                                    the suite      (committed)
     assets\<id>\<ver>\ each application's exe and icon, as uploaded to its release           (ignored)
     exe\               every exe in one place                                                (ignored)
+  and, when the sibling checkout ..\sibarum.github.io exists, the landing page served at https://sibarum.github.io:
+    index.html, install.ps1, img\                                    (committed and pushed there)
 
   -Publish also creates each release (tag <id>-v<version>) on sibarum/vexelray-dist and uploads its files.
   It uses $env:GITHUB_TOKEN if set, and otherwise asks for a token (input hidden, never stored): a fine-grained
@@ -53,6 +55,15 @@ foreach ($m in $suite.members) {
 Write-Host '== suite'
 & java -jar $jar --suite (Join-Path $dist 'installer-suite.json') --out $dist
 if ($LASTEXITCODE -ne 0) { throw 'Generating the suite failed' }
+
+$site = Join-Path $root 'sibarum.github.io'
+if (Test-Path (Join-Path $site '.git')) {
+    Write-Host '== landing page'
+    & java -jar $jar --suite (Join-Path $dist 'installer-suite.json') --site --out $site
+    if ($LASTEXITCODE -ne 0) { throw 'Generating the landing page failed' }
+} else {
+    Write-Warning "No checkout at ${site}: the landing page was not regenerated"
+}
 } finally {
     if ($askedForToken) { Remove-Item Env:GITHUB_TOKEN -ErrorAction SilentlyContinue }
 }

@@ -3,6 +3,8 @@
 
 Desktop applications built on the VexelRay stack: a file explorer, a text editor, an image viewer, a terminal, a calculator, and fluid and rigid-body simulations. They are separate programs that know about each other, so a file in the explorer opens in the editor or the viewer, and the editor can show a file in the explorer.
 
+The install page is https://sibarum.github.io, which installs with a shorter command.
+
 ## Windows
 
 Open **PowerShell** (a normal window - administrator rights are not needed) and run:
@@ -17,11 +19,11 @@ and keep the others. Running the same line again updates each of them to its lat
 
 | Application | What it is | Id | Installed to |
 | --- | --- | --- | --- |
-| [Vexplore](https://github.com/sibarum/vexelray-framework/blob/main/docs/apps/vexplore.md) | A file explorer that suggests instead of asking. | `vexplore` | `%LOCALAPPDATA%\Programs\Vexplore` |
-| [Vex](https://github.com/sibarum/vexelray-framework/blob/main/docs/apps/text-editor.md) | A tabbed text editor with a file navigator, on the VexelRay stack. | `text-editor` | `%LOCALAPPDATA%\Programs\Vex` |
-| [Pix](https://github.com/sibarum/vexelray-framework/blob/main/docs/apps/pix.md) | An image viewer: one picture, as large as the window allows, and the rest of its folder a key press away. | `pix` | `%LOCALAPPDATA%\Programs\Pix` |
-| [MainFrame](https://github.com/sibarum/vexelray-framework/blob/main/docs/apps/mainframe.md) | A terminal window that wraps the native Windows shell over ConPTY, built on the VexelRay stack. | `mainframe` | `%LOCALAPPDATA%\Programs\MainFrame` |
-| [Calculator](https://github.com/sibarum/vexelray-framework/blob/main/docs/apps/calculator.md) | A small calculator window onto cott-engine. | `calculator` | `%LOCALAPPDATA%\Programs\Calculator` |
+| [Vexplore](https://sibarum.github.io/vexelray-framework/apps/vexplore.html) | A file explorer that suggests instead of asking. | `vexplore` | `%LOCALAPPDATA%\Programs\Vexplore` |
+| [Vex](https://sibarum.github.io/vexelray-framework/apps/text-editor.html) | A tabbed text editor with a file navigator, on the VexelRay stack. | `text-editor` | `%LOCALAPPDATA%\Programs\Vex` |
+| [Pix](https://sibarum.github.io/vexelray-framework/apps/pix.html) | An image viewer: one picture, as large as the window allows, and the rest of its folder a key press away. | `pix` | `%LOCALAPPDATA%\Programs\Pix` |
+| [MainFrame](https://sibarum.github.io/vexelray-framework/apps/mainframe.html) | A terminal window that wraps the native Windows shell over ConPTY, built on the VexelRay stack. | `mainframe` | `%LOCALAPPDATA%\Programs\MainFrame` |
+| [Calculator](https://sibarum.github.io/vexelray-framework/apps/calculator.html) | A small calculator window onto cott-engine. | `calculator` | `%LOCALAPPDATA%\Programs\Calculator` |
 | [Fluid Sim](https://github.com/sibarum/vexelray-sim-fluid) | Fluid simulation experiments on the VexelRay stack: dam breaks, mixing, heat and a 3D dam break, live on the GPU. | `fluid-sim` | `%LOCALAPPDATA%\Programs\Fluid Sim` |
 | [Rigid Sim](https://github.com/sibarum/vexelray-sim-rigid) | Rigid-body simulation experiments on the VexelRay stack: spheres that collide, bounce, spin and roll, live on the GPU. | `rigid-sim` | `%LOCALAPPDATA%\Programs\Rigid Sim` |
 
