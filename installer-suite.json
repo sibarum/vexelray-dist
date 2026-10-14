@@ -16,6 +16,24 @@
     "links": [
       { "label": "Framework", "url": "https://sibarum.github.io/vexelray-framework/" },
       { "label": "GitHub", "url": "https://github.com/sibarum/vexelray-dist" }
+    ],
+    "sections": [
+      {
+        "id": "build", "title": "Build your own", "nav": "Developers",
+        "lede": "VexelRay is also a framework: Java 25, compiled to a native Windows executable and drawn with Vulkan. Every application above is built on it. Yours can be too, whether a coding agent writes most of it or you write all of it.",
+        "cards": [
+          { "title": "Start from the template",
+            "text": "One command generates a working application with tabs, a file navigator, settings that persist, and tests that build the window without a GPU. Vex, Calculator and MainFrame all started this way.",
+            "url": "https://sibarum.github.io/vexelray-framework/getting-started.html" },
+          { "title": "Build it with an LLM",
+            "text": "Every repository has a `CLAUDE.md` with the rules the code does not show. `ottermate` lets a coding agent drive and screenshot the window it built, so it checks its own work by looking at it.",
+            "url": "https://sibarum.github.io/vexelray-framework/developers/with-an-llm.html" },
+          { "title": "Or write it yourself in Vex",
+            "text": "Vex highlights Java, jumps to any declaration in your project or in the framework, and shows a folder's Maven modules before you open it. MainFrame and Vexplore work alongside it.",
+            "url": "https://sibarum.github.io/vexelray-framework/developers/in-vex.html" }
+        ],
+        "action": { "label": "Read the developer guide", "url": "https://sibarum.github.io/vexelray-framework/developers/" }
+      }
     ]
   },
 
