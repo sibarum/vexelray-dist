@@ -14,6 +14,7 @@
     "feedbackUrl": "https://github.com/sibarum/vexelray-framework/issues/new",
     "accentColor": "#2563eb",
     "links": [
+      { "label": "Technology", "url": "https://sibarum.github.io/technology.html" },
       { "label": "Framework", "url": "https://sibarum.github.io/vexelray-framework/" },
       { "label": "GitHub", "url": "https://github.com/sibarum/vexelray-dist" }
     ],
