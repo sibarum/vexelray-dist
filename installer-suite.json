@@ -13,12 +13,30 @@
     "requirements": "Needs Windows 10 or 11 (64-bit) and a graphics card with an up-to-date driver: everything here draws with Vulkan.",
     "feedbackUrl": "https://github.com/sibarum/vexelray-framework/issues/new",
     "accentColor": "#2563eb",
+    "logo": "site/vexelray.svg",
+    "heroAction": { "label": "See what's inside the framework", "url": "https://sibarum.github.io/technology.html" },
     "links": [
       { "label": "Technology", "url": "https://sibarum.github.io/technology.html" },
       { "label": "Framework", "url": "https://sibarum.github.io/vexelray-framework/" },
       { "label": "GitHub", "url": "https://github.com/sibarum/vexelray-dist" }
     ],
     "sections": [
+      {
+        "id": "inside", "title": "Built different, underneath", "nav": "Under the hood",
+        "lede": "Every application above runs on the same framework, and it does things you would not expect from a desktop toolkit.",
+        "cards": [
+          { "stat": "0 fps", "title": "Frames only on demand",
+            "text": "A window draws when something changes and sleeps when nothing does, waking to its first frame in about a millisecond. The whole window is one draw call.",
+            "url": "https://sibarum.github.io/technology.html#on-demand" },
+          { "stat": "5 lanes", "title": "Multithreaded by default",
+            "text": "The main thread only draws. App logic, disk work and time run on their own lanes, placed at compile time, so a part that hangs never freezes the window.",
+            "url": "https://sibarum.github.io/technology.html#threads" },
+          { "stat": "577 ns", "title": "A clock you can test",
+            "text": "Kronometer drives every animation from one logical clock. On its virtual clock, a ten-minute scenario runs in microseconds, identically every time.",
+            "url": "https://sibarum.github.io/technology.html#kronometer" }
+        ],
+        "action": { "label": "See all the technology", "url": "https://sibarum.github.io/technology.html" }
+      },
       {
         "id": "build", "title": "Build your own", "nav": "Developers",
         "lede": "VexelRay is also a framework: Java 25, compiled to a native Windows executable and drawn with Vulkan. Every application above is built on it. Yours can be too, whether a coding agent writes most of it or you write all of it.",
