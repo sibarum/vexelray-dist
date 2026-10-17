@@ -315,7 +315,7 @@ def render(name, components, rust, beside):
     for key in components:
         for title, body in C[key].appendix:
             out += [THIN, title, THIN, "", body(), ""]
-    return "\r\n".join(out).rstrip("\r\n") + "\r\n"
+    return "\n".join(out).rstrip("\n").replace("\n", "\r\n") + "\r\n"
 
 
 def exe_of(app_id, folder, config):
