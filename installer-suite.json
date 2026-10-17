@@ -45,15 +45,36 @@
             "text": "One command generates a working application with tabs, a file navigator, settings that persist, and tests that build the window without a GPU. Vex, Calculator and MainFrame all started this way.",
             "url": "https://sibarum.github.io/vexelray-framework/getting-started.html" },
           { "title": "Build it with an LLM",
-            "text": "Every repository has a `CLAUDE.md` with the rules the code does not show. `ottermate` lets a coding agent drive and screenshot the window it built, so it checks its own work by looking at it.",
+            "text": "The stack was written with Claude Code. The framework and the GUI carry a `CLAUDE.md` with the rules the code does not show, and every generated project starts with one. `ottermate` lets a coding agent drive and screenshot the window it built, so it checks its own work by looking at it.",
             "url": "https://sibarum.github.io/vexelray-framework/developers/with-an-llm.html" },
           { "title": "Or write it yourself in Vex",
             "text": "Vex highlights Java, jumps to any declaration in your project or in the framework, and shows a folder's Maven modules before you open it. MainFrame and Vexplore work alongside it.",
             "url": "https://sibarum.github.io/vexelray-framework/developers/in-vex.html" }
         ],
         "action": { "label": "Read the developer guide", "url": "https://sibarum.github.io/vexelray-framework/developers/" }
+      },
+      {
+        "id": "built-with", "title": "Built with", "nav": "Credits",
+        "lede": "VexelRay would not exist without three pieces of other people's work, and we're grateful for each of them.",
+        "cards": [
+          { "title": "Claude Code, by Anthropic",
+            "text": "Most of VexelRay was written with Claude Code, Anthropic's coding agent, working alongside its author. Ottermate exists so Claude can see the windows it builds.",
+            "url": "https://claude.com/claude-code" },
+          { "title": "Oracle GraalVM",
+            "text": "Oracle GraalVM's Native Image compiles every application ahead of time into a single Windows executable that runs without a JVM.",
+            "url": "https://www.graalvm.org/" },
+          { "title": "Vulkan, by the Khronos Group",
+            "text": "Everything here is drawn with Vulkan, the open, cross-platform graphics and compute API from the Khronos Group, with every shader compiled to SPIR-V.",
+            "url": "https://www.vulkan.org/" }
+        ],
+        "action": { "label": "Licenses and notices", "url": "https://sibarum.github.io/licenses.html" }
       }
-    ]
+    ],
+    "footerLinks": [
+      { "label": "Technology", "url": "https://sibarum.github.io/technology.html" },
+      { "label": "Licenses and notices", "url": "https://sibarum.github.io/licenses.html" }
+    ],
+    "notice": "Claude and Claude Code are trademarks of Anthropic, PBC. Oracle, Java and GraalVM are trademarks or registered trademarks of Oracle and/or its affiliates. Vulkan and SPIR-V are trademarks or registered trademarks of The Khronos Group Inc. Windows and Direct3D are trademarks of the Microsoft group of companies. Other names may be trademarks of their respective owners. VexelRay is an independent project, not affiliated with or endorsed by any of them."
   },
 
   "members": [
