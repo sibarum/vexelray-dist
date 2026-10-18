@@ -8,6 +8,9 @@ set "LOGS=%~dp0logs"
 if not exist "%LOGS%" mkdir "%LOGS%"
 call "C:\Program Files\Microsoft Visual Studio\18\Community\VC\Auxiliary\Build\vcvars64.bat" >nul 2>&1
 where cl >nul 2>&1 || ( echo vcvars64 did not set up MSVC; run this from PowerShell or a developer prompt, not Git Bash & exit /b 1 )
+rem vexplore's RemotesTest runs Git's sftp-server.exe, which needs msys-2.0.dll from Git's usr\bin. Appended, not
+rem prepended: usr\bin has its own link.exe, and native-image must find MSVC's first.
+set "PATH=%PATH%;C:\Program Files\Git\usr\bin"
 
 for %%r in (intrabuf atchung supirvast dxgi-bridge kronometer tactroller vexelray imagelib-wrapper vexelray-gui vexelray-framework vexelray-codec vex-suite-common cott-engine cardinal concordance-indexer vexelray-sim-core vexelray-installer) do (
   echo [%%r] clean install
