@@ -55,8 +55,8 @@ and `link.exe` is Git's). It uploads, commits and pushes nothing, so it is safe 
 
 It stops at the first step that fails. Logs are in `logs\`.
 
-1. **build**: `build.cmd` clean-installs the libraries in dependency order with their tests, then tests each app
-   and builds its release native image.
+1. **build**: `build.cmd` clean-installs the libraries in dependency order (`vexelray-build`, the plugin that
+   stamps every build, first) with their tests, then tests each app and builds its release native image.
 2. **start**: starts each app's exe and fails if it is not still running after 8 seconds (`-Seconds` to change).
    The tests run on the JVM, so this is what catches a native image that cannot start, such as one missing a
    resource it never registered in its `reachability-metadata.json` (Vex 0.1.0's own fonts).
@@ -170,7 +170,7 @@ one app, rebuild only it and run with `-SkipBuild`. To release afterwards, follo
 
 ## Source releases (tags on every repository)
 
-Separate from the installers, and not needed for every app release. `release.py` cuts a release of all 26
+Separate from the installers, and not needed for every app release. `release.py` cuts a release of all 27
 repositories at once, from PowerShell:
 
 ```powershell
@@ -189,6 +189,10 @@ git push origin main v0.1.0
 
 Nothing is deployed to a Maven repository. 0.1.0 (1.0 for atchung, kronometer, tactroller and cardinal; 0.2.0
 for supirvast) was cut on 13 October 2026.
+
+`vexelray-build`, the Maven plugin that stamps each build with its source commit, is built first and shares the
+stack's version, so `release` and `next` move it and every pom that names it with the rest. It joined the list after
+0.1.0 was cut, at `0.1.1-SNAPSHOT`.
 
 ## When it goes wrong
 
