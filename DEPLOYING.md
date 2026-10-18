@@ -72,7 +72,7 @@ each app's `target\`.
 
 1. **Bump the version** in the `installer.json` of each app that changed. A published version is final: its
    release exists, and every install that has it compares against it. Bump the `badge` in `installer-suite.json`'s
-   `site` as well. An app whose version did not change is regenerated identically (only an `updatedAt` stamp moves;
+   `site` as well (not for a [snapshot](#snapshot-releases)). An app whose version did not change is regenerated identically (only an `updatedAt` stamp moves;
    discard that with `git checkout -- apps`).
 2. **Preflight, and look before publishing.**
    ```powershell
@@ -84,17 +84,41 @@ each app's `target\`.
    ```powershell
    .\deploy.ps1 -Publish
    ```
-4. **Commit and push.** Until the manifests are pushed, nobody sees the new version; once they are, the install
-   command and every app's updater offer it. GitHub's raw host caches for a few minutes. Push the landing page as
-   well when it changed (a new app, a new description or screenshot); GitHub Pages publishes it within a minute.
+4. **Commit, and merge to `main`.** Every installer and updater reads the manifests from `main` (the `branch` in
+   each `installer.json`, baked into every generated script), so pushing `develop` alone shows nobody anything. Once
+   `main` has them, the install command and every app's updater offer the new version. GitHub's raw host caches for
+   a few minutes. Push the landing page as well when it changed (a new app, a new description or screenshot);
+   GitHub Pages publishes it within a minute.
    ```powershell
-   git add -A; git commit -m "Pix 0.1.1"; git push
+   git add -A; git commit -m "Pix 0.1.1"; git push origin develop
+   git checkout main; git merge develop; git push origin main; git checkout develop
    git -C ..\sibarum.github.io add -A; git -C ..\sibarum.github.io commit -m "Pix 0.1.1"; git -C ..\sibarum.github.io push
    ```
 5. **Try it** on a machine (or a user account) without the apps:
    ```powershell
    irm https://sibarum.github.io/install.ps1 | iex
    ```
+
+## Snapshot releases
+
+A build off `develop` that can be installed without offering it to anyone: give the apps the poms' snapshot
+version (`0.1.1-SNAPSHOT`) in their `installer.json` and release as above, leaving the badge alone.
+
+- `deploy.ps1 -Publish` creates the release `<id>-v0.1.1-SNAPSHOT`, marked as a prerelease on GitHub. Publishing
+  the same snapshot again replaces its files, so a snapshot can be rebuilt; a release cannot.
+- The manifest lists it, but its `latest` skips prereleases, so the install command and every updater keep offering
+  the last release. The manifests still go to `main`: that is the only branch the installers read.
+- Install a snapshot with its app's own installer (the suite ignores `INSTALL_VERSION`), adding
+  `$env:INSTALL_FORCE = '1'` to take a rebuilt one over the same version:
+  ```powershell
+  $env:INSTALL_VERSION = '0.1.1-SNAPSHOT'
+  irm https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/text-editor/install.ps1 | iex
+  ```
+- A snapshot sorts after the release before it and before its own release, so `update.cmd` leaves it alone until
+  `0.1.1` is published, then updates to it. The suite's install command is different: it reinstalls each app's
+  `latest` whenever the installed version is not exactly that, so on a machine with snapshots it goes back to the
+  last release.
+- To release it, change the version to `0.1.1` (and the badge) and release again.
 
 ## Adding an app to the suite
 
