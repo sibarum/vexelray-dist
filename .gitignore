@@ -4,3 +4,4 @@ assets/
 *.exe
 logs/
 __pycache__/
+local/

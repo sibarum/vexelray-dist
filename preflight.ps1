@@ -20,8 +20,11 @@
 
 .PARAMETER Seconds
   How long each application must stay up.
+
+.PARAMETER BuildOnly
+  Stop after the notices: build, start and check, generating nothing. release-preflight.ps1 generates its own.
 #>
-param([switch]$SkipBuild, [int]$Seconds = 8)
+param([switch]$SkipBuild, [int]$Seconds = 8, [switch]$BuildOnly)
 $ErrorActionPreference = 'Stop'
 
 $dist  = $PSScriptRoot
@@ -80,6 +83,7 @@ $python = Find-Python
 if (-not $python) { Fail 'no Python found (python, py, or anaconda3)' }
 & $python (Join-Path $dist 'notices\notices.py') --check
 if ($LASTEXITCODE -ne 0) { Fail 'the notices' }
+if ($BuildOnly) { Write-Host "`nBuilt, started and checked." -ForegroundColor Green; exit 0 }
 
 Step 'versions'
 foreach ($a in $apps) {

@@ -23,6 +23,8 @@ build.cmd ──► native exes in each app's target\ ──► deploy.ps1 ─�
 | `../sibarum.github.io` (its own repo, committed) | the landing page at https://sibarum.github.io: `index.html`, the icons and screenshots in `img/`, and a copy of the suite's `install.ps1`, so the command is shorter. Generated from `installer-suite.json` (its `site` section, and each member's `image`) |
 | releases on `sibarum/vexelray-dist` | the binaries, one release per app version, tagged `<id>-v<version>` (`pix-v0.1.0`) |
 | `exe/`, `assets/`, `logs/` (here, ignored) | build output; never committed |
+| `preflight/` (here, committed) | the [preflight](#preflight-release) suite installer, pinned to the last snapshots published, and `BUILD.txt` |
+| `local/` (here, ignored) | the last preflight's local copy, served from `127.0.0.1` |
 
 `install.ps1` never changes between releases. It reads the app's `manifest.json`, which names each file's
 download URL and SHA-256, so publishing a version is: upload the files, then commit the manifests that name them.
@@ -119,6 +121,41 @@ version (`0.1.1-SNAPSHOT`) in their `installer.json` and release as above, leavi
   `latest` whenever the installed version is not exactly that, so on a machine with snapshots it goes back to the
   last release.
 - To release it, change the version to `0.1.1` (and the badge) and release again.
+
+## Preflight release
+
+Every repository built together at its snapshot version, installed with one command, before anything is released.
+Double-click **`release-preflight.cmd`** (or run `.\release-preflight.ps1` from PowerShell). It stops at the first
+step that fails:
+
+1. **sources**: every repository in `release.py`'s list, and this one, must be on `develop` with nothing
+   uncommitted, so the preflight is exactly what was committed. `-AllowDirty` builds anyway, for a local try only:
+   such a build is never published.
+2. **versions**: if the repositories are still at the release just cut (`0.1.0`), moves them all to the next
+   snapshot with `release.py next`. `-NoBump` stops instead. Then each app's `installer.json` gets its pom's version,
+   committed in that app's repository.
+3. **build**: `preflight.ps1 -BuildOnly`: `build.cmd`, every exe started, the notices checked.
+4. **local**: `deploy.ps1 -Local` writes the apps' installers, their releases and the preflight suite into `local\`
+   (ignored), all pointing at `http://127.0.0.1:8417` (`-Port`) instead of GitHub. `serve.ps1` serves it, and the
+   suite's install command runs in a window of its own: the same scripts as the published preflight, with nothing
+   fetched from GitHub. This is a real install on this computer, over the apps already installed. Afterwards each
+   app's install record must name its snapshot. The records then point their updaters at `127.0.0.1`, until the
+   published preflight or the next release is installed over them.
+5. **publish**: asks first, unless `-Publish` was given (`-LocalOnly` stops before it). `deploy.ps1 -Preflight -Publish`
+   uploads each app's snapshot release (replacing an earlier build of the same snapshot) and writes `preflight\`:
+   the suite installer, pinned to these versions, and `BUILD.txt`, which lists the commit each repository was built
+   from. The script then commits, pushes `develop`, merges it to `main` and pushes that. The snapshots are
+   prereleases, so the public install command and every updater keep offering the last release. Anyone can install
+   the preflight with:
+   ```powershell
+   irm https://raw.githubusercontent.com/sibarum/vexelray-dist/main/preflight/install.ps1 | iex
+   ```
+   It reinstalls every app at its pinned snapshot even when that version is already installed, since a snapshot is
+   rebuilt under the same version.
+
+To publish a build already tried locally: `.\release-preflight.ps1 -SkipBuild -SkipLocal -Publish`. After a fix to
+one app, rebuild only it and run with `-SkipBuild`. To release afterwards, follow
+[Releasing a new version](#releasing-a-new-version-of-the-apps) with the versions changed from `X-SNAPSHOT` to `X`.
 
 ## Adding an app to the suite
 

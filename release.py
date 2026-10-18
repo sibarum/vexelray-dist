@@ -3,6 +3,7 @@
     python release.py release   each repo: X-SNAPSHOT -> X, build and test all in order, then commit "Release X"
                                 and tag vX (only once every build has passed; a failure commits nothing)
     python release.py next      each repo: X -> X+1-SNAPSHOT (last number bumped), install all, commit
+    python release.py status    each repo, a line: name, version, branch, commit, changed files, subject (tab-separated)
 
 Run from PowerShell, with the sibling checkouts beside this folder and clean working trees for the poms. Nothing is
 pushed; see DEPLOYING.md for that. Logs land in logs/.
@@ -128,6 +129,15 @@ def next_snapshot():
     say("NEXT DONE")
 
 
+def status():
+    """What a build of every repository would be built from; release-preflight.ps1 reads it."""
+    for r in REPOS:
+        changed = len(git(r, "status", "--porcelain", "-uno").splitlines())
+        line = [r, own_version(r), git(r, "branch", "--show-current").strip(),
+                git(r, "rev-parse", "--short", "HEAD").strip(), str(changed), git(r, "log", "-1", "--format=%s").strip()]
+        print("\t".join(line), flush=True)
+
+
 if __name__ == "__main__":
     os.makedirs(LOGS, exist_ok=True)
-    {"release": release, "next": next_snapshot}.get(sys.argv[1] if len(sys.argv) > 1 else "", lambda: sys.exit(__doc__))()
+    {"release": release, "next": next_snapshot, "status": status}.get(sys.argv[1] if len(sys.argv) > 1 else "", lambda: sys.exit(__doc__))()
