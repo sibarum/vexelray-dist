@@ -42,43 +42,56 @@ docs site links to the landing page from `vexelray-framework/docs/install/index.
 - To publish: a **fine-grained** GitHub token, repository access *only* `sibarum/vexelray-dist`, permission
   **Contents: read and write**. Nothing else. `deploy.ps1 -Publish` asks for it; it is never stored.
 
+## Preflight
+
+Everything short of publishing, in one command, from PowerShell (not Git Bash: under Git Bash `vcvars64.bat` fails
+and `link.exe` is Git's). It uploads, commits and pushes nothing, so it is safe to run any time:
+
+```powershell
+.\preflight.ps1
+```
+
+It stops at the first step that fails. Logs are in `logs\`.
+
+1. **build**: `build.cmd` clean-installs the libraries in dependency order with their tests, then tests each app
+   and builds its release native image.
+2. **start**: starts each app's exe and fails if it is not still running after 8 seconds (`-Seconds` to change).
+   The tests run on the JVM, so this is what catches a native image that cannot start, such as one missing a
+   resource it never registered in its `reachability-metadata.json` (Vex 0.1.0's own fonts).
+3. **notices**: `notices\notices.py --check` writes each app's `THIRD-PARTY-NOTICES.txt` and looks in the exes for
+   every component it lists, failing on one that is missing or one it does not list (a new library, say). When it
+   fails, add the component to `notices.py` with its licence (in `notices/licenses/`). A changed notices file is
+   part of the app's next release; commit it in the app's repo.
+4. **versions**: names each app whose `installer.json` version is already published. Bump that app if it changed.
+5. **generate**: `deploy.ps1` without `-Publish`, then the files it changed here and in `..\sibarum.github.io`.
+
+After fixing one app, rebuild only it and rerun with `.\preflight.ps1 -SkipBuild`, which uses the exes already in
+each app's `target\`.
+
 ## Releasing a new version of the apps
 
-1. **Build.** From PowerShell, not Git Bash (under Git Bash `vcvars64.bat` fails and `link.exe` is Git's):
+1. **Bump the version** in the `installer.json` of each app that changed. A published version is final: its
+   release exists, and every install that has it compares against it. Bump the `badge` in `installer-suite.json`'s
+   `site` as well. An app whose version did not change is regenerated identically (only an `updatedAt` stamp moves;
+   discard that with `git checkout -- apps`).
+2. **Preflight, and look before publishing.**
    ```powershell
-   .\build.cmd
-   ```
-   Clean-installs the libraries in dependency order with their tests, then tests each app and builds its release
-   native image. It stops at the first library that fails; an app that fails is reported and the rest carry on.
-   Logs are in `logs\`.
-2. **Check the notices.** Writes each app's `THIRD-PARTY-NOTICES.txt` and looks in the exes for every component
-   it lists, failing on one that is missing or one it does not list (a new library, say):
-   ```powershell
-   python notices\notices.py --check
-   ```
-   When it fails, add the component to `notices.py` with its licence (in `notices/licenses/`) and run it again.
-   A changed notices file is part of the app's next release; commit it in the app's repo.
-3. **Bump the version** in the `installer.json` of each app that changed. A published version is final: its
-   release exists, and every install that has it compares against it. An app whose version did not change is
-   regenerated identically (only an `updatedAt` stamp moves; discard that with `git checkout -- apps`).
-4. **Generate, and look before publishing.**
-   ```powershell
-   .\deploy.ps1
+   .\preflight.ps1
    git diff
    ```
    The diff should show only the apps you bumped: a new entry in their `manifest.json`, and their pages.
-5. **Publish.** Creates each new release and uploads its exe, icon and notices:
+3. **Publish.** Creates each new release and uploads its exe, icon and notices:
    ```powershell
    .\deploy.ps1 -Publish
    ```
-6. **Commit and push.** Until the manifests are pushed, nobody sees the new version; once they are, the install
+4. **Commit and push.** Until the manifests are pushed, nobody sees the new version; once they are, the install
    command and every app's updater offer it. GitHub's raw host caches for a few minutes. Push the landing page as
    well when it changed (a new app, a new description or screenshot); GitHub Pages publishes it within a minute.
    ```powershell
    git add -A; git commit -m "Pix 0.1.1"; git push
    git -C ..\sibarum.github.io add -A; git -C ..\sibarum.github.io commit -m "Pix 0.1.1"; git -C ..\sibarum.github.io push
    ```
-7. **Try it** on a machine (or a user account) without the apps:
+5. **Try it** on a machine (or a user account) without the apps:
    ```powershell
    irm https://sibarum.github.io/install.ps1 | iex
    ```
