@@ -1,7 +1,7 @@
 {
   "id": "vexelray",
   "name": "VexelRay",
-  "description": "Desktop applications built on the VexelRay stack: a file explorer, a text editor, an image viewer, a terminal, a calculator, and fluid and rigid-body simulations. They are separate programs that know about each other, so a file in the explorer opens in the editor or the viewer, and the editor can show a file in the explorer.",
+  "description": "Desktop applications built on the VexelRay stack: a file explorer, a text editor, an image viewer, a terminal, a calculator, fluid and rigid-body simulations, a desktop client for Claude Code, and an inspector that shows a running app's frame loop. They are separate programs that know about each other, so a file in the explorer opens in the editor or the viewer, and the editor can show a file in the explorer.",
 
   "repo": "sibarum/vexelray-dist",
   "branch": "main",
@@ -9,7 +9,7 @@
   "site": {
     "url": "https://sibarum.github.io",
     "badge": "0.1.0 · experimental prerelease",
-    "tagline": "Seven desktop applications drawn live on the GPU, which know about each other. One line installs them all.",
+    "tagline": "Nine desktop applications drawn live on the GPU, which know about each other. One line installs them all.",
     "requirements": "Needs Windows 10 or 11 (64-bit) and a graphics card with an up-to-date driver: everything here draws with Vulkan.",
     "feedbackUrl": "https://github.com/sibarum/vexelray-framework/issues/new",
     "accentColor": "#2563eb",
@@ -98,6 +98,10 @@
       "imageAlt": "A dam break of water onto mercury: water (blue) rides on mercury (red)" },
     { "config": "../vexelray-sim-rigid/installer.json", "page": "https://github.com/sibarum/vexelray-sim-rigid",
       "image": "../vexelray-sim-rigid/docs/images/pile-of-1000.png",
-      "imageAlt": "Rigid Sim: a pile of 1000 spheres slumping in its box, solved by Gauss–Seidel" }
+      "imageAlt": "Rigid Sim: a pile of 1000 spheres slumping in its box, solved by Gauss–Seidel" },
+    { "config": "../vexelray-maistro/installer.json", "page": "https://github.com/sibarum/vexelray-maistro" },
+    { "config": "../vexelray-inspector/installer.json", "page": "https://github.com/sibarum/vexelray-inspector",
+      "image": "../vexelray-inspector/docs/screenshots/resting.png",
+      "imageAlt": "VexelRay Inspector: the escapement at rest, replaying a calculator session, its park's budget on the plaque" }
   ]
 }

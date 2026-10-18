@@ -170,7 +170,7 @@ one app, rebuild only it and run with `-SkipBuild`. To release afterwards, follo
 
 ## Source releases (tags on every repository)
 
-Separate from the installers, and not needed for every app release. `release.py` cuts a release of all 24
+Separate from the installers, and not needed for every app release. `release.py` cuts a release of all 26
 repositories at once, from PowerShell:
 
 ```powershell

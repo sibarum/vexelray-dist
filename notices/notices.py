@@ -191,6 +191,8 @@ APPS = {
     "calculator": ("calculator-vexel-demo", EVERY_APP, False, ""),
     "fluid-sim": ("vexelray-sim-fluid", SIMS, False, ""),
     "rigid-sim": ("vexelray-sim-rigid", SIMS, False, ""),
+    "maistro": ("vexelray-maistro", EVERY_APP, False, ""),
+    "inspector": ("vexelray-inspector", EVERY_APP, False, ""),
 }
 
 # Markers of what the exes must not contain unless listed: a dependency that is declared but not compiled in.

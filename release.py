@@ -20,7 +20,7 @@ LOGS = os.path.join(HERE, "logs")
 REPOS = ("intrabuf atchung supirvast dxgi-bridge kronometer tactroller vexelray imagelib-wrapper vexelray-gui "
          "vexelray-framework vexelray-codec vex-suite-common cott-engine cardinal concordance-indexer vexelray-sim-core "
          "vexelray-installer mainframe text-editor-vexel-demo Pix vexplore vexelray-sim-fluid vexelray-sim-rigid "
-         "calculator-vexel-demo").split()
+         "calculator-vexel-demo vexelray-maistro vexelray-inspector").split()
 TEMPLATE = "vexelray-framework-template/src/main/resources/dev/vexelray/framework/template/vexel-desktop/template.manifest"
 TRAILER = "\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 SNAPSHOT = re.compile(r"\d+(?:\.\d+)*-SNAPSHOT")

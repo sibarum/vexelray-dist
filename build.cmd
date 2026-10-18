@@ -21,7 +21,7 @@ for %%r in (intrabuf atchung supirvast dxgi-bridge kronometer tactroller vexelra
 )
 
 set FAILED=
-for %%r in (mainframe text-editor-vexel-demo Pix vexplore vexelray-sim-fluid vexelray-sim-rigid calculator-vexel-demo) do (
+for %%r in (mainframe text-editor-vexel-demo Pix vexplore vexelray-sim-fluid vexelray-sim-rigid calculator-vexel-demo vexelray-maistro vexelray-inspector) do (
   pushd "%ROOT%\%%r"
   echo [%%r] tests
   call mvn -B clean install > "%LOGS%\app-%%r.log" 2>&1
