@@ -12,7 +12,7 @@ rem vexplore's RemotesTest runs Git's sftp-server.exe, which needs msys-2.0.dll 
 rem prepended: usr\bin has its own link.exe, and native-image must find MSVC's first.
 set "PATH=%PATH%;C:\Program Files\Git\usr\bin"
 
-for %%r in (vexelray-build intrabuf atchung supirvast dxgi-bridge kronometer tactroller vexelray imagelib-wrapper vexelray-gui vexelray-framework vexelray-codec vex-suite-common cott-engine cardinal concordance-indexer vexelray-sim-core vexelray-installer) do (
+for %%r in (vexelray-build intrabuf atchung supirvast dxgi-bridge kronometer tactroller vexelray imagelib-wrapper vexelray-gui vexelray-framework ffmpeg-wrapper vexelray-codec vex-suite-common cott-engine cardinal concordance-indexer vexelray-sim-core vexelray-installer) do (
   echo [%%r] clean install
   pushd "%ROOT%\%%r"
   call mvn -B clean install > "%LOGS%\%%r.log" 2>&1

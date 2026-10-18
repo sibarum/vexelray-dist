@@ -41,6 +41,7 @@ docs site links to the landing page from `vexelray-framework/docs/install/index.
 - Visual Studio 2026 (18) Community with the C++ workload: native-image links with MSVC's `link.exe` and the icons
   are compiled with `rc.exe`. `build.cmd` sets this up itself with `vcvars64.bat`.
 - `imagelib-wrapper`'s native library, built once with a Rust toolchain: `./native/build.sh` in that repo.
+- `ffmpeg-wrapper`'s native shim and its pinned FFmpeg, staged once with `./native/build.sh` in that repo.
 - To publish: a **fine-grained** GitHub token, repository access *only* `sibarum/vexelray-dist`, permission
   **Contents: read and write**. Nothing else. `deploy.ps1 -Publish` asks for it; it is never stored.
 
@@ -170,7 +171,7 @@ one app, rebuild only it and run with `-SkipBuild`. To release afterwards, follo
 
 ## Source releases (tags on every repository)
 
-Separate from the installers, and not needed for every app release. `release.py` cuts a release of all 27
+Separate from the installers, and not needed for every app release. `release.py` cuts a release of all 28
 repositories at once, from PowerShell:
 
 ```powershell
@@ -192,7 +193,7 @@ for supirvast) was cut on 13 October 2026.
 
 `vexelray-build`, the Maven plugin that stamps each build with its source commit, is built first and shares the
 stack's version, so `release` and `next` move it and every pom that names it with the rest. It joined the list after
-0.1.0 was cut, at `0.1.1-SNAPSHOT`.
+0.1.0 was cut, at `0.1.1-SNAPSHOT`, and so did `ffmpeg-wrapper`, which `vexelray-codec` decodes video with.
 
 ## When it goes wrong
 
