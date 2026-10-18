@@ -81,17 +81,23 @@
     { "config": "../vexplore/installer.json", "page": "https://sibarum.github.io/vexelray-framework/apps/vexplore.html",
       "image": "../vexelray-framework/docs/apps/img/01-select-condition-action.png",
       "imageAlt": "Vexplore: one video clicked, the suggestion rail offering all nine videos here and a move" },
-    { "config": "../text-editor-vexel-demo/installer.json", "page": "https://sibarum.github.io/vexelray-framework/apps/text-editor.html" },
+    { "config": "../text-editor-vexel-demo/installer.json", "page": "https://sibarum.github.io/vexelray-framework/apps/text-editor.html",
+      "image": "../vexelray-framework/docs/apps/img/text-editor.png",
+      "imageAlt": "Vex: Kronometer's Tempo.java open beside its navigator, the project indexed" },
     { "config": "../Pix/installer.json", "page": "https://sibarum.github.io/vexelray-framework/apps/pix.html",
       "image": "../vexelray-framework/docs/apps/img/pix-viewer.png",
       "imageAlt": "Pix: a picture, and under it the file's name, the filmstrip of its neighbours, and the controls" },
-    { "config": "../mainframe/installer.json", "page": "https://sibarum.github.io/vexelray-framework/apps/mainframe.html" },
+    { "config": "../mainframe/installer.json", "page": "https://sibarum.github.io/vexelray-framework/apps/mainframe.html",
+      "image": "../vexelray-framework/docs/apps/img/mainframe.png",
+      "imageAlt": "MainFrame: PowerShell in a tab, a coloured git log and a folder listing" },
     { "config": "../calculator-vexel-demo/installer.json", "page": "https://sibarum.github.io/vexelray-framework/apps/calculator.html",
       "image": "../vexelray-framework/docs/apps/img/calculator.png",
       "imageAlt": "Calculator: two lines answered, each with its readings, and x^2-4 plotted" },
     { "config": "../vexelray-sim-fluid/installer.json", "page": "https://github.com/sibarum/vexelray-sim-fluid",
       "image": "../vexelray-sim-fluid/docs/images/water-on-mercury.png",
       "imageAlt": "A dam break of water onto mercury: water (blue) rides on mercury (red)" },
-    { "config": "../vexelray-sim-rigid/installer.json", "page": "https://github.com/sibarum/vexelray-sim-rigid" }
+    { "config": "../vexelray-sim-rigid/installer.json", "page": "https://github.com/sibarum/vexelray-sim-rigid",
+      "image": "../vexelray-sim-rigid/docs/images/pile-of-1000.png",
+      "imageAlt": "Rigid Sim: a pile of 1000 spheres slumping in its box, solved by Gauss–Seidel" }
   ]
 }
