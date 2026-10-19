@@ -93,14 +93,14 @@
     { "config": "../calculator-vexel-demo/installer.json", "page": "https://sibarum.github.io/vexelray-framework/apps/calculator.html",
       "image": "../vexelray-framework/docs/apps/img/calculator.png",
       "imageAlt": "Calculator: two lines answered, each with its readings, and x^2-4 plotted" },
-    { "config": "../vexelray-sim-fluid/installer.json", "page": "https://github.com/sibarum/vexelray-sim-fluid",
+    { "config": "../vexelray-sim-fluid/installer.json", "optional": true, "page": "https://github.com/sibarum/vexelray-sim-fluid",
       "image": "../vexelray-sim-fluid/docs/images/water-on-mercury.png",
       "imageAlt": "A dam break of water onto mercury: water (blue) rides on mercury (red)" },
-    { "config": "../vexelray-sim-rigid/installer.json", "page": "https://github.com/sibarum/vexelray-sim-rigid",
+    { "config": "../vexelray-sim-rigid/installer.json", "optional": true, "page": "https://github.com/sibarum/vexelray-sim-rigid",
       "image": "../vexelray-sim-rigid/docs/images/pile-of-1000.png",
       "imageAlt": "Rigid Sim: a pile of 1000 spheres slumping in its box, solved by Gauss–Seidel" },
-    { "config": "../vexelray-maistro/installer.json", "page": "https://github.com/sibarum/vexelray-maistro" },
-    { "config": "../vexelray-inspector/installer.json", "page": "https://github.com/sibarum/vexelray-inspector",
+    { "config": "../vexelray-maistro/installer.json", "optional": true, "page": "https://github.com/sibarum/vexelray-maistro" },
+    { "config": "../vexelray-inspector/installer.json", "optional": true, "page": "https://github.com/sibarum/vexelray-inspector",
       "image": "../vexelray-inspector/docs/screenshots/resting.png",
       "imageAlt": "VexelRay Inspector: the escapement at rest, replaying a calculator session, its park's budget on the plaque" }
   ]
