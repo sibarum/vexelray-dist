@@ -64,8 +64,11 @@ def rewrite(repo, mapping, rev):
 
 
 def mvn(repo, goals, log):
+    # As build.cmd does: vexplore's RemotesTest runs Git's sftp-server.exe, which needs msys-2.0.dll from Git's
+    # usr\bin. Appended, not prepended, so usr\bin's own tools never shadow the system's.
+    env = dict(os.environ, PATH=os.environ.get("PATH", "") + os.pathsep + r"C:\Program Files\Git\usr\bin")
     with open(os.path.join(LOGS, log), "w", encoding="utf-8") as h:
-        return subprocess.run(f"mvn -B {goals}", shell=True, cwd=os.path.join(ROOT, repo),
+        return subprocess.run(f"mvn -B {goals}", shell=True, cwd=os.path.join(ROOT, repo), env=env,
                               stdout=h, stderr=subprocess.STDOUT).returncode == 0
 
 
