@@ -179,14 +179,23 @@ SIMS = EVERY_APP + ["spirv-tools", "spirv-cross"]
 
 # id: (checkout holding installer.json, components, has imagelib, a note for files installed beside the exe)
 APPS = {
-    "vexplore": ("vexplore", EVERY_APP, True, ""),
+    "vexplore": ("vexplore", EVERY_APP, True,
+                 "The ffmpeg folder next to Vexplore holds FFmpeg's libraries, which Vexplore uses to show frames "
+                 "from a video in its Preview Dock. They are not part of vexplore.exe. FFmpeg is licensed under the "
+                 "GNU Lesser General Public License; its licence and where to get its source are in "
+                 "ffmpeg\\FFMPEG-LICENSE.txt and ffmpeg\\FFMPEG-SOURCE.txt. The same folder's ffwrap.dll has "
+                 "miniaudio (https://miniaud.io, by David Reid) built in, which Vexplore does not use; it is offered "
+                 "as public domain or under MIT No Attribution, and asks for no notice."),
     "text-editor": ("text-editor-vexel-demo",
                     EVERY_APP + ["noto-styles", "jdk-xml", "tm4e", "vscode-grammars", "joni", "jcodings", "gson",
                                  "snakeyaml", "javaparser", "vineflower"], False, ""),
     "pix": ("Pix", EVERY_APP, True,
-            "The ffmpeg folder next to Pix holds FFmpeg's libraries, which Pix uses to show a frame of a video. "
-            "They are not part of pix.exe. FFmpeg is licensed under the GNU Lesser General Public License; its "
-            "licence and where to get its source are in ffmpeg\\FFMPEG-LICENSE.txt and ffmpeg\\FFMPEG-SOURCE.txt."),
+            "The ffmpeg folder next to Pix holds FFmpeg's libraries, which Pix uses to show a frame of a video and "
+            "play its sound. They are not part of pix.exe. FFmpeg is licensed under the GNU Lesser General Public "
+            "License; its licence and where to get its source are in ffmpeg\\FFMPEG-LICENSE.txt and "
+            "ffmpeg\\FFMPEG-SOURCE.txt. The same folder's ffwrap.dll has miniaudio (https://miniaud.io, by David "
+            "Reid) built in, which plays the sound; it is offered as public domain or under MIT No Attribution, "
+            "and asks for no notice."),
     "mainframe": ("mainframe", EVERY_APP, False, ""),
     "calculator": ("calculator-vexel-demo", EVERY_APP, False, ""),
     "fluid-sim": ("vexelray-sim-fluid", SIMS, False, ""),
