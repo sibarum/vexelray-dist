@@ -5,3 +5,4 @@ assets/
 logs/
 __pycache__/
 local/
+.claude/
