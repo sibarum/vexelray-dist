@@ -11,8 +11,9 @@ Open **PowerShell** (a normal window - administrator rights are not needed) and 
 irm https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/rigid-sim/install.ps1 | iex
 ```
 
-That is the whole install. It downloads Rigid Sim 0.1.0, checks every file against the
-SHA-256 in the [install manifest](https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/rigid-sim/manifest.json), and installs for your user only.
+That is the whole install. A window opens where you can change the folder and choose shortcuts,
+PATH and file types, then press **Install**. It downloads Rigid Sim 0.1.1, checks every file
+against the SHA-256 in the [install manifest](https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/rigid-sim/manifest.json), and installs for your user only.
 
 What it does:
 
@@ -24,7 +25,8 @@ What it does:
 
 ### Options
 
-Set these in the same PowerShell window *before* the install command:
+The window covers the folder and the `NO_*` choices. For a scripted install, or one without the
+window, set these in the same PowerShell window *before* the install command:
 
 | Variable | Effect |
 | --- | --- |
@@ -34,12 +36,19 @@ Set these in the same PowerShell window *before* the install command:
 | `$env:INSTALL_NO_PATH = '1'` | do not add anything to your user PATH |
 | `$env:INSTALL_NO_ASSOCIATIONS = '1'` | do not register Rigid Sim to open any file types |
 | `$env:INSTALL_FORCE = '1'` | reinstall even if this version is already installed |
+| `$env:INSTALL_SKIP_CHECKS = '1'` | install even if this computer does not meet the system requirements |
+| `$env:INSTALL_QUIET = '1'` | no window: ask nothing and report in PowerShell only |
+| `$env:INSTALL_CLOSE_APPS = '1'` | close Rigid Sim if it is running and holds a file the update replaces |
+
+Updates and reinstalls remember the `INSTALL_NO_*` choices of the last install. To get shortcuts,
+the PATH entry or file types back, set that variable to `'0'` and run the install command again.
 
 ### What gets installed
 
 | File | Kind | Version | Size | Installed to |
 | --- | --- | --- | --- | --- |
-| `rigid-sim.exe` | native executable | 0.1.0 | 56.5 MB | `%LOCALAPPDATA%\Programs\Rigid Sim\rigid-sim.exe` |
+| `rigid-sim.exe` | native executable | 0.1.1 | 63.7 MB | `%LOCALAPPDATA%\Programs\Rigid Sim\rigid-sim.exe` |
+| `THIRD-PARTY-NOTICES.txt` | file | 0.1.1 | 0.1 MB | `%LOCALAPPDATA%\Programs\Rigid Sim\THIRD-PARTY-NOTICES.txt` |
 
 Everything installed is recorded in `%LOCALAPPDATA%\Programs\Rigid Sim\install-manifest.json`, and a copy
 in `%LOCALAPPDATA%\vexelray-installer\installs\rigid-sim.json`.
@@ -55,12 +64,31 @@ as `cmd.exe /c path args...`.
 
 ### Update
 
+Open **sibarum apps** from the Start menu. It lists everything installed this way, with **Update**,
+**Change...** (folder, shortcuts, PATH, file types), **Remove** and **Update all**. Or update from PowerShell:
+
 ```powershell
 & "$env:LOCALAPPDATA\Programs\Rigid Sim\update.cmd"
 ```
 
 Checks GitHub for newer versions of the binaries and installs them after asking. Use
 `-Check` to only look, `-Yes` to skip the question.
+
+An update that fails or is interrupted puts back the version you had, exactly as it was. If the computer
+went off halfway, the next install or update first finishes putting it back.
+
+### Reporting a problem
+
+```powershell
+& "$env:LOCALAPPDATA\Programs\Rigid Sim\diagnose.cmd"
+```
+
+Writes a report about this computer and prints where it is: Windows version, processor, memory, the displays
+(resolution, refresh rate, scaling, HDR), each GPU as DXGI / Direct3D 12 and as Vulkan see it, whether a
+flip-model swapchain can be created, the Vulkan present modes, implicit Vulkan layers, and what is installed.
+Nothing is sent anywhere; your user name is replaced by `%USERPROFILE%`. Read it, then attach it to [your bug report](https://github.com/sibarum/vexelray-dist/issues/new).
+`-Copy` also puts it on the clipboard. Without installing, run `irm https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/rigid-sim/diagnose.ps1 | iex`. A failed
+install writes the same report by itself.
 
 ### Uninstall
 
@@ -85,5 +113,5 @@ macOS and Linux installers are planned; the manifest is already organised per pl
 
 ## Versions
 
-Current version: **0.1.0**. The full history of published versions, with the files,
+Current version: **0.1.1**. The full history of published versions, with the files,
 sizes and checksums of each, is in [`manifest.json`](https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/rigid-sim/manifest.json).

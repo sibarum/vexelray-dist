@@ -11,8 +11,9 @@ Open **PowerShell** (a normal window - administrator rights are not needed) and 
 irm https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/pix/install.ps1 | iex
 ```
 
-That is the whole install. It downloads Pix 0.1.0, checks every file against the
-SHA-256 in the [install manifest](https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/pix/manifest.json), and installs for your user only.
+That is the whole install. A window opens where you can change the folder and choose shortcuts,
+PATH and file types, then press **Install**. It downloads Pix 0.1.1, checks every file
+against the SHA-256 in the [install manifest](https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/pix/manifest.json), and installs for your user only.
 
 What it does:
 
@@ -20,13 +21,14 @@ What it does:
 - unblocks them and makes sure they are executable
 - creates desktop / Start menu shortcuts
 - adds the install folder to your user PATH
-- registers itself to open `.png`, `.apng`, `.jpg`, `.jpeg`, `.jfif`, `.gif`, `.webp`, `.avif`, `.bmp`, `.tif`, `.tiff`, `.svg`, `.ico`, `.tga`, `.qoi`, `.pnm`, `.pbm`, `.pgm`, `.ppm`, `.dds`, `.exr`, `.hdr` files (under Open with; the default only where no other program has claimed the type)
+- registers itself to open `.png`, `.apng`, `.jpg`, `.jpeg`, `.jfif`, `.gif`, `.webp`, `.avif`, `.bmp`, `.tif`, `.tiff`, `.svg`, `.ico`, `.tga`, `.qoi`, `.pnm`, `.pbm`, `.pgm`, `.ppm`, `.dds`, `.exr`, `.hdr`, `.mp4`, `.m4v`, `.mov`, `.mkv`, `.webm`, `.avi`, `.wmv`, `.flv`, `.mpg`, `.mpeg`, `.ts`, `.m2ts`, `.mts`, `.3gp`, `.ogv` files (under Open with; the default only where no other program has claimed the type)
 - writes an install manifest listing everything it installed and where
 - adds an uninstaller and an updater next to the binaries, and an entry in Settings > Apps
 
 ### Options
 
-Set these in the same PowerShell window *before* the install command:
+The window covers the folder and the `NO_*` choices. For a scripted install, or one without the
+window, set these in the same PowerShell window *before* the install command:
 
 | Variable | Effect |
 | --- | --- |
@@ -36,12 +38,20 @@ Set these in the same PowerShell window *before* the install command:
 | `$env:INSTALL_NO_PATH = '1'` | do not add anything to your user PATH |
 | `$env:INSTALL_NO_ASSOCIATIONS = '1'` | do not register Pix to open any file types |
 | `$env:INSTALL_FORCE = '1'` | reinstall even if this version is already installed |
+| `$env:INSTALL_SKIP_CHECKS = '1'` | install even if this computer does not meet the system requirements |
+| `$env:INSTALL_QUIET = '1'` | no window: ask nothing and report in PowerShell only |
+| `$env:INSTALL_CLOSE_APPS = '1'` | close Pix if it is running and holds a file the update replaces |
+
+Updates and reinstalls remember the `INSTALL_NO_*` choices of the last install. To get shortcuts,
+the PATH entry or file types back, set that variable to `'0'` and run the install command again.
 
 ### What gets installed
 
 | File | Kind | Version | Size | Installed to |
 | --- | --- | --- | --- | --- |
-| `pix.exe` | native executable | 0.1.0 | 41.5 MB | `%LOCALAPPDATA%\Programs\Pix\pix.exe` |
+| `pix.exe` | native executable | 0.1.1 | 60.3 MB | `%LOCALAPPDATA%\Programs\Pix\pix.exe` |
+| `pix-ffmpeg-windows-x86_64.zip` | archive (unpacked) | 0.1.1 | 52.1 MB | `%LOCALAPPDATA%\Programs\Pix\ffmpeg\` |
+| `THIRD-PARTY-NOTICES.txt` | file | 0.1.1 | 0.1 MB | `%LOCALAPPDATA%\Programs\Pix\THIRD-PARTY-NOTICES.txt` |
 
 Everything installed is recorded in `%LOCALAPPDATA%\Programs\Pix\install-manifest.json`, and a copy
 in `%LOCALAPPDATA%\vexelray-installer\installs\pix.json`.
@@ -57,12 +67,31 @@ as `cmd.exe /c path args...`.
 
 ### Update
 
+Open **sibarum apps** from the Start menu. It lists everything installed this way, with **Update**,
+**Change...** (folder, shortcuts, PATH, file types), **Remove** and **Update all**. Or update from PowerShell:
+
 ```powershell
 & "$env:LOCALAPPDATA\Programs\Pix\update.cmd"
 ```
 
 Checks GitHub for newer versions of the binaries and installs them after asking. Use
 `-Check` to only look, `-Yes` to skip the question.
+
+An update that fails or is interrupted puts back the version you had, exactly as it was. If the computer
+went off halfway, the next install or update first finishes putting it back.
+
+### Reporting a problem
+
+```powershell
+& "$env:LOCALAPPDATA\Programs\Pix\diagnose.cmd"
+```
+
+Writes a report about this computer and prints where it is: Windows version, processor, memory, the displays
+(resolution, refresh rate, scaling, HDR), each GPU as DXGI / Direct3D 12 and as Vulkan see it, whether a
+flip-model swapchain can be created, the Vulkan present modes, implicit Vulkan layers, and what is installed.
+Nothing is sent anywhere; your user name is replaced by `%USERPROFILE%`. Read it, then attach it to [your bug report](https://github.com/sibarum/vexelray-dist/issues/new).
+`-Copy` also puts it on the clipboard. Without installing, run `irm https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/pix/diagnose.ps1 | iex`. A failed
+install writes the same report by itself.
 
 ### Uninstall
 
@@ -87,5 +116,5 @@ macOS and Linux installers are planned; the manifest is already organised per pl
 
 ## Versions
 
-Current version: **0.1.0**. The full history of published versions, with the files,
+Current version: **0.1.1**. The full history of published versions, with the files,
 sizes and checksums of each, is in [`manifest.json`](https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/pix/manifest.json).

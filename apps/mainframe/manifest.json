@@ -5,22 +5,87 @@
   "publisher": "sibarum",
   "description": "A terminal window that wraps the native Windows shell over ConPTY, built on the VexelRay stack.",
   "repo": "sibarum/vexelray-dist",
-  "latest": "0.1.0",
+  "latest": "0.1.1",
   "tools": {
     "install.ps1": {
       "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/mainframe/install.ps1",
-      "sha256": "7b11a476d07b8c1c12f5feb9077c4e7d99baeaa431e135a459cf22b1b9e9ec40"
+      "sha256": "4c26a9b033ab53a089eb3036bc6dee3b73b3d1fa0dc97b65a9a9efe513452dba"
     },
     "uninstall.ps1": {
       "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/mainframe/uninstall.ps1",
-      "sha256": "efcc0bb017c08a1130d981da9e3e580adfa7fec8eaa024bba553fb22ea0facb4"
+      "sha256": "af14cffb2b236592525635689dda61f4451d9e894aeaf494e6661388e2287237"
     },
     "update.ps1": {
       "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/mainframe/update.ps1",
-      "sha256": "4519c4b922984d31b9c1cf72f6d9dc94683c60658d659d95acd522941696e394"
+      "sha256": "f7cbe84912c78bca89d07e93a3e1a488c6962308aa394385f5c5c5b409a26bbe"
+    },
+    "diagnose.ps1": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/mainframe/diagnose.ps1",
+      "sha256": "14f188ad047e43a3c7902dd2412e4f702c5972a14bca3d8b81f5fe9c70fbb18d"
+    },
+    "manager.ps1": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/mainframe/manager.ps1",
+      "sha256": "bb98fbd36ac7436aac6abd5c0e3afc50311c399d9adac247cfc0904356c3b67d"
     }
   },
   "versions": [
+    {
+      "version": "0.1.1",
+      "publishedAt": "2026-10-20T15:28:46Z",
+      "notes": "",
+      "installer": {
+        "install.ps1": "4c26a9b033ab53a089eb3036bc6dee3b73b3d1fa0dc97b65a9a9efe513452dba",
+        "uninstall.ps1": "af14cffb2b236592525635689dda61f4451d9e894aeaf494e6661388e2287237",
+        "update.ps1": "f7cbe84912c78bca89d07e93a3e1a488c6962308aa394385f5c5c5b409a26bbe",
+        "diagnose.ps1": "14f188ad047e43a3c7902dd2412e4f702c5972a14bca3d8b81f5fe9c70fbb18d",
+        "manager.ps1": "bb98fbd36ac7436aac6abd5c0e3afc50311c399d9adac247cfc0904356c3b67d"
+      },
+      "platforms": {
+        "windows": {
+          "installDir": "%LOCALAPPDATA%\\Programs\\MainFrame",
+          "binaries": [
+            {
+              "name": "mainframe",
+              "version": "0.1.1",
+              "kind": "native",
+              "file": "mainframe.exe",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/mainframe-v0.1.1/mainframe.exe",
+              "sha256": "e61ec38b250ab7ece43198101ebac2340dce24c4507f6c5e6cd9e3d5a9cd657f",
+              "size": 45236224,
+              "installPath": "{installDir}\\mainframe.exe",
+              "executable": true,
+              "addToPath": true,
+              "icon": {
+                "file": "mainframe.ico",
+                "url": "https://github.com/sibarum/vexelray-dist/releases/download/mainframe-v0.1.1/mainframe.ico",
+                "sha256": "8a18b4537d5689974c75f311b9f71b0c6eb7fa38818aabd94bc8ed48da3d75ee",
+                "size": 24959,
+                "installPath": "{installDir}\\mainframe.ico"
+              },
+              "shortcuts": {
+                "desktop": true,
+                "startMenu": true,
+                "label": "MainFrame",
+                "gui": false
+              }
+            },
+            {
+              "name": "notices",
+              "version": "0.1.1",
+              "kind": "file",
+              "file": "THIRD-PARTY-NOTICES.txt",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/mainframe-v0.1.1/THIRD-PARTY-NOTICES.txt",
+              "sha256": "12f4da8637dcc04b2a009bc1dea12784131e9cf6d7646d25d10be9fcbf096ab3",
+              "size": 60062,
+              "installPath": "{installDir}\\THIRD-PARTY-NOTICES.txt",
+              "executable": false,
+              "addToPath": false
+            }
+          ]
+        }
+      },
+      "updatedAt": "2026-10-20T15:38:26Z"
+    },
     {
       "version": "0.1.0",
       "publishedAt": "2026-10-13T22:23:27Z",

@@ -5,22 +5,87 @@
   "publisher": "sibarum",
   "description": "Rigid-body simulation experiments on the VexelRay stack: spheres that collide, bounce, spin and roll, live on the GPU.",
   "repo": "sibarum/vexelray-dist",
-  "latest": "0.1.0",
+  "latest": "0.1.1",
   "tools": {
     "install.ps1": {
       "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/rigid-sim/install.ps1",
-      "sha256": "12e778f8972092c3d5c8887e8081e6668de1ce0a52493adfc14a05b8ec483aa6"
+      "sha256": "09ec64f40b73e61abcab3aaa1427273f8b5742d98d979b286006d029a275ecf4"
     },
     "uninstall.ps1": {
       "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/rigid-sim/uninstall.ps1",
-      "sha256": "31f678fb07aebd81720055a126dbcc0316446987f132d21a16570db8dad582b4"
+      "sha256": "4102b32475fd13cd157a6bce5ea8315104c306f0e8f26c673d802ccbe0f08cc6"
     },
     "update.ps1": {
       "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/rigid-sim/update.ps1",
-      "sha256": "149c342d89afd3438bf807f34cba3073f65faced7e3666f75fd436653a852fc2"
+      "sha256": "6c8d269f4501d1cab50b52bb3a7bb58a188605da0f0596b8a747804aae4728e6"
+    },
+    "diagnose.ps1": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/rigid-sim/diagnose.ps1",
+      "sha256": "908db7e3867708a4c806da9acc654febdc86ae68238983f077aae4b4461edf90"
+    },
+    "manager.ps1": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/rigid-sim/manager.ps1",
+      "sha256": "eebe79377df4d16503430e52c24aea4673adf15fe4ada393290c2671593fd41d"
     }
   },
   "versions": [
+    {
+      "version": "0.1.1",
+      "publishedAt": "2026-10-20T15:28:48Z",
+      "notes": "",
+      "installer": {
+        "install.ps1": "09ec64f40b73e61abcab3aaa1427273f8b5742d98d979b286006d029a275ecf4",
+        "uninstall.ps1": "4102b32475fd13cd157a6bce5ea8315104c306f0e8f26c673d802ccbe0f08cc6",
+        "update.ps1": "6c8d269f4501d1cab50b52bb3a7bb58a188605da0f0596b8a747804aae4728e6",
+        "diagnose.ps1": "908db7e3867708a4c806da9acc654febdc86ae68238983f077aae4b4461edf90",
+        "manager.ps1": "eebe79377df4d16503430e52c24aea4673adf15fe4ada393290c2671593fd41d"
+      },
+      "platforms": {
+        "windows": {
+          "installDir": "%LOCALAPPDATA%\\Programs\\Rigid Sim",
+          "binaries": [
+            {
+              "name": "rigid-sim",
+              "version": "0.1.1",
+              "kind": "native",
+              "file": "rigid-sim.exe",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/rigid-sim-v0.1.1/rigid-sim.exe",
+              "sha256": "99c320688498e3c5df3ea3ba0a7d5e480e30d8157e273736fefd7f9691791b1a",
+              "size": 66830336,
+              "installPath": "{installDir}\\rigid-sim.exe",
+              "executable": true,
+              "addToPath": false,
+              "icon": {
+                "file": "rigid-sim.ico",
+                "url": "https://github.com/sibarum/vexelray-dist/releases/download/rigid-sim-v0.1.1/rigid-sim.ico",
+                "sha256": "ec9757de39305a0b9d0da15cd3c4c260486bd8f13a495a624e5eb65d9f8126ce",
+                "size": 29819,
+                "installPath": "{installDir}\\rigid-sim.ico"
+              },
+              "shortcuts": {
+                "desktop": true,
+                "startMenu": true,
+                "label": "Rigid Sim",
+                "gui": false
+              }
+            },
+            {
+              "name": "notices",
+              "version": "0.1.1",
+              "kind": "file",
+              "file": "THIRD-PARTY-NOTICES.txt",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/rigid-sim-v0.1.1/THIRD-PARTY-NOTICES.txt",
+              "sha256": "c127a95ba0336c086c886d20cb86299c237d9c29fb452cd763554e77d973a75f",
+              "size": 72694,
+              "installPath": "{installDir}\\THIRD-PARTY-NOTICES.txt",
+              "executable": false,
+              "addToPath": false
+            }
+          ]
+        }
+      },
+      "updatedAt": "2026-10-20T15:39:52Z"
+    },
     {
       "version": "0.1.0",
       "publishedAt": "2026-10-13T22:23:28Z",

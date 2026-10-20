@@ -9,7 +9,7 @@
 #   uninstall.cmd -All           remove every install in the registry
 #   uninstall.cmd -Yes           do not ask for confirmation
 
-$InstallerCfg = '{"id":"vexplore","name":"Vexplore","publisher":"sibarum","manifestUrl":"https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexplore/manifest.json","registryDir":"%LOCALAPPDATA%\\vexelray-installer\\installs"}' | ConvertFrom-Json
+$InstallerCfg = '{"id":"vexplore","name":"Vexplore","publisher":"sibarum","description":"A file explorer that suggests instead of asking.","manifestUrl":"https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexplore/manifest.json","registryDir":"%LOCALAPPDATA%\\vexelray-installer\\installs","issuesUrl":"https://github.com/sibarum/vexelray-dist/issues/new"}' | ConvertFrom-Json
 
 function ViExpand([string]$p) { [Environment]::ExpandEnvironmentVariables($p) }
 
@@ -127,6 +127,20 @@ function ViRemoveOne($rec) {
     $mf = Join-Path $rec.installDir 'install-manifest.json'
     if (Test-Path -LiteralPath $mf) { Remove-Item -Force -LiteralPath $mf -ErrorAction SilentlyContinue }
     if ($rec.recordPath -and (Test-Path -LiteralPath $rec.recordPath)) { Remove-Item -Force -LiteralPath $rec.recordPath }
+    # what an install's transaction leaves: backups not yet removed (a .exe that was running), its journal and lock
+    if (Test-Path -LiteralPath $rec.installDir) {
+        Get-ChildItem -LiteralPath $rec.installDir -Directory -Force -Filter '.vi-backup-*' | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+    }
+    $regDir = ViRegistryDir
+    $ob = Join-Path (Split-Path $regDir -Parent) 'backup'
+    if (Test-Path -LiteralPath $ob) {
+        Get-ChildItem -LiteralPath $ob -Directory -Force -Filter "$($rec.id)-*" | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+        if (-not (Get-ChildItem -LiteralPath $ob -Force)) { Remove-Item -Force -LiteralPath $ob -ErrorAction SilentlyContinue }
+    }
+    foreach ($ext in 'journal', 'lock') {
+        $p = Join-Path $regDir "$($rec.id).$ext"
+        if (Test-Path -LiteralPath $p) { Remove-Item -Force -LiteralPath $p -ErrorAction SilentlyContinue }
+    }
 
     # prune empty directories, deepest first; anything the user added stays
     if (Test-Path -LiteralPath $rec.installDir) {
@@ -198,6 +212,35 @@ function ViInvokeUninstall {
     foreach ($r in $chosen) { ViRemoveOne $r }
 
     $regDir = ViRegistryDir
+    # the last application gone: the app manager beside the registry goes too, with its Start menu shortcut
+    if (@(ViReadRecords).Count -eq 0) {
+        $mdir = Join-Path (Split-Path $regDir -Parent) 'manager'
+        $meta = Join-Path $mdir 'manager.json'
+        if (Test-Path -LiteralPath $meta) {
+            try { $lnk = (Get-Content -Raw -LiteralPath $meta | ConvertFrom-Json).shortcut } catch { $lnk = $null }
+            if ($lnk -and (Test-Path -LiteralPath $lnk)) { Remove-Item -Force -LiteralPath $lnk -ErrorAction SilentlyContinue }
+        }
+        if (Test-Path -LiteralPath $mdir) {
+            # run from manager.cmd, the cmd.exe reading it would fail once it is gone: that waits for it to exit
+            $cmdPid = $null
+            try {
+                $c = [int]$PID
+                for ($n = 0; $n -lt 8 -and $c; $n++) {
+                    $p = Get-CimInstance Win32_Process -Filter "ProcessId=$c" -ErrorAction SilentlyContinue
+                    if (-not $p) { break }
+                    if ($p.Name -eq 'cmd.exe' -and $p.CommandLine -and $p.CommandLine.IndexOf($mdir, [StringComparison]::OrdinalIgnoreCase) -ge 0) { $cmdPid = [int]$p.ProcessId; break }
+                    $c = [int]$p.ParentProcessId
+                }
+            } catch { }
+            if ($cmdPid) {
+                $q = $mdir.Replace("'", "''")
+                Start-Process -FilePath powershell.exe -WindowStyle Hidden -ArgumentList '-NoProfile', '-Command', "Wait-Process -Id $cmdPid -ErrorAction SilentlyContinue; Remove-Item -Recurse -Force -LiteralPath '$q' -ErrorAction SilentlyContinue"
+            } else { Remove-Item -Recurse -Force -LiteralPath $mdir -ErrorAction SilentlyContinue }
+        }
+        foreach ($left in Get-ChildItem -LiteralPath $regDir -Force -ErrorAction SilentlyContinue | Where-Object { $_.Extension -in '.lock', '.home' }) {
+            Remove-Item -Force -LiteralPath $left.FullName -ErrorAction SilentlyContinue
+        }
+    }
     if ((Test-Path -LiteralPath $regDir) -and -not (Get-ChildItem -LiteralPath $regDir -Force)) {
         Remove-Item -Force -LiteralPath $regDir -ErrorAction SilentlyContinue
         $parent = Split-Path $regDir -Parent

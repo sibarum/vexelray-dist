@@ -4,7 +4,7 @@
 #   update.cmd -Check   only report what is available
 #   update.cmd -Yes     do not ask for confirmation
 
-$InstallerCfg = '{"id":"vexplore","name":"Vexplore","publisher":"sibarum","manifestUrl":"https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexplore/manifest.json","registryDir":"%LOCALAPPDATA%\\vexelray-installer\\installs"}' | ConvertFrom-Json
+$InstallerCfg = '{"id":"vexplore","name":"Vexplore","publisher":"sibarum","description":"A file explorer that suggests instead of asking.","manifestUrl":"https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexplore/manifest.json","registryDir":"%LOCALAPPDATA%\\vexelray-installer\\installs","issuesUrl":"https://github.com/sibarum/vexelray-dist/issues/new"}' | ConvertFrom-Json
 
 function ViExpand([string]$p) { [Environment]::ExpandEnvironmentVariables($p) }
 function ViSha([string]$p) { (Get-FileHash -Algorithm SHA256 -LiteralPath $p).Hash.ToLowerInvariant() }
@@ -86,7 +86,7 @@ function ViInvokeUpdate {
     try {
         Invoke-WebRequest -UseBasicParsing -Uri $t.url -OutFile $tmp
         if ((ViSha $tmp) -ne $t.sha256) { throw "Checksum mismatch for install.ps1 downloaded from $($t.url). Update aborted." }
-        $childArgs = @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', $tmp, '-Version', $manifest.latest, '-Dir', $rec.installDir, '-Force')
+        $childArgs = @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', $tmp, '-Version', $manifest.latest, '-Dir', $rec.installDir, '-Force', '-Quiet')
         & powershell.exe @childArgs | Out-Host
         if ($LASTEXITCODE -ne 0) { throw "The installer exited with code $LASTEXITCODE." }
     } finally {

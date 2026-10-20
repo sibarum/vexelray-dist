@@ -8,7 +8,7 @@
 
   "site": {
     "url": "https://sibarum.github.io",
-    "badge": "0.1.0 · experimental prerelease",
+    "badge": "0.1.1 · experimental prerelease",
     "tagline": "Nine desktop applications drawn live on the GPU, which know about each other. One line installs them all.",
     "requirements": "Needs Windows 10 or 11 (64-bit) and a graphics card with an up-to-date driver: everything here draws with Vulkan.",
     "feedbackUrl": "https://github.com/sibarum/vexelray-framework/issues/new",

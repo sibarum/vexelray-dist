@@ -5,22 +5,87 @@
   "publisher": "sibarum",
   "description": "A small calculator window onto cott-engine.",
   "repo": "sibarum/vexelray-dist",
-  "latest": "0.1.0",
+  "latest": "0.1.1",
   "tools": {
     "install.ps1": {
       "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/calculator/install.ps1",
-      "sha256": "9aeb9462b885119176a2a2fd65d00351380631e6a4982b74a27def07e21155a0"
+      "sha256": "effec796ea36d71a323655f7c882b853f62c599ae68790a5ce5d16db71372350"
     },
     "uninstall.ps1": {
       "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/calculator/uninstall.ps1",
-      "sha256": "abdfe9661bd5e2dbf7fc24d8ce7cc6b99292c5f1f492c9dd68fbc3d7859482f3"
+      "sha256": "e273d7b04a626dd3e1213559055670a0b9edeecdcefa082bb38d1f18641afb64"
     },
     "update.ps1": {
       "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/calculator/update.ps1",
-      "sha256": "449501680b8e825a65fb7799bb5e34a89a258c9ca7bef5001ce8b4e4e3e7b3be"
+      "sha256": "7692b5dfecf190a7a2376f50f5ed360f288cc4cbf97079e54302d64684cd14dd"
+    },
+    "diagnose.ps1": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/calculator/diagnose.ps1",
+      "sha256": "debf2175bbb9f6e035f7a561f9bb1ae31d49e7f824b48f3da4aa7d2f0b9caab4"
+    },
+    "manager.ps1": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/calculator/manager.ps1",
+      "sha256": "eb90fd545aea2b06a01a7ab10b1a9079dcc941057be3f86202ba5d6d53deb825"
     }
   },
   "versions": [
+    {
+      "version": "0.1.1",
+      "publishedAt": "2026-10-20T15:28:47Z",
+      "notes": "",
+      "installer": {
+        "install.ps1": "effec796ea36d71a323655f7c882b853f62c599ae68790a5ce5d16db71372350",
+        "uninstall.ps1": "e273d7b04a626dd3e1213559055670a0b9edeecdcefa082bb38d1f18641afb64",
+        "update.ps1": "7692b5dfecf190a7a2376f50f5ed360f288cc4cbf97079e54302d64684cd14dd",
+        "diagnose.ps1": "debf2175bbb9f6e035f7a561f9bb1ae31d49e7f824b48f3da4aa7d2f0b9caab4",
+        "manager.ps1": "eb90fd545aea2b06a01a7ab10b1a9079dcc941057be3f86202ba5d6d53deb825"
+      },
+      "platforms": {
+        "windows": {
+          "installDir": "%LOCALAPPDATA%\\Programs\\Calculator",
+          "binaries": [
+            {
+              "name": "calculator",
+              "version": "0.1.1",
+              "kind": "native",
+              "file": "calculator.exe",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/calculator-v0.1.1/calculator.exe",
+              "sha256": "92be3c13601f02b2bbe5716fa6c2b655cbbb947c49d1f61b246fc41e57fc6533",
+              "size": 44994560,
+              "installPath": "{installDir}\\calculator.exe",
+              "executable": true,
+              "addToPath": true,
+              "icon": {
+                "file": "calculator.ico",
+                "url": "https://github.com/sibarum/vexelray-dist/releases/download/calculator-v0.1.1/calculator.ico",
+                "sha256": "c93ef49f4a01767da7dcfd7ee7cba8a4fe0cdd30abf29694570fd649875f0582",
+                "size": 26499,
+                "installPath": "{installDir}\\calculator.ico"
+              },
+              "shortcuts": {
+                "desktop": true,
+                "startMenu": true,
+                "label": "Calculator",
+                "gui": false
+              }
+            },
+            {
+              "name": "notices",
+              "version": "0.1.1",
+              "kind": "file",
+              "file": "THIRD-PARTY-NOTICES.txt",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/calculator-v0.1.1/THIRD-PARTY-NOTICES.txt",
+              "sha256": "83464b10bc407e505c8900aedb6de36a72d877aa60afa4a7a43977d45ee98ac6",
+              "size": 60064,
+              "installPath": "{installDir}\\THIRD-PARTY-NOTICES.txt",
+              "executable": false,
+              "addToPath": false
+            }
+          ]
+        }
+      },
+      "updatedAt": "2026-10-20T15:38:47Z"
+    },
     {
       "version": "0.1.0",
       "publishedAt": "2026-10-13T22:23:27Z",
