@@ -16,7 +16,7 @@ for %%r in (vexelray-build intrabuf atchung supirvast dxgi-bridge kronometer tac
   echo [%%r] clean install
   pushd "%ROOT%\%%r"
   call mvn -B clean install > "%LOGS%\%%r.log" 2>&1
-  if errorlevel 1 ( echo [%%r] FAILED, see logs\%%r.log & popd & exit /b 1 )
+  if errorlevel 1 ( echo [%%r] FAILED, see logs\%%r.log & popd & goto :failed )
   popd
 )
 
@@ -32,5 +32,11 @@ for %%r in (mainframe text-editor-vexel-demo Pix vexplore vexelray-sim-fluid vex
   )
   popd
 )
-if defined FAILED ( echo Some applications failed. & exit /b 1 )
+if defined FAILED ( echo Some applications failed. & goto :failed )
 echo Build done.
+exit /b 0
+
+rem An exit /b inside a block that has more commands after it (the loop's popd) loses its code when this runs
+rem under cmd /c without call: cmd /c then returns 0. So every failure exits from here, outside any block.
+:failed
+exit /b 1

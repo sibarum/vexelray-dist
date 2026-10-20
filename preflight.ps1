@@ -54,8 +54,11 @@ function Find-Python {
 
 if (-not $SkipBuild) {
     Step 'build'
-    & cmd /c "`"$dist\build.cmd`""
-    if ($LASTEXITCODE -ne 0) { Fail 'the build; see logs\' }
+    # call: without it cmd /c can return 0 from a batch file that ran exit /b 1 (see the end of build.cmd).
+    # Its output is checked for FAILED as well, so a failure can never pass as a build.
+    $failed = $false
+    & cmd /c "call `"$dist\build.cmd`"" | ForEach-Object { Write-Host $_; if ($_ -match 'FAILED') { $failed = $true } }
+    if ($LASTEXITCODE -ne 0 -or $failed) { Fail 'the build; see logs\' }
 }
 
 Step 'start'
