@@ -129,11 +129,11 @@ Every repository built together at its snapshot version, installed with one comm
 Double-click **`release-preflight.cmd`** (or run `.\release-preflight.ps1` from PowerShell). It stops at the first
 step that fails:
 
-1. **sources**: every repository in `release.py`'s list, and this one, must be on `develop` with nothing
+1. **sources**: every repository in `release.ps1`'s list, and this one, must be on `develop` with nothing
    uncommitted, so the preflight is exactly what was committed. `-AllowDirty` builds anyway, for a local try only:
    such a build is never published.
 2. **versions**: if the repositories are still at the release just cut (`0.1.0`), moves them all to the next
-   snapshot with `release.py next`. `-NoBump` stops instead. Then each app's `installer.json` gets its pom's version,
+   snapshot with `release.ps1 next`. `-NoBump` stops instead. Then each app's `installer.json` gets its pom's version,
    committed in that app's repository.
 3. **build**: `preflight.ps1 -BuildOnly`: `build.cmd`, every exe started, the notices checked.
 4. **local**: `deploy.ps1 -Local` writes the apps' installers, their releases and the preflight suite into `local\`
@@ -171,22 +171,32 @@ one app, rebuild only it and run with `-SkipBuild`. To release afterwards, follo
 
 ## Source releases (tags on every repository)
 
-Separate from the installers, and not needed for every app release. `release.py` cuts a release of all 28
+Separate from the installers, and not needed for every app release. `release.ps1` cuts a release of all 28
 repositories at once, from PowerShell:
 
 ```powershell
-python release.py release
-python release.py next
+.\release.ps1 release
 ```
 
 `release` turns each repository's `X-SNAPSHOT` into `X` (in its poms and in the framework's project template),
-builds and tests all of them in order, and only when every one has passed commits `Release X` and tags `vX`.
-`next` moves each to the next snapshot (`0.1.0` to `0.1.1-SNAPSHOT`), installs it locally and commits. Neither
-pushes; push each repository's branch and tag afterwards, for example:
+builds and tests all of them in order, and only when every one has passed commits `Release X` and tags `vX`. It
+pushes nothing. Once the apps are published (an app's `installer.json` commit after the tag is fine), the rest is
+one command:
 
-```bash
-git push origin main v0.1.0
+```powershell
+.\release.ps1 finish -DryRun
+.\release.ps1 finish
 ```
+
+`finish` is `publish`, then `next`, then a push of each `develop`:
+
+- `publish` checks every repository first: on `develop`, nothing uncommitted, HEAD at or after its release tag with
+  the poms unchanged since, and a release branch that can fast-forward. Any problem stops it before anything is
+  pushed. Then each pushes `develop` and its tag, and moves its release branch to `develop`: `main` or `master`,
+  whichever origin has, or a new `main` when it has neither. Only fast-forwards; it never merges.
+- `next` moves each to the next snapshot (`0.1.0` to `0.1.1-SNAPSHOT`), installs it locally and commits.
+
+Each step runs alone as well. A push that fails part way leaves the repositories before it published; rerun.
 
 Nothing is deployed to a Maven repository. 0.1.0 (1.0 for atchung, kronometer, tactroller and cardinal; 0.2.0
 for supirvast) was cut on 13 October 2026.

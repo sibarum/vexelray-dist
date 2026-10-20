@@ -4,10 +4,10 @@
   out on this computer first, then published as snapshot releases. Double-click release-preflight.cmd to run it.
 
 .DESCRIPTION
-  1. sources   every repository (release.py's list) and this one on develop with nothing uncommitted, so the
+  1. sources   every repository (release.ps1's list) and this one on develop with nothing uncommitted, so the
                preflight is exactly what was committed
   2. versions  when the repositories are still at the release just cut, moves them all to the next snapshot
-               (release.py next); then sets each application's installer.json to its pom's version, committing
+               (release.ps1 next); then sets each application's installer.json to its pom's version, committing
                that in the application's repository
   3. build     preflight.ps1 -BuildOnly: build.cmd, start every exe, check the notices
   4. local     deploy.ps1 -Local, served from local\ at http://127.0.0.1:<Port>, and the suite installer run from
@@ -54,27 +54,11 @@ function GitIn([string]$repo) {
     $o
 }
 
-# Python is not on PowerShell's PATH everywhere; the Store's python.exe stub answers but runs nothing.
-function Find-Python {
-    $ErrorActionPreference = 'Continue'
-    foreach ($c in @('python', 'py', "$env:USERPROFILE\anaconda3\python.exe", "$env:USERPROFILE\miniconda3\python.exe")) {
-        if (Get-Command $c -ErrorAction SilentlyContinue) {
-            & $c --version *> $null
-            if ($LASTEXITCODE -eq 0) { return $c }
-        }
-    }
-    return $null
-}
-$python = Find-Python
-if (-not $python) { Fail 'no Python found (python, py, or anaconda3)' }
-
+$release = Join-Path $dist 'release.ps1'
 function Status {
-    $lines = & $python (Join-Path $dist 'release.py') status
-    if ($LASTEXITCODE -ne 0) { Fail 'release.py status' }
-    foreach ($l in $lines) {
-        $f = $l -split "`t", 6
-        [pscustomobject]@{ Repo = $f[0]; Version = $f[1]; Branch = $f[2]; Commit = $f[3]; Changed = [int]$f[4]; Subject = $f[5] }
-    }
+    $repos = & $release status
+    if ($LASTEXITCODE -ne 0) { Fail 'release.ps1 status' }
+    $repos
 }
 
 $suite = Get-Content (Join-Path $dist 'installer-suite.json') -Raw | ConvertFrom-Json
@@ -106,16 +90,16 @@ $released = @($repos | Where-Object { $_.Version -notlike '*-SNAPSHOT' })
 if ($released.Count -gt 0) {
     $released | ForEach-Object { Write-Host "  $($_.Repo) is at $($_.Version)" }
     if ($NoBump) { Fail 'the repositories are at a release, and -NoBump says not to move them to the next snapshot' }
-    if ($released.Count -ne $repos.Count) { Fail 'only some repositories are at a release; release.py next moves all of them, so sort this out by hand' }
-    Write-Host '  moving every repository to the next snapshot (release.py next)'
-    & $python (Join-Path $dist 'release.py') next
-    if ($LASTEXITCODE -ne 0) { Fail 'release.py next; see logs\next-*.log' }
+    if ($released.Count -ne $repos.Count) { Fail 'only some repositories are at a release; release.ps1 next moves all of them, so sort this out by hand' }
+    Write-Host '  moving every repository to the next snapshot (release.ps1 next)'
+    & $release next
+    if ($LASTEXITCODE -ne 0) { Fail 'release.ps1 next; see logs\next-*.log' }
     $repos = @(Status)
 }
 $synced = $false
 foreach ($a in $apps) {
     $r = $repos | Where-Object { $_.Repo -eq (Split-Path $a.Repo -Leaf) } | Select-Object -First 1
-    if (-not $r) { Fail "$($a.Repo) is in the suite but not in release.py's list" }
+    if (-not $r) { Fail "$($a.Repo) is in the suite but not in release.ps1's list" }
     $text = [IO.File]::ReadAllText($a.Config)
     $rx = [regex]'("version"\s*:\s*")([^"]*)(")'
     $m = $rx.Match($text)
