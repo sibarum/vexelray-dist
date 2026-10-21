@@ -191,8 +191,10 @@ step that fails:
    suite's install command runs in a window of its own: the same scripts as the published preflight, with nothing
    fetched from GitHub. This is a real install on this computer, over the apps already installed. Afterwards each
    app's install record must name its snapshot. The records then point their updaters at `127.0.0.1`, until the
-   published preflight or the next release is installed over them. Only Windows is tried: `local\` gets the Linux
-   scripts too, but the VM cannot reach `127.0.0.1` here, so nothing runs them.
+   published preflight or the next release is installed over them. Only Windows is tried here: `local\` gets the
+   Linux scripts too, but the VM cannot reach `127.0.0.1`. To try Linux, run `./local-linux.sh` in the VM after
+   `build.sh`: the same preflight, in `~/vexelray-local` and pointing at it through `file://`, so
+   `sh ~/vexelray-local/install.sh` is a real install on the VM, with nothing fetched from GitHub.
 5. **publish**: asks first, unless `-Publish` was given (`-LocalOnly` stops before it). `deploy.ps1 -Preflight -Publish`
    uploads each app's snapshot release (replacing an earlier build of the same snapshot) and writes `preflight\`:
    the suite installer, pinned to these versions, and `BUILD.txt`, which lists the commit each repository was built
