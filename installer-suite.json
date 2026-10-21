@@ -9,8 +9,20 @@
   "site": {
     "url": "https://sibarum.github.io",
     "badge": "0.1.1 · experimental prerelease",
-    "tagline": "Nine desktop applications drawn live on the GPU, which know about each other. One line installs them all.",
+    "tagline": "Nine desktop applications for Windows and Linux, drawn live on the GPU, which know about each other.",
     "requirements": "Needs Windows 10 or 11 (64-bit) and a graphics card with an up-to-date driver: everything here draws with Vulkan.",
+    "linux": {
+      "url": "https://github.com/sibarum/vexelray-dist/releases",
+      "label": "Download for Linux",
+      "text": "each application is a download of its own. There is no install line for Linux yet.",
+      "requirements": "Needs 64-bit (x86_64) Linux with an X11 desktop, or Wayland with XWayland, and a Vulkan driver: Mesa's, or your graphics card maker's. For now every window draws at 100%, whatever the desktop's scaling.",
+      "steps": [
+        "On the release of each application you want, download its Linux build, and unpack it if it is an archive.",
+        "Make the program executable and start it, for example `chmod +x vexplore` and then `./vexplore`.",
+        "If no window opens, check that a Vulkan driver is installed: `vulkaninfo --summary`, from your distribution's `vulkan-tools`, lists the graphics cards it can draw on.",
+        "To update, download the newer release and replace the old files. To remove an application, delete them."
+      ]
+    },
     "feedbackUrl": "https://github.com/sibarum/vexelray-framework/issues/new",
     "accentColor": "#2563eb",
     "logo": "site/vexelray.svg",
@@ -40,7 +52,7 @@
       },
       {
         "id": "build", "title": "Build your own", "nav": "Developers",
-        "lede": "VexelRay is also a framework: Java 25, compiled to a native Windows executable and drawn with Vulkan. Every application above is built on it. Yours can be too, whether a coding agent writes most of it or you write all of it.",
+        "lede": "VexelRay is also a framework: Java 25, compiled to a native executable for Windows or Linux and drawn with Vulkan. Every application above is built on it. Yours can be too, whether a coding agent writes most of it or you write all of it.",
         "cards": [
           { "title": "Start from the template",
             "text": "One command generates a working application with tabs, a file navigator, settings that persist, and tests that build the window without a GPU. Vex, Calculator and MainFrame all started this way.",
@@ -62,7 +74,7 @@
             "text": "Most of VexelRay was written with Claude Code, Anthropic's coding agent, working alongside its author. Ottermate exists so Claude can see the windows it builds.",
             "url": "https://claude.com/claude-code" },
           { "title": "Oracle GraalVM",
-            "text": "Oracle GraalVM's Native Image compiles every application ahead of time into a single Windows executable that runs without a JVM.",
+            "text": "Oracle GraalVM's Native Image compiles every application ahead of time into a single native executable, for Windows or Linux, that runs without a JVM.",
             "url": "https://www.graalvm.org/" },
           { "title": "Vulkan, by the Khronos Group",
             "text": "Everything here is drawn with Vulkan, the open, cross-platform graphics and compute API from the Khronos Group, with every shader compiled to SPIR-V.",
@@ -76,7 +88,7 @@
       { "label": "Design", "url": "https://sibarum.github.io/design.html" },
       { "label": "Licenses and notices", "url": "https://sibarum.github.io/licenses.html" }
     ],
-    "notice": "Claude and Claude Code are trademarks of Anthropic, PBC. Oracle, Java and GraalVM are trademarks or registered trademarks of Oracle and/or its affiliates. Vulkan and SPIR-V are trademarks or registered trademarks of The Khronos Group Inc. Windows and Direct3D are trademarks of the Microsoft group of companies. Other names may be trademarks of their respective owners. VexelRay is an independent project, not affiliated with or endorsed by any of them."
+    "notice": "Claude and Claude Code are trademarks of Anthropic, PBC. Oracle, Java and GraalVM are trademarks or registered trademarks of Oracle and/or its affiliates. Vulkan and SPIR-V are trademarks or registered trademarks of The Khronos Group Inc. Windows and Direct3D are trademarks of the Microsoft group of companies. Linux is the registered trademark of Linus Torvalds in the U.S. and other countries. Other names may be trademarks of their respective owners. VexelRay is an independent project, not affiliated with or endorsed by any of them."
   },
 
   "members": [
