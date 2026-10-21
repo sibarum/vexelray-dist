@@ -7,10 +7,13 @@
   1. build      build.cmd: libraries in order with their tests, then each application's tests and native image
   2. start      each application's exe, from its installer.json, must still be running after a few seconds. Tests run
                 on the JVM, so this is what catches a native image that cannot start (a resource it never registered)
-  3. notices    notices\notices.py --check
-  4. versions   lists each application whose installer.json version is already published: its exe will be
+  3. linux      each application with a linux section needs its Linux binaries, which build.sh builds in the Linux
+                VM: logs\linux\BUILD.txt must name exactly the commits checked out here. Run from a console a
+                person is at, it waits for that build; otherwise it fails
+  4. notices    notices\notices.py --check
+  5. versions   lists each application whose installer.json version is already published: its exe will be
                 regenerated as that same release, so bump it if it changed
-  5. generate   deploy.ps1 without -Publish, then the diff here and in ..\sibarum.github.io
+  6. generate   deploy.ps1 without -Publish, then the diff here and in ..\sibarum.github.io
 
   Nothing is uploaded, committed or pushed. The generated files are left in place to look at: publishing is
   deploy.ps1 -Publish, and git checkout -- apps puts them back. Logs land in logs\. Stops at the first failing step.
@@ -22,7 +25,7 @@
   How long each application must stay up.
 
 .PARAMETER BuildOnly
-  Stop after the notices: build, start and check, generating nothing. release-preflight.ps1 generates its own.
+  Stop after the notices: build, start, the Linux build and the notices checked, generating nothing. release-preflight.ps1 generates its own.
 #>
 param([switch]$SkipBuild, [int]$Seconds = 8, [switch]$BuildOnly)
 $ErrorActionPreference = 'Stop'
@@ -80,6 +83,51 @@ foreach ($a in $apps) {
     }
 }
 if ($dead) { $dead | ForEach-Object { Write-Host "  $_" -ForegroundColor Red }; Fail 'an application does not start' }
+
+# The Linux binaries are built in the Linux VM by build.sh, which writes logs\linux\BUILD.txt: the commit of every
+# checkout it built. They are fit to publish beside these exes only while every one of those is still checked out.
+function Test-LinuxBuild {
+    $stamp = Join-Path $logs 'linux\BUILD.txt'
+    if (-not (Test-Path $stamp)) { return @('no Linux build: logs\linux\BUILD.txt is missing') }
+    $builtFrom = @{}
+    foreach ($line in Get-Content $stamp) {
+        if ($line -match '^\s*(#|$)') { continue }
+        $f = $line -split '\s+'
+        $builtFrom[$f[0]] = $f[1]
+    }
+    $problems = @()
+    foreach ($repo in $builtFrom.Keys) {
+        $head = (git -C (Join-Path $root $repo) rev-parse HEAD) -join ''
+        if ($head -ne $builtFrom[$repo]) {
+            $problems += "${repo}: the Linux build is of $($builtFrom[$repo].Substring(0, 9)), the checkout is at $(if ($head) { $head.Substring(0, 9) } else { 'nothing' })"
+        }
+    }
+    foreach ($a in $apps | Where-Object { $_.App.linux }) {
+        $repo = Split-Path $a.Repo -Leaf
+        if (-not $builtFrom.ContainsKey($repo)) { $problems += "${repo}: not in the Linux build" }
+        foreach ($b in $a.App.linux.binaries) {
+            if (-not (Test-Path (Join-Path $a.Repo $b.source))) { $problems += "$($a.App.id): no $($b.source)" }
+        }
+    }
+    $problems
+}
+
+Step 'linux'
+$linuxApps = @($apps | Where-Object { $_.App.linux } | ForEach-Object { $_.App.name })
+if (-not $linuxApps) {
+    Write-Host '  no application has a linux section'
+} else {
+    # Read-Host fails under -NonInteractive, and has no one to answer it with redirected input
+    $interactive = [Environment]::UserInteractive -and -not [Console]::IsInputRedirected -and
+                   -not ([Environment]::GetCommandLineArgs() -match '^-NonI')
+    while (($problems = @(Test-LinuxBuild)).Count -gt 0) {
+        $problems | ForEach-Object { Write-Host "  $_" -ForegroundColor Yellow }
+        Write-Host '  Build them in the Linux VM, from a terminal on its desktop, in this folder: ./build.sh'
+        if (-not $interactive) { Fail 'the Linux build is missing, or not of these sources' }
+        Read-Host '  Press Enter once it has finished, to check again (Ctrl+C stops)' | Out-Null
+    }
+    Write-Host "  built in the VM from these sources: $($linuxApps -join ', ')"
+}
 
 Step 'notices'
 $python = Find-Python

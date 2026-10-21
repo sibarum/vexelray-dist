@@ -9,10 +9,12 @@
   2. versions  when the repositories are still at the release just cut, moves them all to the next snapshot
                (release.ps1 next); then sets each application's installer.json to its pom's version, committing
                that in the application's repository
-  3. build     preflight.ps1 -BuildOnly: build.cmd, start every exe, check the notices
+  3. build     preflight.ps1 -BuildOnly: build.cmd, start every exe, wait for the Linux VM's build.sh of these same
+               commits (after step 2, which commits), check the notices
   4. local     deploy.ps1 -Local, served from local\ at http://127.0.0.1:<Port>, and the suite installer run from
                there in a window of its own: the same scripts as the published preflight, with nothing downloaded
-               from GitHub. Each application's install record is checked afterwards
+               from GitHub. Each application's install record is checked afterwards. This tries Windows only: the
+               Linux scripts are written to local\ as well, but nothing runs them
   5. publish   asks first (unless -Publish). deploy.ps1 -Preflight -Publish uploads each snapshot release, replacing
                a previous build of the same snapshot; preflight\ gets the suite installer and BUILD.txt (what was
                built, commit by commit); then commit, push develop, merge to main and push. Every installer reads

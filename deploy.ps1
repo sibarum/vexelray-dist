@@ -4,13 +4,15 @@
 
 .DESCRIPTION
   Reads each application's installer.json from the sibling checkouts and the native images their builds left in
-  target\ (run build.cmd first). Writes:
+  target\ (run build.cmd first) and, for an application with a linux section, target-linux\ (build.sh, in the
+  Linux VM; preflight.ps1 checks that build is of these sources). Writes:
     apps\<id>\         install.ps1, uninstall.ps1, update.ps1, manifest.json, README.md   (committed)
-    install.ps1, README.md                                                    the suite      (committed)
-    assets\<id>\<ver>\ each application's exe and icon, as uploaded to its release           (ignored)
+                       and, with a linux section, install.sh, uninstall.sh, update.sh, manifest.linux.txt
+    install.ps1, install.sh, README.md                                        the suite      (committed)
+    assets\<id>\<ver>\ each application's exe, Linux binaries and icons, as uploaded to its release (ignored)
     exe\               every exe in one place                                                (ignored)
   and, when the sibling checkout ..\sibarum.github.io exists, the landing page served at https://sibarum.github.io:
-    index.html, install.ps1, img\                                    (committed and pushed there)
+    index.html, install.ps1, install.sh, img\                        (committed and pushed there)
 
   -Publish also creates each release (tag <id>-v<version>) on sibarum/vexelray-dist and uploads its files.
   It uses $env:GITHUB_TOKEN if set, and otherwise asks for a token (input hidden, never stored): a fine-grained

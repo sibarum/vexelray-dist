@@ -12,16 +12,7 @@
     "tagline": "Nine desktop applications for Windows and Linux, drawn live on the GPU, which know about each other.",
     "requirements": "Needs Windows 10 or 11 (64-bit) and a graphics card with an up-to-date driver: everything here draws with Vulkan.",
     "linux": {
-      "url": "https://github.com/sibarum/vexelray-dist/releases",
-      "label": "Download for Linux",
-      "text": "each application is a download of its own. There is no install line for Linux yet.",
-      "requirements": "Needs 64-bit (x86_64) Linux with an X11 desktop, or Wayland with XWayland, and a Vulkan driver: Mesa's, or your graphics card maker's. For now every window draws at 100%, whatever the desktop's scaling.",
-      "steps": [
-        "On the release of each application you want, download its Linux build, and unpack it if it is an archive.",
-        "Make the program executable and start it, for example `chmod +x vexplore` and then `./vexplore`.",
-        "If no window opens, check that a Vulkan driver is installed: `vulkaninfo --summary`, from your distribution's `vulkan-tools`, lists the graphics cards it can draw on.",
-        "To update, download the newer release and replace the old files. To remove an application, delete them."
-      ]
+      "requirements": "Needs 64-bit (x86_64) Linux with an X11 desktop, or Wayland with XWayland, and a Vulkan driver: Mesa's, or your graphics card maker's. For now every window draws at 100%, whatever the desktop's scaling."
     },
     "feedbackUrl": "https://github.com/sibarum/vexelray-framework/issues/new",
     "accentColor": "#2563eb",
