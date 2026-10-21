@@ -17,6 +17,7 @@
     "heroAction": { "label": "See what's inside the framework", "url": "https://sibarum.github.io/technology.html" },
     "links": [
       { "label": "Technology", "url": "https://sibarum.github.io/technology.html" },
+      { "label": "Design", "url": "https://sibarum.github.io/design.html" },
       { "label": "Framework", "url": "https://sibarum.github.io/vexelray-framework/" },
       { "label": "GitHub", "url": "https://github.com/sibarum/vexelray-framework" }
     ],
@@ -72,6 +73,7 @@
     ],
     "footerLinks": [
       { "label": "Technology", "url": "https://sibarum.github.io/technology.html" },
+      { "label": "Design", "url": "https://sibarum.github.io/design.html" },
       { "label": "Licenses and notices", "url": "https://sibarum.github.io/licenses.html" }
     ],
     "notice": "Claude and Claude Code are trademarks of Anthropic, PBC. Oracle, Java and GraalVM are trademarks or registered trademarks of Oracle and/or its affiliates. Vulkan and SPIR-V are trademarks or registered trademarks of The Khronos Group Inc. Windows and Direct3D are trademarks of the Microsoft group of companies. Other names may be trademarks of their respective owners. VexelRay is an independent project, not affiliated with or endorsed by any of them."
