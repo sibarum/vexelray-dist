@@ -10,11 +10,13 @@
                (release.ps1 next); then sets each application's installer.json to its pom's version, committing
                that in the application's repository
   3. build     preflight.ps1 -BuildOnly: build.cmd, start every exe, wait for the Linux VM's build.sh of these same
-               commits (after step 2, which commits), check the notices
+               commits (after step 2, which commits), check the notices. The preflight asks the VM's build.sh
+               --watch for that build as it starts, and (unless -SkipLocal) for local-linux.sh --install after it:
+               the same local install as step 4, on the VM
   4. local     deploy.ps1 -Local, served from local\ at http://127.0.0.1:<Port>, and the suite installer run from
                there in a window of its own: the same scripts as the published preflight, with nothing downloaded
-               from GitHub. Each application's install record is checked afterwards. This tries Windows only: the
-               Linux scripts are written to local\ as well, but nothing runs them
+               from GitHub. Each application's install record is checked afterwards. The VM cannot reach
+               127.0.0.1, so the Linux install was tried in step 3, from a local preflight of its own
   5. publish   asks first (unless -Publish). deploy.ps1 -Preflight -Publish uploads each snapshot release, replacing
                a previous build of the same snapshot; preflight\ gets the suite installer and BUILD.txt (what was
                built, commit by commit); then commit, push develop, merge to main and push. Every installer reads
@@ -32,7 +34,7 @@
 .PARAMETER SkipBuild
   Use the exes already built (after fixing one application and rebuilding only it).
 .PARAMETER SkipLocal
-  Do not run the local install (it has been tried already).
+  Do not run the local install (it has been tried already), on Windows or in the Linux VM.
 .PARAMETER AllowDirty
   Build even with uncommitted changes or a branch other than develop. The preflight is then not what was committed,
   so it is never published.
@@ -121,6 +123,7 @@ if ($synced) { $repos = @(Status) }   # BUILD.txt names the commits built
 Step 'build'
 $pfArgs = @{ BuildOnly = $true }
 if ($SkipBuild) { $pfArgs.SkipBuild = $true }
+if (-not $SkipLocal) { $pfArgs.LinuxLocal = $true }
 & (Join-Path $dist 'preflight.ps1') @pfArgs
 if ($LASTEXITCODE -ne 0) { Fail 'preflight.ps1 (above)' }
 foreach ($a in $apps) {

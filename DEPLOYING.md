@@ -30,7 +30,7 @@ instead of `target/` (each repository's `linux-build-output` profile), so the tw
 | `install.ps1`, `install.sh`, `README.md` (here, committed) | the suite: runs each app's installer in turn. `install.sh` is the Linux one, of the apps that have a `linux` section |
 | `../sibarum.github.io` (its own repo, committed) | the landing page at https://sibarum.github.io: `index.html`, the icons and screenshots in `img/`, and copies of the suite's `install.ps1` and `install.sh`, so the commands are shorter. Generated from `installer-suite.json` (its `site` section, and each member's `image`) |
 | releases on `sibarum/vexelray-dist` | the binaries, one release per app version, tagged `<id>-v<version>` (`pix-v0.1.0`) |
-| `exe/`, `assets/`, `logs/` (here, ignored) | build output; never committed. `logs/linux/` is `build.sh`'s, with `BUILD.txt`: the commit of every checkout the Linux binaries were built from |
+| `exe/`, `assets/`, `logs/` (here, ignored) | build output; never committed. `logs/linux/` is `build.sh`'s, with `BUILD.txt`: the commit of every checkout the Linux binaries were built from, `LOCAL.txt`: the build `local-linux.sh --install` installed, and `REQUEST.txt`, `WATCH.txt`: the preflight's request to the VM's watcher and its answer |
 | `preflight/` (here, committed) | the [preflight](#preflight-release) suite installer, pinned to the last snapshots published, and `BUILD.txt` |
 | `local/` (here, ignored) | the last preflight's local copy, served from `127.0.0.1` |
 
@@ -58,13 +58,22 @@ docs site links to the landing page from `vexelray-framework/docs/install/index.
 For the Linux binaries, a Linux VM (x86_64, with a desktop session) with the same folder mounted (a VMware shared
 folder), and in it:
 
-- GraalVM 25 as `JAVA_HOME` (with `native-image`), Maven, and what native-image links with: `gcc`, and the zlib and
-  glibc headers (`build-essential zlib1g-dev` on Debian and Ubuntu).
+- GraalVM 25 (with `native-image`), Maven, and what native-image links with: `gcc`, and the zlib and glibc headers
+  (`build-essential zlib1g-dev` on Debian and Ubuntu). GraalVM need not be `JAVA_HOME`: `build.sh` finds it when it is
+  unpacked into `~/.local/opt`, `/opt` or `/usr/lib/jvm`, or installed by SDKMAN.
 - The Linux builds of `imagelib-wrapper`'s native library and `ffmpeg-wrapper`'s shim and FFmpeg, each staged once
   with `./native/build.sh` in the repo's `-linux` module (`imagelib-wrapper-linux`, `ffmpeg-wrapper-linux`).
 - A Vulkan driver (Mesa's in a VM), so `build.sh` can start each app.
 
-Nothing is published from the VM, and it needs no token.
+`./build.sh --check` says what is still missing, in a second. Then, once, from a terminal on the VM's desktop:
+
+```bash
+./build.sh --install-watcher
+```
+
+which runs `./build.sh --watch` as a systemd user service of every desktop session from then on, so the VM builds
+whenever a preflight on Windows asks for it, with nobody at the VM (see [The Linux build](#the-linux-build)).
+`--remove-watcher` takes it out again. Nothing is published from the VM, and it needs no token.
 
 ## Preflight
 
@@ -84,8 +93,12 @@ It stops at the first step that fails. Logs are in `logs\`.
    resource it never registered in its `reachability-metadata.json` (Vex 0.1.0's own fonts).
 3. **linux**: the Linux binaries of each app with a `linux` section. `build.sh`, run in the VM (below), records in
    `logs/linux/BUILD.txt` the commit of every checkout it built; this step fails unless every one of them is still
-   the one checked out, and every binary the `linux` sections ship is there. Run from a console, it waits instead:
-   build in the VM, then press Enter here.
+   the one checked out, and every binary the `linux` sections ship is there. When they are not, the preflight has
+   already asked the VM for that build as it started (`logs/linux/REQUEST.txt`), so the VM builds while Windows does,
+   and this step waits for the VM's answer. A failed Linux build shows its failing lines here; from a console,
+   fix it and press Enter to have the VM build again. Without a watcher in the VM, run from a console, it waits for
+   a `./build.sh` started by hand and notices when it is done; otherwise it fails. `-LinuxMinutes` (240) is how long
+   it waits.
 4. **notices**: `notices\notices.py --check` writes each app's `THIRD-PARTY-NOTICES.txt` and looks in the exes for
    every component it lists, failing on one that is missing or one it does not list (a new library, say). When it
    fails, add the component to `notices.py` with its licence (in `notices/licenses/`). A changed notices file is
@@ -96,17 +109,38 @@ It stops at the first step that fails. Logs are in `logs\`.
 After fixing one app, rebuild only it and rerun with `.\preflight.ps1 -SkipBuild`, which uses the exes already in
 each app's `target\`.
 
+### The Linux preflight
+
+The same, for Linux alone, in the VM from a terminal on its desktop, with no Windows host needed:
+
+```bash
+./preflight.sh
+```
+
+It reports each checkout not on `develop` or with uncommitted changes, runs `./build.sh` (build, then start each
+app), names each app whose version is already published, and runs `./local-linux.sh --install` (a real install on the
+VM, from a local preflight in `~/vexelray-local`). `--skip-build` uses the binaries already built, `--no-local` stops
+before the install, and `--skip-tests`, `--seconds` and `--no-start` go to `build.sh`. The notices and generating
+`apps/` stay with `preflight.ps1`, which needs the exes; a release still goes through it.
+
 ### The Linux build
 
-In the VM, from a terminal on its desktop, in this folder (any time after the last commit; the Windows build can run
-at the same time, since the two write to different folders):
+With the watcher running in the VM (`./build.sh --install-watcher`, once, or `./build.sh --watch` in a terminal on
+its desktop), there is nothing to do: `preflight.ps1` asks for the build, and the watcher runs it and answers.
+`logs/linux/watch.log` is the output of the last request, and `logs/linux/WATCH.txt` how it went; the watcher keeps
+`logs/linux/watch.alive` fresh so the preflight knows it is there. Stopping the watcher stops a build it is running.
+Two builds never run at once in the VM: one started by hand while the watcher builds is refused.
+
+By hand, in the VM, from a terminal on its desktop, in this folder (any time after the last commit; the Windows build
+can run at the same time, since the two write to different folders):
 
 ```bash
 ./build.sh
 ```
 
-It is `build.cmd` for Linux: it clean-installs the same libraries in the same order into the VM's own `~/.m2`, then
-tests each app that has a `linux` section and builds its native image with `-Pnative-linux` (into `target-linux/`),
+It is `build.cmd` for Linux: it clean-installs the same libraries in the same order into the VM's own `~/.m2`
+(supirvast's without its tests: they want a real GPU, and the preflight only takes a Linux build of commits Windows
+has just tested; `NO_TESTS` in `build.sh` lists them, and `--skip-tests` skips every test), then tests each app that has a `linux` section and builds its native image with `-Pnative-linux` (into `target-linux/`),
 then starts each one and fails if it is not still running after 8 seconds (`--seconds`). Logs are in `logs/linux/`.
 Only a run in which all of that passed writes `logs/linux/BUILD.txt`. After fixing one app, `./build.sh --only Pix`
 (its checkout's name) rebuilds and starts only it, and updates its line. `--skip-build` only starts them, and
@@ -121,8 +155,8 @@ longer match the exes; build again.
    release exists, and every install that has it compares against it. Bump the `badge` in `installer-suite.json`'s
    `site` as well (not for a [snapshot](#snapshot-releases)). An app whose version did not change is regenerated identically (only an `updatedAt` stamp moves;
    discard that with `git checkout -- apps`).
-2. **Preflight, and look before publishing.** Commit the bumps first, then run [the Linux build](#the-linux-build)
-   in the VM while the preflight builds on Windows:
+2. **Preflight, and look before publishing.** Commit the bumps first. The preflight has the VM's watcher run
+   [the Linux build](#the-linux-build) while it builds on Windows (without a watcher, run `./build.sh` in the VM):
    ```powershell
    .\preflight.ps1
    git diff
@@ -183,18 +217,20 @@ step that fails:
 2. **versions**: if the repositories are still at the release just cut (`0.1.0`), moves them all to the next
    snapshot with `release.ps1 next`. `-NoBump` stops instead. Then each app's `installer.json` gets its pom's version,
    committed in that app's repository.
-3. **build**: `preflight.ps1 -BuildOnly`: `build.cmd`, every exe started, the Linux build checked, the notices
-   checked. Step 2 commits, so start [the Linux build](#the-linux-build) once this step has begun, not before: the
-   preflight waits for it.
+3. **build**: `preflight.ps1 -BuildOnly -LinuxLocal`: `build.cmd`, every exe started, the Linux build checked, the
+   notices checked. It asks the VM's watcher for [the Linux build](#the-linux-build) as it starts, after step 2's
+   commits, and then for `./local-linux.sh --install` (below), and waits for both. Without a watcher, start
+   `./build.sh && ./local-linux.sh --install` in the VM once this step has begun, not before.
 4. **local**: `deploy.ps1 -Local` writes the apps' installers, their releases and the preflight suite into `local\`
    (ignored), all pointing at `http://127.0.0.1:8417` (`-Port`) instead of GitHub. `serve.ps1` serves it, and the
    suite's install command runs in a window of its own: the same scripts as the published preflight, with nothing
    fetched from GitHub. This is a real install on this computer, over the apps already installed. Afterwards each
    app's install record must name its snapshot. The records then point their updaters at `127.0.0.1`, until the
-   published preflight or the next release is installed over them. Only Windows is tried here: `local\` gets the
-   Linux scripts too, but the VM cannot reach `127.0.0.1`. To try Linux, run `./local-linux.sh` in the VM after
-   `build.sh`: the same preflight, in `~/vexelray-local` and pointing at it through `file://`, so
-   `sh ~/vexelray-local/install.sh` is a real install on the VM, with nothing fetched from GitHub.
+   published preflight or the next release is installed over them. `local\` gets the Linux scripts too, but the VM
+   cannot reach `127.0.0.1`, so Linux was tried in step 3: `./local-linux.sh --install` writes the same preflight in
+   `~/vexelray-local`, pointing at it through `file://`, installs it for real on the VM with nothing fetched from
+   GitHub, checks each app's install record names its snapshot, and records that in `logs/linux/LOCAL.txt`, which
+   step 3 waits for. `-SkipLocal` skips it on both.
 5. **publish**: asks first, unless `-Publish` was given (`-LocalOnly` stops before it). `deploy.ps1 -Preflight -Publish`
    uploads each app's snapshot release (replacing an earlier build of the same snapshot) and writes `preflight\`:
    the suite installer, pinned to these versions, and `BUILD.txt`, which lists the commit each repository was built
