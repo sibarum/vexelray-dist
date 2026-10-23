@@ -30,6 +30,62 @@
   },
   "versions": [
     {
+      "version": "0.1.2-SNAPSHOT",
+      "publishedAt": "2026-10-23T19:00:13Z",
+      "notes": "",
+      "installer": {
+        "install.ps1": "dc5537732ce83d1f8936efc12605e22c8473f3944b9b02d3896691e2c1b4c4f0",
+        "uninstall.ps1": "1396202122772594e21d40f4b0f46bcf2a1198ab526e42dfdb30b5143aa5e5cf",
+        "update.ps1": "e67f9a7d9bd710226d47cda9e210fc258811dd75365a8aeff13fc331b3146342",
+        "diagnose.ps1": "f1ac84dc32fd747e8cb9c6f0c5a753be9f24a22b80997b2f03d674232bf65483",
+        "manager.ps1": "2bc532afc5bbd7c8830e7e9b57a108f8e5470c2c65342386072d2572a8e3a042"
+      },
+      "platforms": {
+        "windows": {
+          "installDir": "%LOCALAPPDATA%\\Programs\\Maistro",
+          "binaries": [
+            {
+              "name": "maistro",
+              "version": "0.1.2-SNAPSHOT",
+              "kind": "native",
+              "file": "maistro.exe",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/maistro-v0.1.2-SNAPSHOT/maistro.exe",
+              "sha256": "9502a469b8fc90e0b5fa6762d5241df2aad29a7d8cca9f363b74bffda3f6fdb8",
+              "size": 44949504,
+              "installPath": "{installDir}\\maistro.exe",
+              "executable": true,
+              "addToPath": true,
+              "icon": {
+                "file": "maistro.ico",
+                "url": "https://github.com/sibarum/vexelray-dist/releases/download/maistro-v0.1.2-SNAPSHOT/maistro.ico",
+                "sha256": "e2d3676361befe98a58749642da2ad4f035fbcdbd19e81a3f54641c26ba08fef",
+                "size": 25680,
+                "installPath": "{installDir}\\maistro.ico"
+              },
+              "shortcuts": {
+                "desktop": true,
+                "startMenu": true,
+                "label": "Maistro",
+                "gui": false
+              }
+            },
+            {
+              "name": "notices",
+              "version": "0.1.2-SNAPSHOT",
+              "kind": "file",
+              "file": "THIRD-PARTY-NOTICES.txt",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/maistro-v0.1.2-SNAPSHOT/THIRD-PARTY-NOTICES.txt",
+              "sha256": "0d32bb6729d0e1b3b8cd242b47ebe7eed1d741300384dc038cf3cb00341b9991",
+              "size": 60058,
+              "installPath": "{installDir}\\THIRD-PARTY-NOTICES.txt",
+              "executable": false,
+              "addToPath": false
+            }
+          ]
+        }
+      }
+    },
+    {
       "version": "0.1.1",
       "publishedAt": "2026-10-20T15:28:49Z",
       "notes": "",

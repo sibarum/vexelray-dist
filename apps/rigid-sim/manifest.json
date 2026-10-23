@@ -30,6 +30,62 @@
   },
   "versions": [
     {
+      "version": "0.1.2-SNAPSHOT",
+      "publishedAt": "2026-10-23T18:59:35Z",
+      "notes": "",
+      "installer": {
+        "install.ps1": "09ec64f40b73e61abcab3aaa1427273f8b5742d98d979b286006d029a275ecf4",
+        "uninstall.ps1": "4102b32475fd13cd157a6bce5ea8315104c306f0e8f26c673d802ccbe0f08cc6",
+        "update.ps1": "6c8d269f4501d1cab50b52bb3a7bb58a188605da0f0596b8a747804aae4728e6",
+        "diagnose.ps1": "908db7e3867708a4c806da9acc654febdc86ae68238983f077aae4b4461edf90",
+        "manager.ps1": "eebe79377df4d16503430e52c24aea4673adf15fe4ada393290c2671593fd41d"
+      },
+      "platforms": {
+        "windows": {
+          "installDir": "%LOCALAPPDATA%\\Programs\\Rigid Sim",
+          "binaries": [
+            {
+              "name": "rigid-sim",
+              "version": "0.1.2-SNAPSHOT",
+              "kind": "native",
+              "file": "rigid-sim.exe",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/rigid-sim-v0.1.2-SNAPSHOT/rigid-sim.exe",
+              "sha256": "281d37646d0c315c3457a090a51fe53969502e22e24f29fb8e22dcbd6143d48c",
+              "size": 67158016,
+              "installPath": "{installDir}\\rigid-sim.exe",
+              "executable": true,
+              "addToPath": false,
+              "icon": {
+                "file": "rigid-sim.ico",
+                "url": "https://github.com/sibarum/vexelray-dist/releases/download/rigid-sim-v0.1.2-SNAPSHOT/rigid-sim.ico",
+                "sha256": "ec9757de39305a0b9d0da15cd3c4c260486bd8f13a495a624e5eb65d9f8126ce",
+                "size": 29819,
+                "installPath": "{installDir}\\rigid-sim.ico"
+              },
+              "shortcuts": {
+                "desktop": true,
+                "startMenu": true,
+                "label": "Rigid Sim",
+                "gui": false
+              }
+            },
+            {
+              "name": "notices",
+              "version": "0.1.2-SNAPSHOT",
+              "kind": "file",
+              "file": "THIRD-PARTY-NOTICES.txt",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/rigid-sim-v0.1.2-SNAPSHOT/THIRD-PARTY-NOTICES.txt",
+              "sha256": "c127a95ba0336c086c886d20cb86299c237d9c29fb452cd763554e77d973a75f",
+              "size": 72694,
+              "installPath": "{installDir}\\THIRD-PARTY-NOTICES.txt",
+              "executable": false,
+              "addToPath": false
+            }
+          ]
+        }
+      }
+    },
+    {
       "version": "0.1.1",
       "publishedAt": "2026-10-20T15:28:48Z",
       "notes": "",

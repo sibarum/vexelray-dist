@@ -1,0 +1,14 @@
+vexelray-installer-linux	1
+id	mainframe
+name	MainFrame
+latest	0.1.2-SNAPSHOT
+tool	install.sh	deba93698da780021582b1fcb37f13585c9ab701107112ca64b873c37eb603f7	https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/mainframe/install.sh
+tool	uninstall.sh	a132980a72227bd27b65e0826ba5d23cb9017d55af6b0958d1bffaa8f07d9935	https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/mainframe/uninstall.sh
+tool	update.sh	fc459867b026b7c55a9bf29bbe733b8adfd3682c3d506b1209847deaa903cf77	https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/mainframe/update.sh
+version	0.1.2-SNAPSHOT
+dir	0.1.2-SNAPSHOT	$HOME/.local/opt/mainframe
+arch	0.1.2-SNAPSHOT	x86_64
+bin	0.1.2-SNAPSHOT	mainframe	native	0.1.2-SNAPSHOT	8b3b7968993ac86282901e7c2968eacc793a4e7cd76f8b7e3f0455d9c121ee6e	46336256	1	mainframe	https://github.com/sibarum/vexelray-dist/releases/download/mainframe-v0.1.2-SNAPSHOT/mainframe	mainframe
+icon	0.1.2-SNAPSHOT	mainframe	fc35b9ba563e0c510a6ededf29e093cefd41fd6fe4d531bd19527b0e0a7ed4f8	256	mainframe.png	https://github.com/sibarum/vexelray-dist/releases/download/mainframe-v0.1.2-SNAPSHOT/mainframe.png	mainframe.png
+shortcut	0.1.2-SNAPSHOT	mainframe	1	1	1	MainFrame
+bin	0.1.2-SNAPSHOT	notices	file	0.1.2-SNAPSHOT	12f4da8637dcc04b2a009bc1dea12784131e9cf6d7646d25d10be9fcbf096ab3	60062	0	THIRD-PARTY-NOTICES.txt	https://github.com/sibarum/vexelray-dist/releases/download/mainframe-v0.1.2-SNAPSHOT/THIRD-PARTY-NOTICES.txt	THIRD-PARTY-NOTICES.txt

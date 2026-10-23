@@ -1,0 +1,55 @@
+vexelray-installer-linux	1
+id	pix
+name	Pix
+latest	0.1.2-SNAPSHOT
+tool	install.sh	e860fc4a8872bcdef256efa3b07549354eb75453059aa4256043648e8fade271	https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/pix/install.sh
+tool	uninstall.sh	be575e4f635d36446afa849adfb3b78dd4a42ff56543a31e022653b5dd9fbcda	https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/pix/uninstall.sh
+tool	update.sh	86d9e83fd43d4f7ac4ba21d1a9394a18c9df8b83a063231ef399f19da1932f0c	https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/pix/update.sh
+version	0.1.2-SNAPSHOT
+dir	0.1.2-SNAPSHOT	$HOME/.local/opt/pix
+arch	0.1.2-SNAPSHOT	x86_64
+bin	0.1.2-SNAPSHOT	pix	native	0.1.2-SNAPSHOT	eb12bae5fbc99d18a6e523b22897c8771f3ef14514a93577a69bfd598047c2ac	65407232	1	pix	https://github.com/sibarum/vexelray-dist/releases/download/pix-v0.1.2-SNAPSHOT/pix	pix
+icon	0.1.2-SNAPSHOT	pix	cb713db6d8ae8af84ee6c21097265f67c1c41b94fae3d6f1e3ca05c56e0c6db5	256	pix.png	https://github.com/sibarum/vexelray-dist/releases/download/pix-v0.1.2-SNAPSHOT/pix.png	pix.png
+typeicon	0.1.2-SNAPSHOT	pix	4868830bd78957b922e98f6f1c0267c15eacb833173b08d165d191ddb85cd4d6	256	pix-file-images.png	https://github.com/sibarum/vexelray-dist/releases/download/pix-v0.1.2-SNAPSHOT/pix-file-images.png	pix-file-images.png
+typeicon	0.1.2-SNAPSHOT	pix	4e0f4670fc08b26954475564ace94ca9725d63d3f9228716ce89a2be492c67be	256	pix-file-vector-graphics.png	https://github.com/sibarum/vexelray-dist/releases/download/pix-v0.1.2-SNAPSHOT/pix-file-vector-graphics.png	pix-file-vector-graphics.png
+typeicon	0.1.2-SNAPSHOT	pix	4bbc94fa42946028b8175d0adc8f6941c0880759d4e0c5946f2a08d2f5ea7c45	256	pix-file-video.png	https://github.com/sibarum/vexelray-dist/releases/download/pix-v0.1.2-SNAPSHOT/pix-file-video.png	pix-file-video.png
+shortcut	0.1.2-SNAPSHOT	pix	1	1	1	Pix
+assoc	0.1.2-SNAPSHOT	pix	.png	image/png	0	pix-file-images.png	PNG Image
+assoc	0.1.2-SNAPSHOT	pix	.apng	image/apng	0	pix-file-images.png	Animated PNG Image
+assoc	0.1.2-SNAPSHOT	pix	.jpg	image/jpeg	0	pix-file-images.png	JPEG Image
+assoc	0.1.2-SNAPSHOT	pix	.jpeg	image/jpeg	0	pix-file-images.png	JPEG Image
+assoc	0.1.2-SNAPSHOT	pix	.jfif	image/jpeg	0	pix-file-images.png	JPEG Image
+assoc	0.1.2-SNAPSHOT	pix	.gif	image/gif	0	pix-file-images.png	GIF Image
+assoc	0.1.2-SNAPSHOT	pix	.webp	image/webp	0	pix-file-images.png	WebP Image
+assoc	0.1.2-SNAPSHOT	pix	.avif	image/avif	0	pix-file-images.png	AVIF Image
+assoc	0.1.2-SNAPSHOT	pix	.bmp	image/bmp	0	pix-file-images.png	Bitmap Image
+assoc	0.1.2-SNAPSHOT	pix	.tif	image/tiff	0	pix-file-images.png	TIFF Image
+assoc	0.1.2-SNAPSHOT	pix	.tiff	image/tiff	0	pix-file-images.png	TIFF Image
+assoc	0.1.2-SNAPSHOT	pix	.svg	image/svg+xml	0	pix-file-vector-graphics.png	SVG Image
+assoc	0.1.2-SNAPSHOT	pix	.ico	image/x-icon	0	pix-file-images.png	Icon
+assoc	0.1.2-SNAPSHOT	pix	.tga	application/x-pix-tga	1	pix-file-images.png	Targa Image
+assoc	0.1.2-SNAPSHOT	pix	.qoi	application/x-pix-qoi	1	pix-file-images.png	QOI Image
+assoc	0.1.2-SNAPSHOT	pix	.pnm	application/x-pix-pnm	1	pix-file-images.png	Portable Anymap Image
+assoc	0.1.2-SNAPSHOT	pix	.pbm	application/x-pix-pbm	1	pix-file-images.png	Portable Bitmap Image
+assoc	0.1.2-SNAPSHOT	pix	.pgm	application/x-pix-pgm	1	pix-file-images.png	Portable Graymap Image
+assoc	0.1.2-SNAPSHOT	pix	.ppm	application/x-pix-ppm	1	pix-file-images.png	Portable Pixmap Image
+assoc	0.1.2-SNAPSHOT	pix	.dds	application/x-pix-dds	1	pix-file-images.png	DirectDraw Surface
+assoc	0.1.2-SNAPSHOT	pix	.exr	application/x-pix-exr	1	pix-file-images.png	OpenEXR Image
+assoc	0.1.2-SNAPSHOT	pix	.hdr	application/x-pix-hdr	1	pix-file-images.png	Radiance HDR Image
+assoc	0.1.2-SNAPSHOT	pix	.mp4	video/mp4	0	pix-file-video.png	MP4 Video
+assoc	0.1.2-SNAPSHOT	pix	.m4v	video/x-m4v	0	pix-file-video.png	MPEG-4 Video
+assoc	0.1.2-SNAPSHOT	pix	.mov	video/quicktime	0	pix-file-video.png	QuickTime Movie
+assoc	0.1.2-SNAPSHOT	pix	.mkv	video/x-matroska	0	pix-file-video.png	Matroska Video
+assoc	0.1.2-SNAPSHOT	pix	.webm	video/webm	0	pix-file-video.png	WebM Video
+assoc	0.1.2-SNAPSHOT	pix	.avi	video/x-msvideo	0	pix-file-video.png	AVI Video
+assoc	0.1.2-SNAPSHOT	pix	.wmv	video/x-ms-wmv	0	pix-file-video.png	Windows Media Video
+assoc	0.1.2-SNAPSHOT	pix	.flv	video/x-flv	0	pix-file-video.png	Flash Video
+assoc	0.1.2-SNAPSHOT	pix	.mpg	video/mpeg	0	pix-file-video.png	MPEG Video
+assoc	0.1.2-SNAPSHOT	pix	.mpeg	video/mpeg	0	pix-file-video.png	MPEG Video
+assoc	0.1.2-SNAPSHOT	pix	.ts	video/mp2t	0	pix-file-video.png	MPEG Transport Stream
+assoc	0.1.2-SNAPSHOT	pix	.m2ts	video/mp2t	0	pix-file-video.png	MPEG-2 Transport Stream
+assoc	0.1.2-SNAPSHOT	pix	.mts	video/mp2t	0	pix-file-video.png	AVCHD Video
+assoc	0.1.2-SNAPSHOT	pix	.3gp	video/3gpp	0	pix-file-video.png	3GPP Video
+assoc	0.1.2-SNAPSHOT	pix	.ogv	video/ogg	0	pix-file-video.png	Ogg Video
+bin	0.1.2-SNAPSHOT	pix-ffmpeg	archive	0.1.2-SNAPSHOT	604cf38c4c54819e8c2d70a0762f76a28e56326afba0580b635434b8c931cf72	59207254	0	pix-ffmpeg-linux-x86_64.tar.gz	https://github.com/sibarum/vexelray-dist/releases/download/pix-v0.1.2-SNAPSHOT/pix-ffmpeg-linux-x86_64.tar.gz	ffmpeg
+bin	0.1.2-SNAPSHOT	notices	file	0.1.2-SNAPSHOT	86176294ff56865deac4e0e1de215e9f6c812823cf383fe66bc97d0002d37ca9	149051	0	THIRD-PARTY-NOTICES.txt	https://github.com/sibarum/vexelray-dist/releases/download/pix-v0.1.2-SNAPSHOT/THIRD-PARTY-NOTICES.txt	THIRD-PARTY-NOTICES.txt

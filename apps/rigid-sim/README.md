@@ -47,8 +47,8 @@ the PATH entry or file types back, set that variable to `'0'` and run the instal
 
 | File | Kind | Version | Size | Installed to |
 | --- | --- | --- | --- | --- |
-| `rigid-sim.exe` | native executable | 0.1.1 | 63.7 MB | `%LOCALAPPDATA%\Programs\Rigid Sim\rigid-sim.exe` |
-| `THIRD-PARTY-NOTICES.txt` | file | 0.1.1 | 0.1 MB | `%LOCALAPPDATA%\Programs\Rigid Sim\THIRD-PARTY-NOTICES.txt` |
+| `rigid-sim.exe` | native executable | 0.1.2-SNAPSHOT | 64.0 MB | `%LOCALAPPDATA%\Programs\Rigid Sim\rigid-sim.exe` |
+| `THIRD-PARTY-NOTICES.txt` | file | 0.1.2-SNAPSHOT | 0.1 MB | `%LOCALAPPDATA%\Programs\Rigid Sim\THIRD-PARTY-NOTICES.txt` |
 
 Everything installed is recorded in `%LOCALAPPDATA%\Programs\Rigid Sim\install-manifest.json`, and a copy
 in `%LOCALAPPDATA%\vexelray-installer\installs\rigid-sim.json`.

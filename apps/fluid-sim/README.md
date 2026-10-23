@@ -47,8 +47,8 @@ the PATH entry or file types back, set that variable to `'0'` and run the instal
 
 | File | Kind | Version | Size | Installed to |
 | --- | --- | --- | --- | --- |
-| `fluid-sim.exe` | native executable | 0.1.1 | 61.8 MB | `%LOCALAPPDATA%\Programs\Fluid Sim\fluid-sim.exe` |
-| `THIRD-PARTY-NOTICES.txt` | file | 0.1.1 | 0.1 MB | `%LOCALAPPDATA%\Programs\Fluid Sim\THIRD-PARTY-NOTICES.txt` |
+| `fluid-sim.exe` | native executable | 0.1.2-SNAPSHOT | 62.1 MB | `%LOCALAPPDATA%\Programs\Fluid Sim\fluid-sim.exe` |
+| `THIRD-PARTY-NOTICES.txt` | file | 0.1.2-SNAPSHOT | 0.1 MB | `%LOCALAPPDATA%\Programs\Fluid Sim\THIRD-PARTY-NOTICES.txt` |
 
 Everything installed is recorded in `%LOCALAPPDATA%\Programs\Fluid Sim\install-manifest.json`, and a copy
 in `%LOCALAPPDATA%\vexelray-installer\installs\fluid-sim.json`.

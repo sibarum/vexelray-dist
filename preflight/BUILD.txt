@@ -1,0 +1,30 @@
+VexelRay preflight, built 2026-10-23 15:01 for https://raw.githubusercontent.com/sibarum/vexelray-dist/main/preflight/install.ps1
+
+vexelray-build           0.1.2-SNAPSHOT   5589215   README: point at the developer guide
+intrabuf                 0.1.2-SNAPSHOT   c811322   Add intrabuf-nanotemplate: a template filler in one line per shell
+atchung                  1.2-SNAPSHOT     7cbd05c   PumpedReg: drain swaps buffers, recycles fold slots, wakes only BLOCK waiters
+supirvast                0.2.2-SNAPSHOT   671c712   README: point at the developer guide
+dxgi-bridge              0.1.2-SNAPSHOT   9e794f4   README: point at the developer guide
+kronometer               1.2-SNAPSHOT     46c98bd   README: point at the developer guide
+tactroller               1.2-SNAPSHOT     3cedac3   WindowsInputBackend: pollKeys walks precomputed arrays, pollPointer reuses button sets
+vexelray                 0.1.2-SNAPSHOT   417678d   NativePlatform.reducedMotion: the OS's own "reduce motion" switch
+imagelib-wrapper         0.1.2-SNAPSHOT   7599f98   README: point at the developer guide
+vexelray-gui             0.1.2-SNAPSHOT   0e8e6b4   Slow frames: judged by load, and never switched back off
+vexelray-framework       0.1.2-SNAPSHOT   e76dc68   SlowFramesPrompt: a switch that does not help is not taken back
+ffmpeg-wrapper           0.1.2-SNAPSHOT   530bdbb   Compression is one knob that moves every setting, up to too much on purpose
+vexelray-codec           0.1.2-SNAPSHOT   64115da   An animated image shows every frame, slower; a video drops late ones
+vex-suite-common         0.1.2-SNAPSHOT   17e58b3   PictureViewer: arrows at the sides, a fade under the pointer, an Auto backdrop
+cott-engine              0.1.2-SNAPSHOT   e6056ca   Linux builds into target-linux/
+cardinal                 1.2-SNAPSHOT     3bbc89f   Linux builds into target-linux/
+concordance-indexer      0.1.2-SNAPSHOT   c8f656a   The drafter declares the Cardinal it writes in
+vexelray-sim-core        0.1.2-SNAPSHOT   dc95bbc   Linux builds into target-linux/
+vexelray-installer       0.1.2-SNAPSHOT   e8b7e80   CLI: --platform generates only the platforms named
+mainframe                0.1.2-SNAPSHOT   d48ed86   Workspace environment scripts for bash and zsh
+text-editor-vexel-demo   0.1.2-SNAPSHOT   cba3851   A retrospective at the end of every milestone
+Pix                      0.1.2-SNAPSHOT   717effb   README: arrows at the sides, the fade under the pointer, the Auto backdrop
+vexplore                 0.1.2-SNAPSHOT   807f1ad   A retrospective at the end of every milestone
+vexelray-sim-fluid       0.1.2-SNAPSHOT   6ba9c5c   installer.json at 0.1.2-SNAPSHOT
+vexelray-sim-rigid       0.1.2-SNAPSHOT   5ca0e3f   installer.json at 0.1.2-SNAPSHOT
+calculator-vexel-demo    0.1.2-SNAPSHOT   f5f2845   A retrospective at the end of every milestone
+vexelray-maistro         0.1.2-SNAPSHOT   151ba5d   A retrospective at the end of every milestone
+vexelray-inspector       0.1.2-SNAPSHOT   069f1aa   The minimum height covers what cannot scroll, not the content

@@ -1,0 +1,45 @@
+vexelray-installer-linux	1
+id	text-editor
+name	Vex
+latest	0.1.2-SNAPSHOT
+tool	install.sh	65ce78a700719d1ef7c483a2febcc01108f2df282f2d915f2ed4ad8a1ee50f57	https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/text-editor/install.sh
+tool	uninstall.sh	f1867641443c59ff677226b62f7c501db0e09d708bd21efe8b5cf2787a01b818	https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/text-editor/uninstall.sh
+tool	update.sh	b2cf2adf9982ae74eadc41a0382f7cb20338f602e049e81ee99ab77b4feaafb5	https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/text-editor/update.sh
+version	0.1.2-SNAPSHOT
+dir	0.1.2-SNAPSHOT	$HOME/.local/opt/text-editor
+arch	0.1.2-SNAPSHOT	x86_64
+bin	0.1.2-SNAPSHOT	text-editor	native	0.1.2-SNAPSHOT	2f35ea3466ba7c9af7972d95db82cbae852d28f6fa6486628a6c84716931a43b	98699520	1	text-editor	https://github.com/sibarum/vexelray-dist/releases/download/text-editor-v0.1.2-SNAPSHOT/text-editor	text-editor
+icon	0.1.2-SNAPSHOT	text-editor	0a742625dee1b468a19b0deac14f67ad9a4eb5a94247b9d383e47d015dfb62ed	256	text-editor.png	https://github.com/sibarum/vexelray-dist/releases/download/text-editor-v0.1.2-SNAPSHOT/text-editor.png	text-editor.png
+typeicon	0.1.2-SNAPSHOT	text-editor	d0d8ba64c4131d1b26d4ff5e02fd72a31433ed91fa6344250bc753b0b92c2db6	256	text-editor-file-plain-text.png	https://github.com/sibarum/vexelray-dist/releases/download/text-editor-v0.1.2-SNAPSHOT/text-editor-file-plain-text.png	text-editor-file-plain-text.png
+typeicon	0.1.2-SNAPSHOT	text-editor	5586c10e88e66b48b0801334729647befebd0bd4451484b3234840962c6a16ed	256	text-editor-file-data-and-config.png	https://github.com/sibarum/vexelray-dist/releases/download/text-editor-v0.1.2-SNAPSHOT/text-editor-file-data-and-config.png	text-editor-file-data-and-config.png
+typeicon	0.1.2-SNAPSHOT	text-editor	dfe1d70ee4508e30c74018dc61e10025b2b388e8052e69a3341cfd82884cc973	256	text-editor-file-source-code.png	https://github.com/sibarum/vexelray-dist/releases/download/text-editor-v0.1.2-SNAPSHOT/text-editor-file-source-code.png	text-editor-file-source-code.png
+typeicon	0.1.2-SNAPSHOT	text-editor	ec7439ab4fedfef1c5131ca90410abc0b6a102e71242accbf0060882974ba997	256	text-editor-vex-terminal.png	https://github.com/sibarum/vexelray-dist/releases/download/text-editor-v0.1.2-SNAPSHOT/text-editor-vex-terminal.png	text-editor-vex-terminal.png
+shortcut	0.1.2-SNAPSHOT	text-editor	1	1	1	Vex
+assoc	0.1.2-SNAPSHOT	text-editor	.txt	text/plain	0	text-editor-file-plain-text.png	Text Document
+assoc	0.1.2-SNAPSHOT	text-editor	.log	text/plain	0	text-editor-file-plain-text.png	Log File
+assoc	0.1.2-SNAPSHOT	text-editor	.md	text/markdown	0	text-editor-file-plain-text.png	Markdown Document
+assoc	0.1.2-SNAPSHOT	text-editor	.markdown	text/markdown	0	text-editor-file-plain-text.png	Markdown Document
+assoc	0.1.2-SNAPSHOT	text-editor	.json	application/json	0	text-editor-file-data-and-config.png	JSON File
+assoc	0.1.2-SNAPSHOT	text-editor	.jsonc	application/x-text-editor-jsonc	1	text-editor-file-data-and-config.png	JSON with Comments File
+assoc	0.1.2-SNAPSHOT	text-editor	.xml	application/xml	0	text-editor-file-data-and-config.png	XML Document
+assoc	0.1.2-SNAPSHOT	text-editor	.xsd	application/x-text-editor-xsd	1	text-editor-file-data-and-config.png	XML Schema
+assoc	0.1.2-SNAPSHOT	text-editor	.xsl	application/x-text-editor-xsl	1	text-editor-file-data-and-config.png	XSL Stylesheet
+assoc	0.1.2-SNAPSHOT	text-editor	.yaml	application/yaml	0	text-editor-file-data-and-config.png	YAML File
+assoc	0.1.2-SNAPSHOT	text-editor	.yml	application/yaml	0	text-editor-file-data-and-config.png	YAML File
+assoc	0.1.2-SNAPSHOT	text-editor	.ini	application/x-text-editor-ini	1	text-editor-file-data-and-config.png	Configuration Settings
+assoc	0.1.2-SNAPSHOT	text-editor	.properties	application/x-text-editor-properties	1	text-editor-file-data-and-config.png	Properties File
+assoc	0.1.2-SNAPSHOT	text-editor	.html	application/x-text-editor-html	1	text-editor-file-source-code.png	HTML Document
+assoc	0.1.2-SNAPSHOT	text-editor	.htm	application/x-text-editor-htm	1	text-editor-file-source-code.png	HTML Document
+assoc	0.1.2-SNAPSHOT	text-editor	.css	application/x-text-editor-css	1	text-editor-file-source-code.png	CSS Stylesheet
+assoc	0.1.2-SNAPSHOT	text-editor	.mjs	application/x-text-editor-mjs	1	text-editor-file-source-code.png	JavaScript Module
+assoc	0.1.2-SNAPSHOT	text-editor	.cjs	application/x-text-editor-cjs	1	text-editor-file-source-code.png	CommonJS Module
+assoc	0.1.2-SNAPSHOT	text-editor	.java	application/x-text-editor-java	1	text-editor-file-source-code.png	Java Source File
+assoc	0.1.2-SNAPSHOT	text-editor	.py	application/x-text-editor-py	1	text-editor-file-source-code.png	Python Source File
+assoc	0.1.2-SNAPSHOT	text-editor	.pyi	application/x-text-editor-pyi	1	text-editor-file-source-code.png	Python Stub File
+assoc	0.1.2-SNAPSHOT	text-editor	.sh	application/x-text-editor-sh	1	text-editor-vex-terminal.png	Shell Script
+assoc	0.1.2-SNAPSHOT	text-editor	.bash	application/x-text-editor-bash	1	text-editor-vex-terminal.png	Bash Script
+assoc	0.1.2-SNAPSHOT	text-editor	.psd1	application/x-text-editor-psd1	1	text-editor-vex-terminal.png	PowerShell Data File
+assoc	0.1.2-SNAPSHOT	text-editor	.diff	text/x-diff	0	text-editor-file-plain-text.png	Diff File
+assoc	0.1.2-SNAPSHOT	text-editor	.patch	text/x-diff	0	text-editor-file-plain-text.png	Patch File
+assoc	0.1.2-SNAPSHOT	text-editor	.dockerfile	application/x-text-editor-dockerfile	1	text-editor-file-plain-text.png	Dockerfile
+bin	0.1.2-SNAPSHOT	notices	file	0.1.2-SNAPSHOT	c620f56c0b9e5400f1f61953d6220f00bee5bfdd0c820092f2447520def30bb6	106150	0	THIRD-PARTY-NOTICES.txt	https://github.com/sibarum/vexelray-dist/releases/download/text-editor-v0.1.2-SNAPSHOT/THIRD-PARTY-NOTICES.txt	THIRD-PARTY-NOTICES.txt

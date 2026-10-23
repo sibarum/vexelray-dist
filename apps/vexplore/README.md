@@ -48,9 +48,9 @@ the PATH entry or file types back, set that variable to `'0'` and run the instal
 
 | File | Kind | Version | Size | Installed to |
 | --- | --- | --- | --- | --- |
-| `vexplore.exe` | native executable | 0.1.1 | 62.1 MB | `%LOCALAPPDATA%\Programs\Vexplore\vexplore.exe` |
-| `vexplore-ffmpeg-windows-x86_64.zip` | archive (unpacked) | 0.1.1 | 52.1 MB | `%LOCALAPPDATA%\Programs\Vexplore\ffmpeg\` |
-| `THIRD-PARTY-NOTICES.txt` | file | 0.1.1 | 0.1 MB | `%LOCALAPPDATA%\Programs\Vexplore\THIRD-PARTY-NOTICES.txt` |
+| `vexplore.exe` | native executable | 0.1.2-SNAPSHOT | 62.6 MB | `%LOCALAPPDATA%\Programs\Vexplore\vexplore.exe` |
+| `vexplore-ffmpeg-windows-x86_64.zip` | archive (unpacked) | 0.1.2-SNAPSHOT | 52.1 MB | `%LOCALAPPDATA%\Programs\Vexplore\ffmpeg\` |
+| `THIRD-PARTY-NOTICES.txt` | file | 0.1.2-SNAPSHOT | 0.1 MB | `%LOCALAPPDATA%\Programs\Vexplore\THIRD-PARTY-NOTICES.txt` |
 
 Everything installed is recorded in `%LOCALAPPDATA%\Programs\Vexplore\install-manifest.json`, and a copy
 in `%LOCALAPPDATA%\vexelray-installer\installs\vexplore.json`.

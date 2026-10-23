@@ -48,8 +48,8 @@ the PATH entry or file types back, set that variable to `'0'` and run the instal
 
 | File | Kind | Version | Size | Installed to |
 | --- | --- | --- | --- | --- |
-| `maistro.exe` | native executable | 0.1.1 | 42.6 MB | `%LOCALAPPDATA%\Programs\Maistro\maistro.exe` |
-| `THIRD-PARTY-NOTICES.txt` | file | 0.1.1 | 0.1 MB | `%LOCALAPPDATA%\Programs\Maistro\THIRD-PARTY-NOTICES.txt` |
+| `maistro.exe` | native executable | 0.1.2-SNAPSHOT | 42.9 MB | `%LOCALAPPDATA%\Programs\Maistro\maistro.exe` |
+| `THIRD-PARTY-NOTICES.txt` | file | 0.1.2-SNAPSHOT | 0.1 MB | `%LOCALAPPDATA%\Programs\Maistro\THIRD-PARTY-NOTICES.txt` |
 
 Everything installed is recorded in `%LOCALAPPDATA%\Programs\Maistro\install-manifest.json`, and a copy
 in `%LOCALAPPDATA%\vexelray-installer\installs\maistro.json`.

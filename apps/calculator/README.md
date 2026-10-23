@@ -48,8 +48,8 @@ the PATH entry or file types back, set that variable to `'0'` and run the instal
 
 | File | Kind | Version | Size | Installed to |
 | --- | --- | --- | --- | --- |
-| `calculator.exe` | native executable | 0.1.1 | 42.9 MB | `%LOCALAPPDATA%\Programs\Calculator\calculator.exe` |
-| `THIRD-PARTY-NOTICES.txt` | file | 0.1.1 | 0.1 MB | `%LOCALAPPDATA%\Programs\Calculator\THIRD-PARTY-NOTICES.txt` |
+| `calculator.exe` | native executable | 0.1.2-SNAPSHOT | 43.2 MB | `%LOCALAPPDATA%\Programs\Calculator\calculator.exe` |
+| `THIRD-PARTY-NOTICES.txt` | file | 0.1.2-SNAPSHOT | 0.1 MB | `%LOCALAPPDATA%\Programs\Calculator\THIRD-PARTY-NOTICES.txt` |
 
 Everything installed is recorded in `%LOCALAPPDATA%\Programs\Calculator\install-manifest.json`, and a copy
 in `%LOCALAPPDATA%\vexelray-installer\installs\calculator.json`.
@@ -110,7 +110,88 @@ Read it first - it is one file: [`install.ps1`](https://raw.githubusercontent.co
 accepted when their SHA-256 matches the manifest, and the manifest and script live in this
 repository.
 
-macOS and Linux installers are planned; the manifest is already organised per platform.
+## Install (Linux)
+
+Open a terminal and run (no `sudo`: it installs for your user only):
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/calculator/install.sh | sh
+```
+
+It downloads Calculator 0.1.1, checks every file against the SHA-256 in the
+[install manifest](https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/calculator/manifest.json), and installs into `~/.local/opt/calculator`. It needs `curl` (or
+`wget`), `tar` and `sha256sum`, which every desktop distribution has.
+
+What it does:
+
+- creates the install folder and places the binaries there, executable
+- adds Calculator to your applications menu
+- puts a launcher on your desktop, if you have a Desktop folder
+- links `calculator` into `~/.local/bin`, so it runs from a terminal (a link is never put over a file that is not its own)
+- writes an install manifest listing everything it installed and where
+- adds `uninstall.sh` and `update.sh` next to the binaries
+
+### System requirements
+
+- a x86_64 processor (`uname -m` says `x86_64`)
+
+The installer checks these before it downloads anything large and stops if one is not met. To install anyway, run it as `curl -fsSL https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/calculator/install.sh | INSTALL_SKIP_CHECKS=1 sh`.
+
+### Options
+
+Set these for the `sh` that runs the script, as in `curl -fsSL https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/calculator/install.sh | INSTALL_NO_PATH=1 sh`:
+
+| Variable | Effect |
+| --- | --- |
+| `INSTALL_VERSION=1.2.3` | install a specific version from the [history](#versions) |
+| `INSTALL_DIR=/opt/calculator` | install somewhere other than `~/.local/opt/calculator` |
+| `INSTALL_NO_SHORTCUTS=1` | no menu entry or desktop launcher |
+| `INSTALL_NO_PATH=1` | link nothing into `~/.local/bin` |
+| `INSTALL_NO_ASSOCIATIONS=1` | do not register Calculator to open any file types |
+| `INSTALL_FORCE=1` | reinstall even if this version is already installed |
+| `INSTALL_SKIP_CHECKS=1` | install even if this computer does not meet the system requirements |
+
+Updates and reinstalls remember the `INSTALL_NO_*` choices of the last install. To get them back,
+set that variable to `0` and run the install command again.
+
+### What gets installed
+
+| File | Kind | Version | Size | Installed to |
+| --- | --- | --- | --- | --- |
+| `calculator` | native executable | 0.1.2-SNAPSHOT | 44.3 MB | `~/.local/opt/calculator/calculator` |
+| `THIRD-PARTY-NOTICES.txt` | file | 0.1.2-SNAPSHOT | 0.1 MB | `~/.local/opt/calculator/THIRD-PARTY-NOTICES.txt` |
+
+Everything installed is recorded in `~/.local/opt/calculator/install-manifest.json`, and a copy in
+`~/.local/share/vexelray-installer/installs/calculator.json`, the same record the Windows installer writes: other programs
+find Calculator through `commands.<name>.path` in it.
+
+### Update
+
+```sh
+"$HOME/.local/opt/calculator/update.sh"
+```
+
+Checks for a newer version and installs it after asking. `--check` only looks, `--yes` does not ask.
+An update that fails or is interrupted puts back the version you had, exactly as it was; if the
+computer went off halfway, the next install or update first finishes putting it back.
+
+### Uninstall
+
+```sh
+"$HOME/.local/opt/calculator/uninstall.sh"
+```
+
+Removes exactly what was installed: files, the menu entry and desktop launcher, the links in
+`~/.local/bin` and the file types. Files you added to the install folder are left alone. `--list`
+shows every install it knows about, `--all` removes them all, `--yes` does not ask. Report problems at https://github.com/sibarum/vexelray-dist/issues/new.
+
+### Is it safe to pipe a script into sh?
+
+Read it first - it is one file: [`install.sh`](https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/calculator/install.sh). Downloads are only accepted when
+their SHA-256 matches the manifest, and the manifest and the script live in this repository. It never
+asks for root, and writes nowhere outside your home folder unless `INSTALL_DIR` says so.
+
+A macOS installer is planned; the manifest is already organised per platform.
 
 ## Versions
 

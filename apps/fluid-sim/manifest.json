@@ -30,6 +30,62 @@
   },
   "versions": [
     {
+      "version": "0.1.2-SNAPSHOT",
+      "publishedAt": "2026-10-23T18:58:57Z",
+      "notes": "",
+      "installer": {
+        "install.ps1": "6a826b3df9c1b3ce1d7ec8ee63dacee4b91c2dbd1dc3a4c62e0836c21d9cd6f5",
+        "uninstall.ps1": "d49715b55826f28694edd46b940f572dfc69b58a3665540319fe454dd60ee665",
+        "update.ps1": "a21417d471ddc4f3f67ddcacb3b538d675745b2ba6360d419efa21ea02b7ded4",
+        "diagnose.ps1": "648cce94caa05ec6244f10f2b8c447d6fee3374b95240f3c88a9f33b34450768",
+        "manager.ps1": "2948ad0f915787b654cf895d5277b81544ef65b6e897b53dcacecfe57e127cf6"
+      },
+      "platforms": {
+        "windows": {
+          "installDir": "%LOCALAPPDATA%\\Programs\\Fluid Sim",
+          "binaries": [
+            {
+              "name": "fluid-sim",
+              "version": "0.1.2-SNAPSHOT",
+              "kind": "native",
+              "file": "fluid-sim.exe",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/fluid-sim-v0.1.2-SNAPSHOT/fluid-sim.exe",
+              "sha256": "7f51f7f00da6d808ce6ee30da6509195c12b149d8cfa13ad1979541c8fb7ef2e",
+              "size": 65163264,
+              "installPath": "{installDir}\\fluid-sim.exe",
+              "executable": true,
+              "addToPath": false,
+              "icon": {
+                "file": "fluid-sim.ico",
+                "url": "https://github.com/sibarum/vexelray-dist/releases/download/fluid-sim-v0.1.2-SNAPSHOT/fluid-sim.ico",
+                "sha256": "b2a9a4d502678628ab72fc947b0fb119334de8b228519e75a04f7aca0698de29",
+                "size": 28361,
+                "installPath": "{installDir}\\fluid-sim.ico"
+              },
+              "shortcuts": {
+                "desktop": true,
+                "startMenu": true,
+                "label": "Fluid Sim",
+                "gui": false
+              }
+            },
+            {
+              "name": "notices",
+              "version": "0.1.2-SNAPSHOT",
+              "kind": "file",
+              "file": "THIRD-PARTY-NOTICES.txt",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/fluid-sim-v0.1.2-SNAPSHOT/THIRD-PARTY-NOTICES.txt",
+              "sha256": "7cc1ed913399174b36424f53fe969188d840362ba73a04287d6544c4712cd71f",
+              "size": 72694,
+              "installPath": "{installDir}\\THIRD-PARTY-NOTICES.txt",
+              "executable": false,
+              "addToPath": false
+            }
+          ]
+        }
+      }
+    },
+    {
       "version": "0.1.1",
       "publishedAt": "2026-10-20T15:28:47Z",
       "notes": "",

@@ -30,6 +30,74 @@
   },
   "versions": [
     {
+      "version": "0.1.2-SNAPSHOT",
+      "publishedAt": "2026-10-23T18:52:31Z",
+      "notes": "",
+      "installer": {
+        "install.ps1": "7f6936ed796fc946cc0260dd71f9e7e6b58fbef5a6742c1178da419842333f4d",
+        "uninstall.ps1": "e7c5d17895d4dd3839e5b2f955dc6716c55840f39029c43eb693a9b3fdcd01fd",
+        "update.ps1": "53c919ba912c5dbff62131a8cc85bc3c2b1094cca9454ae80c31b6544376665f",
+        "diagnose.ps1": "5186e6636908f34affcf69446b515f2043b7e452a70d88704bd850d2f1e51883",
+        "manager.ps1": "341188f21adc17e0c77fa36837c888b09b2c3e0b8641735c1142525c45d04d48"
+      },
+      "platforms": {
+        "windows": {
+          "installDir": "%LOCALAPPDATA%\\Programs\\Vexplore",
+          "binaries": [
+            {
+              "name": "vexplore",
+              "version": "0.1.2-SNAPSHOT",
+              "kind": "native",
+              "file": "vexplore.exe",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/vexplore-v0.1.2-SNAPSHOT/vexplore.exe",
+              "sha256": "2c3ca314bbd1510555b0c451644d898676781780b93444e2ae7c233f6f0456c6",
+              "size": 65622016,
+              "installPath": "{installDir}\\vexplore.exe",
+              "executable": true,
+              "addToPath": true,
+              "icon": {
+                "file": "vexplore.ico",
+                "url": "https://github.com/sibarum/vexelray-dist/releases/download/vexplore-v0.1.2-SNAPSHOT/vexplore.ico",
+                "sha256": "a24f59cc8fb21271cfbdfa87b35b9c45ed461bef5f7603584942fd046fb5f806",
+                "size": 22384,
+                "installPath": "{installDir}\\vexplore.ico"
+              },
+              "shortcuts": {
+                "desktop": true,
+                "startMenu": true,
+                "label": "Vexplore",
+                "gui": false
+              }
+            },
+            {
+              "name": "vexplore-ffmpeg",
+              "version": "0.1.2-SNAPSHOT",
+              "kind": "archive",
+              "file": "vexplore-ffmpeg-windows-x86_64.zip",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/vexplore-v0.1.2-SNAPSHOT/vexplore-ffmpeg-windows-x86_64.zip",
+              "sha256": "9ebca8484245a7bd59289883f609b799023b9c41755bfd81abb53238262213b3",
+              "size": 54635834,
+              "installPath": "{installDir}\\ffmpeg",
+              "executable": false,
+              "addToPath": false
+            },
+            {
+              "name": "notices",
+              "version": "0.1.2-SNAPSHOT",
+              "kind": "file",
+              "file": "THIRD-PARTY-NOTICES.txt",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/vexplore-v0.1.2-SNAPSHOT/THIRD-PARTY-NOTICES.txt",
+              "sha256": "3e173ef93558ee0272f9260ff0f91e38a04123b939287cd4a704ec4f92526942",
+              "size": 149084,
+              "installPath": "{installDir}\\THIRD-PARTY-NOTICES.txt",
+              "executable": false,
+              "addToPath": false
+            }
+          ]
+        }
+      }
+    },
+    {
       "version": "0.1.1",
       "publishedAt": "2026-10-20T15:28:45Z",
       "notes": "",

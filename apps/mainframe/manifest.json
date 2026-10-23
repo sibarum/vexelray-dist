@@ -26,9 +26,124 @@
     "manager.ps1": {
       "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/mainframe/manager.ps1",
       "sha256": "bb98fbd36ac7436aac6abd5c0e3afc50311c399d9adac247cfc0904356c3b67d"
+    },
+    "install.sh": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/mainframe/install.sh",
+      "sha256": "deba93698da780021582b1fcb37f13585c9ab701107112ca64b873c37eb603f7"
+    },
+    "uninstall.sh": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/mainframe/uninstall.sh",
+      "sha256": "a132980a72227bd27b65e0826ba5d23cb9017d55af6b0958d1bffaa8f07d9935"
+    },
+    "update.sh": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/mainframe/update.sh",
+      "sha256": "fc459867b026b7c55a9bf29bbe733b8adfd3682c3d506b1209847deaa903cf77"
     }
   },
   "versions": [
+    {
+      "version": "0.1.2-SNAPSHOT",
+      "publishedAt": "2026-10-23T18:57:28Z",
+      "notes": "",
+      "installer": {
+        "install.ps1": "4c26a9b033ab53a089eb3036bc6dee3b73b3d1fa0dc97b65a9a9efe513452dba",
+        "uninstall.ps1": "af14cffb2b236592525635689dda61f4451d9e894aeaf494e6661388e2287237",
+        "update.ps1": "f7cbe84912c78bca89d07e93a3e1a488c6962308aa394385f5c5c5b409a26bbe",
+        "diagnose.ps1": "14f188ad047e43a3c7902dd2412e4f702c5972a14bca3d8b81f5fe9c70fbb18d",
+        "manager.ps1": "bb98fbd36ac7436aac6abd5c0e3afc50311c399d9adac247cfc0904356c3b67d",
+        "install.sh": "deba93698da780021582b1fcb37f13585c9ab701107112ca64b873c37eb603f7",
+        "uninstall.sh": "a132980a72227bd27b65e0826ba5d23cb9017d55af6b0958d1bffaa8f07d9935",
+        "update.sh": "fc459867b026b7c55a9bf29bbe733b8adfd3682c3d506b1209847deaa903cf77"
+      },
+      "platforms": {
+        "windows": {
+          "installDir": "%LOCALAPPDATA%\\Programs\\MainFrame",
+          "binaries": [
+            {
+              "name": "mainframe",
+              "version": "0.1.2-SNAPSHOT",
+              "kind": "native",
+              "file": "mainframe.exe",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/mainframe-v0.1.2-SNAPSHOT/mainframe.exe",
+              "sha256": "e50504dc6ff3535e0e72fe785f4c4a46b57c6531fa64b2d13f44e6f0cc26a82d",
+              "size": 45572096,
+              "installPath": "{installDir}\\mainframe.exe",
+              "executable": true,
+              "addToPath": true,
+              "icon": {
+                "file": "mainframe.ico",
+                "url": "https://github.com/sibarum/vexelray-dist/releases/download/mainframe-v0.1.2-SNAPSHOT/mainframe.ico",
+                "sha256": "8a18b4537d5689974c75f311b9f71b0c6eb7fa38818aabd94bc8ed48da3d75ee",
+                "size": 24959,
+                "installPath": "{installDir}\\mainframe.ico"
+              },
+              "shortcuts": {
+                "desktop": true,
+                "startMenu": true,
+                "label": "MainFrame",
+                "gui": false
+              }
+            },
+            {
+              "name": "notices",
+              "version": "0.1.2-SNAPSHOT",
+              "kind": "file",
+              "file": "THIRD-PARTY-NOTICES.txt",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/mainframe-v0.1.2-SNAPSHOT/THIRD-PARTY-NOTICES.txt",
+              "sha256": "12f4da8637dcc04b2a009bc1dea12784131e9cf6d7646d25d10be9fcbf096ab3",
+              "size": 60062,
+              "installPath": "{installDir}\\THIRD-PARTY-NOTICES.txt",
+              "executable": false,
+              "addToPath": false
+            }
+          ]
+        },
+        "linux": {
+          "installDir": "$HOME/.local/opt/mainframe",
+          "arch": "x86_64",
+          "binaries": [
+            {
+              "name": "mainframe",
+              "version": "0.1.2-SNAPSHOT",
+              "kind": "native",
+              "file": "mainframe",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/mainframe-v0.1.2-SNAPSHOT/mainframe",
+              "sha256": "8b3b7968993ac86282901e7c2968eacc793a4e7cd76f8b7e3f0455d9c121ee6e",
+              "size": 46336256,
+              "installPath": "{installDir}/mainframe",
+              "executable": true,
+              "addToPath": true,
+              "icon": {
+                "file": "mainframe.png",
+                "url": "https://github.com/sibarum/vexelray-dist/releases/download/mainframe-v0.1.2-SNAPSHOT/mainframe.png",
+                "sha256": "fc35b9ba563e0c510a6ededf29e093cefd41fd6fe4d531bd19527b0e0a7ed4f8",
+                "size": 9336,
+                "installPath": "{installDir}/mainframe.png",
+                "pixels": 256
+              },
+              "shortcuts": {
+                "desktop": true,
+                "startMenu": true,
+                "label": "MainFrame",
+                "gui": true
+              }
+            },
+            {
+              "name": "notices",
+              "version": "0.1.2-SNAPSHOT",
+              "kind": "file",
+              "file": "THIRD-PARTY-NOTICES.txt",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/mainframe-v0.1.2-SNAPSHOT/THIRD-PARTY-NOTICES.txt",
+              "sha256": "12f4da8637dcc04b2a009bc1dea12784131e9cf6d7646d25d10be9fcbf096ab3",
+              "size": 60062,
+              "installPath": "{installDir}/THIRD-PARTY-NOTICES.txt",
+              "executable": false,
+              "addToPath": false
+            }
+          ]
+        }
+      }
+    },
     {
       "version": "0.1.1",
       "publishedAt": "2026-10-20T15:28:46Z",
