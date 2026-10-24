@@ -257,7 +257,14 @@ one app, rebuild only it and run with `-SkipBuild`. To release afterwards, follo
 2. Add it to `installer-suite.json` (`config` is relative to this folder) and to the app lists in `build.cmd` and
    `build.sh`. For Linux, give it a `native-linux` profile (`mvn -Pnative-linux package` leaving its binary in
    `target-linux/`, as Vex's does) and a `linux` section in its `installer.json` naming what that leaves; `build.sh`
-   builds only the apps that have one.
+   builds only the apps that have one. The binary with the shortcuts takes an `"appId"`, its `<groupId>.<artifactId>`
+   (or the pom's `vexelray.app.id`), so the dock shows the running app under its icon; the build fails until it does
+   (`vexelray-build/README.md`). Choose it before the first release: changing it later renames the installed desktop
+   entry, which the installer handles on upgrade (`vexelray-installer/README.md`, Renames), but at a cost to users.
+   Its `id` is its `@VexelApp` name, which the build checks. Renaming an app later: change both, list the old name in
+   `@VexelApp(formerNames)` and in `installer.json`'s `replaces` with its old `repoPath` (`apps/<old id>`), and keep
+   the old `apps/<old id>` folder in this repo, which `deploy.ps1` now refreshes with forwarding copies; take the old
+   id out of `installer-suite.json`.
    List what its exe contains in `notices/notices.py` (`APPS`), run it, and add
    `{ "name": "notices", "source": "THIRD-PARTY-NOTICES.txt" }` to its `installer.json`'s binaries.
 3. Give it an `image` (a screenshot, relative to this folder) and `imageAlt` in `installer-suite.json` if it has one;
