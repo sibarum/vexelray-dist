@@ -130,6 +130,9 @@ check_setup() {
             missing+=("imagelib's Linux library: ./native/build.sh in imagelib-wrapper/imagelib-wrapper-linux")
         [ -f "$root/ffmpeg-wrapper/ffmpeg-wrapper-linux/native/dist/linux-x86_64/libs.txt" ] ||
             missing+=("ffmpeg-wrapper's Linux shim and FFmpeg: ./native/build.sh in ffmpeg-wrapper/ffmpeg-wrapper-linux")
+        # The camera's recording encoder, staged beside every app as ffmpeg-record.
+        [ -f "$root/ffmpeg-wrapper/ffmpeg-wrapper-record-linux/native/dist/linux-x86_64/libs.txt" ] ||
+            missing+=("ffmpeg-wrapper's Linux recording encoder: ./native/build.sh in ffmpeg-wrapper/ffmpeg-wrapper-record-linux")
     fi
     for r in "${LIBS[@]}" "${APPS[@]}"; do
         [ -f "$root/$r/pom.xml" ] || missing+=("the checkout $root/$r")

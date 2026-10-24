@@ -204,6 +204,17 @@ APPS = {
     "inspector": ("vexelray-inspector", EVERY_APP, False, ""),
 }
 
+# Every app records its windows to video (the title bar's camera), through ffmpeg-wrapper-record's encoder, which its
+# installer.json installs beside the exe. The licence files are staged with the libraries by that module's build.
+RECORD = ("The ffmpeg-record folder next to {name} holds the libraries its camera records video with (AV1 into "
+          "Matroska). They are not part of the program's executable. They are FFmpeg, licensed under the GNU Lesser "
+          "General Public License, with SVT-AV1 (https://gitlab.com/AOMediaCodec/SVT-AV1, Copyright (c) 2021, "
+          "Alliance for Open Media) linked in, licensed under the BSD 3-Clause Clear License and covered by the "
+          "Alliance for Open Media Patent License 1.0. Their licences, the patent licence and where to get their "
+          "source are in ffmpeg-record\\FFMPEG-LICENSE.txt, ffmpeg-record\\SVT-AV1-LICENSE.txt, "
+          "ffmpeg-record\\SVT-AV1-PATENTS.txt and ffmpeg-record\\FFMPEG-SOURCE.txt. The same folder's ffrecord.dll "
+          "is VexelRay's own code.")
+
 # Markers of what the exes must not contain unless listed: a dependency that is declared but not compiled in.
 NOT_LISTED = {"org.joml": "JOML"}
 
@@ -369,7 +380,7 @@ def main():
             config = json.load(h)
         name = config["name"]
         rust = crate_list if has_rust else None
-        body = render(name, components, rust, beside)
+        body = render(name, components, rust, "\n\n".join(p for p in (beside, RECORD.format(name=name)) if p))
         with open(os.path.join(folder, NAME), "w", encoding="utf-8", newline="") as h:
             h.write(body)
         print(f"[{app_id}] {checkout}/{NAME}: {len(components) + (1 if rust else 0)} items, {len(body) // 1024} KB")
