@@ -12,7 +12,7 @@
     assets\<id>\<ver>\ each application's exe, Linux binaries and icons, as uploaded to its release (ignored)
     exe\               every exe in one place                                                (ignored)
   The landing page is not part of a deploy: it reads each platform's version from the published manifests, so a
-  release changes nothing there. site.ps1 regenerates it when the site itself changes.
+  release changes nothing there.
 
   -Publish also creates each release (tag <id>-v<version>) on sibarum/vexelray-dist and uploads its files.
   It uses $env:GITHUB_TOKEN if set, and otherwise asks for a token (input hidden, never stored): a fine-grained

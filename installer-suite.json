@@ -6,108 +6,15 @@
   "repo": "sibarum/vexelray-dist",
   "branch": "main",
 
-  "site": {
-    "url": "https://sibarum.github.io",
-    "badge": "{version} · experimental prerelease",
-    "tagline": "Nine desktop applications for Windows and Linux, drawn live on the GPU, which know about each other.",
-    "requirements": "Needs Windows 10 or 11 (64-bit) and a graphics card with an up-to-date driver: everything here draws with Vulkan.",
-    "linux": {
-      "requirements": "Needs 64-bit (x86_64) Linux with an X11 desktop, or Wayland with XWayland, and a Vulkan driver: Mesa's, or your graphics card maker's. For now every window draws at 100%, whatever the desktop's scaling."
-    },
-    "feedbackUrl": "https://github.com/sibarum/vexelray-framework/issues/new",
-    "accentColor": "#2563eb",
-    "logo": "site/vexelray.svg",
-    "heroLogo": "site/vexelray-full.svg",
-    "heroAction": { "label": "See what's inside the framework", "url": "https://sibarum.github.io/technology.html" },
-    "links": [
-      { "label": "Technology", "url": "https://sibarum.github.io/technology.html" },
-      { "label": "Design", "url": "https://sibarum.github.io/design.html" },
-      { "label": "Framework", "url": "https://sibarum.github.io/vexelray-framework/" },
-      { "label": "GitHub", "url": "https://github.com/sibarum/vexelray-framework" }
-    ],
-    "sections": [
-      {
-        "id": "inside", "title": "Built different, underneath", "nav": "Under the hood",
-        "lede": "Every application above runs on the same framework, and it does things you would not expect from a desktop toolkit.",
-        "cards": [
-          { "stat": "0 fps", "title": "Frames only on demand",
-            "text": "A window draws when something changes and sleeps when nothing does, waking to its first frame in about a millisecond. The whole window is one draw call.",
-            "url": "https://sibarum.github.io/technology.html#on-demand" },
-          { "stat": "5 lanes", "title": "Multithreaded by default",
-            "text": "The main thread only draws. App logic, disk work and time run on their own lanes, placed at compile time, so a part that hangs never freezes the window.",
-            "url": "https://sibarum.github.io/technology.html#threads" },
-          { "stat": "577 ns", "title": "A clock you can test",
-            "text": "Kronometer drives every animation from one logical clock. On its virtual clock, a ten-minute scenario runs in microseconds, identically every time.",
-            "url": "https://sibarum.github.io/technology.html#kronometer" }
-        ],
-        "action": { "label": "See all the technology", "url": "https://sibarum.github.io/technology.html" }
-      },
-      {
-        "id": "build", "title": "Build your own", "nav": "Developers",
-        "lede": "VexelRay is also a framework: Java 25, compiled to a native executable for Windows or Linux and drawn with Vulkan. Every application above is built on it. Yours can be too, whether a coding agent writes most of it or you write all of it.",
-        "cards": [
-          { "title": "Start from the template",
-            "text": "One command generates a working application with tabs, a file navigator, settings that persist, and tests that build the window without a GPU. Vex, Calculator and MainFrame all started this way.",
-            "url": "https://sibarum.github.io/vexelray-framework/getting-started.html" },
-          { "title": "Build it with an LLM",
-            "text": "The stack was written with Claude Code. The framework and the GUI carry a `CLAUDE.md` with the rules the code does not show, and every generated project starts with one. `ottermate` lets a coding agent drive and screenshot the window it built, so it checks its own work by looking at it.",
-            "url": "https://sibarum.github.io/vexelray-framework/developers/with-an-llm.html" },
-          { "title": "Or write it yourself in Vex",
-            "text": "Vex highlights Java, jumps to any declaration in your project or in the framework, and shows a folder's Maven modules before you open it. MainFrame and Vexplore work alongside it.",
-            "url": "https://sibarum.github.io/vexelray-framework/developers/in-vex.html" }
-        ],
-        "action": { "label": "Read the developer guide", "url": "https://sibarum.github.io/vexelray-framework/developers/" }
-      },
-      {
-        "id": "built-with", "title": "Built with", "nav": "Credits",
-        "lede": "VexelRay would not exist without three pieces of other people's work, and we're grateful for each of them.",
-        "cards": [
-          { "title": "Claude Code, by Anthropic",
-            "text": "Most of VexelRay was written with Claude Code, Anthropic's coding agent, working alongside its author. Ottermate exists so Claude can see the windows it builds.",
-            "url": "https://claude.com/claude-code" },
-          { "title": "Oracle GraalVM",
-            "text": "Oracle GraalVM's Native Image compiles every application ahead of time into a single native executable, for Windows or Linux, that runs without a JVM.",
-            "url": "https://www.graalvm.org/" },
-          { "title": "Vulkan, by the Khronos Group",
-            "text": "Everything here is drawn with Vulkan, the open, cross-platform graphics and compute API from the Khronos Group, with every shader compiled to SPIR-V.",
-            "url": "https://www.vulkan.org/" }
-        ],
-        "action": { "label": "Licenses and notices", "url": "https://sibarum.github.io/licenses.html" }
-      }
-    ],
-    "footerLinks": [
-      { "label": "Technology", "url": "https://sibarum.github.io/technology.html" },
-      { "label": "Design", "url": "https://sibarum.github.io/design.html" },
-      { "label": "Licenses and notices", "url": "https://sibarum.github.io/licenses.html" }
-    ],
-    "notice": "Claude and Claude Code are trademarks of Anthropic, PBC. Oracle, Java and GraalVM are trademarks or registered trademarks of Oracle and/or its affiliates. Vulkan and SPIR-V are trademarks or registered trademarks of The Khronos Group Inc. Windows and Direct3D are trademarks of the Microsoft group of companies. Linux is the registered trademark of Linus Torvalds in the U.S. and other countries. Other names may be trademarks of their respective owners. VexelRay is an independent project, not affiliated with or endorsed by any of them."
-  },
-
   "members": [
-    { "config": "../vexplore/installer.json", "page": "https://sibarum.github.io/vexelray-framework/apps/vexplore.html",
-      "image": "../vexelray-framework/docs/apps/img/01-select-condition-action.png",
-      "imageAlt": "Vexplore: one video clicked, the suggestion rail offering all nine videos here and a move" },
-    { "config": "../text-editor-vexel-demo/installer.json", "page": "https://sibarum.github.io/vexelray-framework/apps/text-editor.html",
-      "image": "../vexelray-framework/docs/apps/img/text-editor.png",
-      "imageAlt": "Vex: Kronometer's Tempo.java open beside its navigator, the project indexed" },
-    { "config": "../Pix/installer.json", "page": "https://sibarum.github.io/vexelray-framework/apps/pix.html",
-      "image": "../vexelray-framework/docs/apps/img/pix-viewer.png",
-      "imageAlt": "Pix: a picture, and under it the file's name, the filmstrip of its neighbours, and the controls" },
-    { "config": "../mainframe/installer.json", "page": "https://sibarum.github.io/vexelray-framework/apps/mainframe.html",
-      "image": "../vexelray-framework/docs/apps/img/mainframe.png",
-      "imageAlt": "MainFrame: PowerShell in a tab, a coloured git log and a folder listing" },
-    { "config": "../calculator-vexel-demo/installer.json", "page": "https://sibarum.github.io/vexelray-framework/apps/calculator.html",
-      "image": "../vexelray-framework/docs/apps/img/calculator.png",
-      "imageAlt": "Calculator: two lines answered, each with its readings, and x^2-4 plotted" },
-    { "config": "../vexelray-sim-fluid/installer.json", "optional": true, "page": "https://github.com/sibarum/vexelray-sim-fluid",
-      "image": "../vexelray-sim-fluid/docs/images/water-on-mercury.png",
-      "imageAlt": "A dam break of water onto mercury: water (blue) rides on mercury (red)" },
-    { "config": "../vexelray-sim-rigid/installer.json", "optional": true, "page": "https://github.com/sibarum/vexelray-sim-rigid",
-      "image": "../vexelray-sim-rigid/docs/images/pile-of-1000.png",
-      "imageAlt": "Rigid Sim: a pile of 1000 spheres slumping in its box, solved by Gauss–Seidel" },
+    { "config": "../vexplore/installer.json", "page": "https://sibarum.github.io/vexelray-framework/apps/vexplore.html" },
+    { "config": "../text-editor-vexel-demo/installer.json", "page": "https://sibarum.github.io/vexelray-framework/apps/text-editor.html" },
+    { "config": "../Pix/installer.json", "page": "https://sibarum.github.io/vexelray-framework/apps/pix.html" },
+    { "config": "../mainframe/installer.json", "page": "https://sibarum.github.io/vexelray-framework/apps/mainframe.html" },
+    { "config": "../calculator-vexel-demo/installer.json", "page": "https://sibarum.github.io/vexelray-framework/apps/calculator.html" },
+    { "config": "../vexelray-sim-fluid/installer.json", "optional": true, "page": "https://github.com/sibarum/vexelray-sim-fluid" },
+    { "config": "../vexelray-sim-rigid/installer.json", "optional": true, "page": "https://github.com/sibarum/vexelray-sim-rigid" },
     { "config": "../vexelray-maistro/installer.json", "optional": true, "page": "https://github.com/sibarum/vexelray-maistro" },
-    { "config": "../vexelray-inspector/installer.json", "optional": true, "page": "https://github.com/sibarum/vexelray-inspector",
-      "image": "../vexelray-inspector/docs/screenshots/resting.png",
-      "imageAlt": "VexelRay Inspector: the escapement at rest, replaying a calculator session, its park's budget on the plaque" }
+    { "config": "../vexelray-inspector/installer.json", "optional": true, "page": "https://github.com/sibarum/vexelray-inspector" }
   ]
 }

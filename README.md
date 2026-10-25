@@ -3,8 +3,6 @@
 
 Desktop applications built on the VexelRay stack: a file explorer, a text editor, an image viewer, a terminal, a calculator, fluid and rigid-body simulations, a desktop client for Claude Code, and an inspector that shows a running app's frame loop. They are separate programs that know about each other, so a file in the explorer opens in the editor or the viewer, and the editor can show a file in the explorer.
 
-The install page is https://sibarum.github.io, which installs with a shorter command.
-
 ## Windows
 
 Open **PowerShell** (a normal window - administrator rights are not needed) and run:

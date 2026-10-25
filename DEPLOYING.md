@@ -1,15 +1,13 @@
 # Deploying VexelRay
 
 How the applications get from the sibling checkouts to the one-line installer. The page users see is
-[sibarum.github.io](https://sibarum.github.io), and [README.md](README.md) is the same instructions for this repo;
-both are generated, so this file is the one to edit.
+[sibarum.github.io](https://sibarum.github.io), written by hand in its own repo, and [README.md](README.md) is the same
+instructions for this repo; the README is generated, so this file is the one to edit.
 
 ```
 build.cmd ──► native exes in each app's target\ ───────┐
                                                        ├──► deploy.ps1 ──► apps\<id>\, install.ps1, install.sh, README.md   (git)
 build.sh (Linux VM) ──► Linux binaries in target-linux/ ┘               └──► assets\, exe\  ──► -Publish ──► GitHub releases
-
-installer-suite.json ──► site.ps1 ──► ..\sibarum.github.io\  (git, served by GitHub Pages; not part of a release)
 ```
 
 Windows and Linux share a release: an app with a `linux` section in its `installer.json` (Vex, Pix, MainFrame,
@@ -33,7 +31,7 @@ a version to that version's release and manifest, keeping what the others put th
 | `installer-suite.json` (here) | which apps the suite installs, in order, and where each links to |
 | `apps/<id>/` (here, committed) | each app's `install.ps1`, `uninstall.ps1`, `update.ps1`, `manifest.json` and install page; with a `linux` section, `install.sh`, `uninstall.sh`, `update.sh` and `manifest.linux.txt` too |
 | `install.ps1`, `install.sh`, `README.md` (here, committed) | the suite: runs each app's installer in turn. `install.sh` is the Linux one, of the apps that have a `linux` section |
-| `../sibarum.github.io` (its own repo, committed) | the landing page at https://sibarum.github.io: `index.html`, the icons and screenshots in `img/`, and copies of the suite's `install.ps1` and `install.sh`, so the commands are shorter. Generated from `installer-suite.json` (its `site` section, and each member's `image`) |
+| `../sibarum.github.io` (its own repo, committed) | the landing page at https://sibarum.github.io: `index.html`, the icons and screenshots in `img/`, and copies of the suite's `install.ps1` and `install.sh`, so the commands are shorter. Written by hand there; nothing here writes to it |
 | releases on `sibarum/vexelray-dist` | the binaries, one release per app version, tagged `<id>-v<version>` (`pix-v0.1.0`), with each platform's files added as that platform publishes |
 | `exe/`, `assets/`, `logs/` (here, ignored) | build output; never committed. `logs/linux/` is `build.sh`'s, with `BUILD.txt`: the commit of every checkout the Linux binaries were built from, `LOCAL.txt`: the build `local-linux.sh --install` installed, and `REQUEST.txt`, `WATCH.txt`: the preflight's request to the VM's watcher and its answer |
 | `preflight/` (here, committed) | the [preflight](#preflight-release) suite installer, pinned to the last snapshots published, and `BUILD.txt` |
@@ -50,7 +48,7 @@ docs site links to the landing page from `vexelray-framework/docs/install/index.
 
 ## One-time setup
 
-- Every repository checked out side by side in one folder, this one included, and `sibarum.github.io` for `site.ps1`.
+- Every repository checked out side by side in one folder, this one included.
 - GraalVM 25 as `JAVA_HOME`, and Maven.
 - Visual Studio 2026 (18) Community with the C++ workload: native-image links with MSVC's `link.exe` and the icons
   are compiled with `rc.exe`. `build.cmd` sets this up itself with `vcvars64.bat`.
@@ -108,7 +106,7 @@ It stops at the first step that fails. Logs are in `logs\`.
    fails, add the component to `notices.py` with its licence (in `notices/licenses/`). A changed notices file is
    part of the app's next release; commit it in the app's repo.
 5. **versions**: names each app whose `installer.json` version is already published. Bump that app if it changed.
-6. **generate**: `deploy.ps1` without `-Publish`, then the files it changed here and in `..\sibarum.github.io`.
+6. **generate**: `deploy.ps1` without `-Publish`, then the files it changed here.
 
 After fixing one app, rebuild only it and rerun with `.\preflight.ps1 -SkipBuild`, which uses the exes already in
 each app's `target\`.
@@ -342,9 +340,8 @@ one app, rebuild only it and run with `-SkipBuild`. To release afterwards, follo
    id out of `installer-suite.json`.
    List what its exe contains in `notices/notices.py` (`APPS`), run it, and add
    `{ "name": "notices", "source": "THIRD-PARTY-NOTICES.txt" }` to its `installer.json`'s binaries.
-3. Give it an `image` (a screenshot, relative to this folder) and `imageAlt` in `installer-suite.json` if it has one;
-   the landing page shows its icon otherwise, then regenerate the page with `.\site.ps1`, and commit and push it in
-   `..sibarum.github.io`. Add it to the framework docs' home page, `vexelray-framework/docs/index.md`.
+3. Add its card to the landing page, `../sibarum.github.io/index.html`, by hand, with its icon and screenshot in
+   that repo's `img/`, and to the framework docs' home page, `vexelray-framework/docs/index.md`.
 4. Release as above.
 
 ## Source releases (tags on every repository)
