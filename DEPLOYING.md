@@ -7,8 +7,9 @@ both are generated, so this file is the one to edit.
 ```
 build.cmd ──► native exes in each app's target\ ───────┐
                                                        ├──► deploy.ps1 ──► apps\<id>\, install.ps1, install.sh, README.md   (git)
-build.sh (Linux VM) ──► Linux binaries in target-linux/ ┘               ├──► assets\, exe\  ──► -Publish ──► GitHub releases
-                                                                        └──► ..\sibarum.github.io\  (git, served by GitHub Pages)
+build.sh (Linux VM) ──► Linux binaries in target-linux/ ┘               └──► assets\, exe\  ──► -Publish ──► GitHub releases
+
+installer-suite.json ──► site.ps1 ──► ..\sibarum.github.io\  (git, served by GitHub Pages; not part of a release)
 ```
 
 Windows and Linux share a release: an app with a `linux` section in its `installer.json` (Vex, Pix, MainFrame,
@@ -49,8 +50,7 @@ docs site links to the landing page from `vexelray-framework/docs/install/index.
 
 ## One-time setup
 
-- Every repository checked out side by side in one folder, this one included. `sibarum.github.io` too, or `deploy.ps1`
-  skips the landing page with a warning.
+- Every repository checked out side by side in one folder, this one included, and `sibarum.github.io` for `site.ps1`.
 - GraalVM 25 as `JAVA_HOME`, and Maven.
 - Visual Studio 2026 (18) Community with the C++ workload: native-image links with MSVC's `link.exe` and the icons
   are compiled with `rc.exe`. `build.cmd` sets this up itself with `vcvars64.bat`.
@@ -252,13 +252,11 @@ pushed branch.
 After each platform's publish. Every installer and updater reads the manifests from `main` (the `branch` in each
 `installer.json`, baked into every generated script), so pushing `develop` alone shows nobody anything. Once `main`
 has them, the install command and every app's updater offer the new version. GitHub's raw host caches for a few
-minutes. Push the landing page as well when it changed (a new app, a new description or screenshot); GitHub Pages
-publishes it within a minute.
+minutes. The landing page needs nothing: it reads each platform's version from these manifests.
 
 ```powershell
 git add -A; git commit -m "0.1.2 for Windows"; git push origin develop
 git checkout main; git merge develop; git push origin main; git checkout develop
-git -C ..\sibarum.github.io add -A; git -C ..\sibarum.github.io commit -m "0.1.2 for Windows"; git -C ..\sibarum.github.io push
 ```
 
 ## Snapshot releases
@@ -345,7 +343,8 @@ one app, rebuild only it and run with `-SkipBuild`. To release afterwards, follo
    List what its exe contains in `notices/notices.py` (`APPS`), run it, and add
    `{ "name": "notices", "source": "THIRD-PARTY-NOTICES.txt" }` to its `installer.json`'s binaries.
 3. Give it an `image` (a screenshot, relative to this folder) and `imageAlt` in `installer-suite.json` if it has one;
-   the landing page shows its icon otherwise. Add it to the framework docs' home page, `vexelray-framework/docs/index.md`.
+   the landing page shows its icon otherwise, then regenerate the page with `.\site.ps1`, and commit and push it in
+   `..sibarum.github.io`. Add it to the framework docs' home page, `vexelray-framework/docs/index.md`.
 4. Release as above.
 
 ## Source releases (tags on every repository)

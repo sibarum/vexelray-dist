@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # deploy.ps1 -Platform windows for Linux, run in the Linux VM: each app that has a "linux" section gets its Linux
-# installer generated into apps/<id>/, from the binaries build.sh left in its target-linux/, and the suite and the
-# landing page are regenerated. What the manifests already have for Windows is kept: each operating system publishes
+# installer generated into apps/<id>/, from the binaries build.sh left in its target-linux/, and the suite is
+# regenerated. What the manifests already have for Windows is kept: each operating system publishes
 # its build of a version into the app's release on its own. Pull this repository first, so the manifests merged into
 # are the ones the other platforms committed.
 #
@@ -71,10 +71,3 @@ done <<< "$members"
 
 echo "== suite"
 java -jar "$cli" --suite "$dist/installer-suite.json" --out "$dist" || { echo "Generating the suite failed" >&2; exit 1; }
-site="$root/sibarum.github.io"
-if [ -d "$site/.git" ]; then
-    echo "== landing page"
-    java -jar "$cli" --suite "$dist/installer-suite.json" --site --out "$site" || { echo "Generating the landing page failed" >&2; exit 1; }
-else
-    echo "No checkout at $site: the landing page was not regenerated" >&2
-fi

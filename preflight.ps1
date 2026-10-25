@@ -16,7 +16,7 @@
   4. notices    notices\notices.py --check
   5. versions   lists each application whose installer.json version is already published: its exe will be
                 regenerated as that same release, so bump it if it changed
-  6. generate   deploy.ps1 without -Publish, then the diff here and in ..\sibarum.github.io
+  6. generate   deploy.ps1 without -Publish, then the diff here
 
   Nothing is uploaded, committed or pushed. The generated files are left in place to look at: publishing is
   deploy.ps1 -Publish, and git checkout -- apps puts them back. Logs land in logs\. Stops at the first failing step.
@@ -277,7 +277,5 @@ try { & (Join-Path $dist 'deploy.ps1') @deployArgs } catch { Fail "deploy.ps1: $
 
 Step 'diff'
 git -C $dist status --short
-$site = Join-Path $root 'sibarum.github.io'
-if (Test-Path (Join-Path $site '.git')) { git -C $site status --short }
 
-Write-Host "`nPreflight passed. Look at git diff here (and in ..\sibarum.github.io), then .\deploy.ps1 -Publish$(if ($Platform) { " -Platform $Platform" })." -ForegroundColor Green
+Write-Host "`nPreflight passed. Look at git diff here, then .\deploy.ps1 -Publish$(if ($Platform) { " -Platform $Platform" })." -ForegroundColor Green

@@ -7,7 +7,7 @@
 #   3. versions   each app whose installer.json version is already published for Linux: bump it if it changed
 #   4. local      ./local-linux.sh --install: a local preflight in ~/vexelray-local, installed for real on this
 #                 account, and each install record checked
-#   5. generate   with --release only: ./deploy.sh without --publish, then the diff here and in ../sibarum.github.io
+#   5. generate   with --release only: ./deploy.sh without --publish, then the diff here
 #
 #   ./preflight.sh                  all of it
 #   ./preflight.sh --skip-build     use the Linux binaries already built (after rebuilding one app with --only)
@@ -102,8 +102,7 @@ if [ $release = 1 ]; then
     "$dist/deploy.sh" || fail "deploy.sh"
     step diff
     git -C "$dist" status --short
-    [ -d "$root/sibarum.github.io/.git" ] && git -C "$root/sibarum.github.io" status --short
-    printf '\nLinux release preflight passed. Look at git diff here (and in ../sibarum.github.io), then ./deploy.sh --publish.\n'
+    printf '\nLinux release preflight passed. Look at git diff here, then ./deploy.sh --publish.\n'
     exit 0
 fi
 

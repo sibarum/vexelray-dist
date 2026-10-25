@@ -11,15 +11,15 @@
     install.ps1, install.sh, README.md                                        the suite      (committed)
     assets\<id>\<ver>\ each application's exe, Linux binaries and icons, as uploaded to its release (ignored)
     exe\               every exe in one place                                                (ignored)
-  and, when the sibling checkout ..\sibarum.github.io exists, the landing page served at https://sibarum.github.io:
-    index.html, install.ps1, install.sh, img\                        (committed and pushed there)
+  The landing page is not part of a deploy: it reads each platform's version from the published manifests, so a
+  release changes nothing there. site.ps1 regenerates it when the site itself changes.
 
   -Publish also creates each release (tag <id>-v<version>) on sibarum/vexelray-dist and uploads its files.
   It uses $env:GITHUB_TOKEN if set, and otherwise asks for a token (input hidden, never stored): a fine-grained
   token with Contents: read and write on vexelray-dist. Commit and push afterwards: the manifests name the uploads.
 
   -Preflight is for snapshot builds (every installer.json at an X-SNAPSHOT version). It writes the applications as
-  above, but instead of the suite and the landing page it writes preflight\install.ps1 and README.md: a suite that
+  above, but instead of the suite it writes preflight\install.ps1 and README.md: a suite that
   installs exactly these versions, rather than each application's latest release.
 
   -Local writes the same preflight, but all of it into local\ (ignored) and pointing at http://127.0.0.1:<Port>
@@ -126,15 +126,6 @@ if ($Preflight -or $Local) {
 Write-Host '== suite'
 & java -jar $jar --suite (Join-Path $dist 'installer-suite.json') --out $dist
 if ($LASTEXITCODE -ne 0) { throw 'Generating the suite failed' }
-
-$site = Join-Path $root 'sibarum.github.io'
-if (Test-Path (Join-Path $site '.git')) {
-    Write-Host '== landing page'
-    & java -jar $jar --suite (Join-Path $dist 'installer-suite.json') --site --out $site
-    if ($LASTEXITCODE -ne 0) { throw 'Generating the landing page failed' }
-} else {
-    Write-Warning "No checkout at ${site}: the landing page was not regenerated"
-}
 } finally {
     if ($askedForToken) { Remove-Item Env:GITHUB_TOKEN -ErrorAction SilentlyContinue }
 }
