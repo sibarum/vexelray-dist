@@ -119,7 +119,7 @@ Open a terminal and run (no `sudo`: it installs for your user only):
 curl -fsSL https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/mainframe/install.sh | sh
 ```
 
-It downloads MainFrame 0.1.2-SNAPSHOT, checks every file against the SHA-256 in the
+It downloads MainFrame 0.1.2, checks every file against the SHA-256 in the
 [install manifest](https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/mainframe/manifest.json), and installs into `~/.local/opt/mainframe`. It needs `curl` (or
 `wget`), `tar` and `sha256sum`, which every desktop distribution has.
 
@@ -159,8 +159,9 @@ set that variable to `0` and run the install command again.
 
 | File | Kind | Version | Size | Installed to |
 | --- | --- | --- | --- | --- |
-| `mainframe` | native executable | 0.1.2-SNAPSHOT | 44.2 MB | `~/.local/opt/mainframe/mainframe` |
-| `THIRD-PARTY-NOTICES.txt` | file | 0.1.2-SNAPSHOT | 0.1 MB | `~/.local/opt/mainframe/THIRD-PARTY-NOTICES.txt` |
+| `mainframe` | native executable | 0.1.2 | 46.1 MB | `~/.local/opt/mainframe/mainframe` |
+| `mainframe-ffmpeg-record-linux-x86_64.tar.gz` | archive (unpacked) | 0.1.2 | 4.3 MB | `~/.local/opt/mainframe/ffmpeg-record/` |
+| `THIRD-PARTY-NOTICES.txt` | file | 0.1.2 | 0.1 MB | `~/.local/opt/mainframe/THIRD-PARTY-NOTICES.txt` |
 
 Everything installed is recorded in `~/.local/opt/mainframe/install-manifest.json`, and a copy in
 `~/.local/share/vexelray-installer/installs/mainframe.json`, the same record the Windows installer writes: other programs

@@ -120,7 +120,7 @@ Open a terminal and run (no `sudo`: it installs for your user only):
 curl -fsSL https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/text-editor/install.sh | sh
 ```
 
-It downloads Vex 0.1.2-SNAPSHOT, checks every file against the SHA-256 in the
+It downloads Vex 0.1.2, checks every file against the SHA-256 in the
 [install manifest](https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/text-editor/manifest.json), and installs into `~/.local/opt/text-editor`. It needs `curl` (or
 `wget`), `tar` and `sha256sum`, which every desktop distribution has.
 
@@ -161,8 +161,9 @@ set that variable to `0` and run the install command again.
 
 | File | Kind | Version | Size | Installed to |
 | --- | --- | --- | --- | --- |
-| `text-editor` | native executable | 0.1.2-SNAPSHOT | 94.1 MB | `~/.local/opt/text-editor/text-editor` |
-| `THIRD-PARTY-NOTICES.txt` | file | 0.1.2-SNAPSHOT | 0.1 MB | `~/.local/opt/text-editor/THIRD-PARTY-NOTICES.txt` |
+| `text-editor` | native executable | 0.1.2 | 95.9 MB | `~/.local/opt/text-editor/text-editor` |
+| `text-editor-ffmpeg-record-linux-x86_64.tar.gz` | archive (unpacked) | 0.1.2 | 4.3 MB | `~/.local/opt/text-editor/ffmpeg-record/` |
+| `THIRD-PARTY-NOTICES.txt` | file | 0.1.2 | 0.1 MB | `~/.local/opt/text-editor/THIRD-PARTY-NOTICES.txt` |
 
 Everything installed is recorded in `~/.local/opt/text-editor/install-manifest.json`, and a copy in
 `~/.local/share/vexelray-installer/installs/text-editor.json`, the same record the Windows installer writes: other programs

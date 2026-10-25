@@ -121,7 +121,7 @@ Open a terminal and run (no `sudo`: it installs for your user only):
 curl -fsSL https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/pix/install.sh | sh
 ```
 
-It downloads Pix 0.1.2-SNAPSHOT, checks every file against the SHA-256 in the
+It downloads Pix 0.1.2, checks every file against the SHA-256 in the
 [install manifest](https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/pix/manifest.json), and installs into `~/.local/opt/pix`. It needs `curl` (or
 `wget`), `tar` and `sha256sum`, which every desktop distribution has.
 
@@ -162,9 +162,10 @@ set that variable to `0` and run the install command again.
 
 | File | Kind | Version | Size | Installed to |
 | --- | --- | --- | --- | --- |
-| `pix` | native executable | 0.1.2-SNAPSHOT | 62.4 MB | `~/.local/opt/pix/pix` |
-| `pix-ffmpeg-linux-x86_64.tar.gz` | archive (unpacked) | 0.1.2-SNAPSHOT | 56.5 MB | `~/.local/opt/pix/ffmpeg/` |
-| `THIRD-PARTY-NOTICES.txt` | file | 0.1.2-SNAPSHOT | 0.1 MB | `~/.local/opt/pix/THIRD-PARTY-NOTICES.txt` |
+| `pix` | native executable | 0.1.2 | 64.2 MB | `~/.local/opt/pix/pix` |
+| `pix-ffmpeg-linux-x86_64.tar.gz` | archive (unpacked) | 0.1.2 | 56.5 MB | `~/.local/opt/pix/ffmpeg/` |
+| `pix-ffmpeg-record-linux-x86_64.tar.gz` | archive (unpacked) | 0.1.2 | 4.3 MB | `~/.local/opt/pix/ffmpeg-record/` |
+| `THIRD-PARTY-NOTICES.txt` | file | 0.1.2 | 0.1 MB | `~/.local/opt/pix/THIRD-PARTY-NOTICES.txt` |
 
 Everything installed is recorded in `~/.local/opt/pix/install-manifest.json`, and a copy in
 `~/.local/share/vexelray-installer/installs/pix.json`, the same record the Windows installer writes: other programs

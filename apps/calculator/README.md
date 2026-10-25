@@ -119,7 +119,7 @@ Open a terminal and run (no `sudo`: it installs for your user only):
 curl -fsSL https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/calculator/install.sh | sh
 ```
 
-It downloads Calculator 0.1.2-SNAPSHOT, checks every file against the SHA-256 in the
+It downloads Calculator 0.1.2, checks every file against the SHA-256 in the
 [install manifest](https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/calculator/manifest.json), and installs into `~/.local/opt/calculator`. It needs `curl` (or
 `wget`), `tar` and `sha256sum`, which every desktop distribution has.
 
@@ -159,8 +159,9 @@ set that variable to `0` and run the install command again.
 
 | File | Kind | Version | Size | Installed to |
 | --- | --- | --- | --- | --- |
-| `calculator` | native executable | 0.1.2-SNAPSHOT | 44.3 MB | `~/.local/opt/calculator/calculator` |
-| `THIRD-PARTY-NOTICES.txt` | file | 0.1.2-SNAPSHOT | 0.1 MB | `~/.local/opt/calculator/THIRD-PARTY-NOTICES.txt` |
+| `calculator` | native executable | 0.1.2 | 46.1 MB | `~/.local/opt/calculator/calculator` |
+| `calculator-ffmpeg-record-linux-x86_64.tar.gz` | archive (unpacked) | 0.1.2 | 4.3 MB | `~/.local/opt/calculator/ffmpeg-record/` |
+| `THIRD-PARTY-NOTICES.txt` | file | 0.1.2 | 0.1 MB | `~/.local/opt/calculator/THIRD-PARTY-NOTICES.txt` |
 
 Everything installed is recorded in `~/.local/opt/calculator/install-manifest.json`, and a copy in
 `~/.local/share/vexelray-installer/installs/calculator.json`, the same record the Windows installer writes: other programs

@@ -29,7 +29,7 @@
     },
     "install.sh": {
       "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/inspector/install.sh",
-      "sha256": "74fd4359a158f13924d00f178d1b26bb5032bc457b360776c0e0933aa78d3748"
+      "sha256": "90d1549729ead1abf43fb82acb85147e0142bb15a96e7d4a60596aa295ecf7a4"
     },
     "uninstall.sh": {
       "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/inspector/uninstall.sh",
@@ -50,7 +50,10 @@
         "uninstall.ps1": "88ddafa4f038ff00b7992c71cc0ccd0f1ac47fdd12c6b496f2c02543e28cec0a",
         "update.ps1": "09aceadf15f87e24cdc3fb3bf01383ecf8583075d4bf4ba8ea329d8ca5c87a67",
         "diagnose.ps1": "b100a782269a0334a83d65169ba0d12510084d92148a5854e67f5fb8764d04b2",
-        "manager.ps1": "bb40e3d9c2455ed5e6acaac22c49fdccb7b56911f9f74e6e7d5e3ced2ca5a8ac"
+        "manager.ps1": "bb40e3d9c2455ed5e6acaac22c49fdccb7b56911f9f74e6e7d5e3ced2ca5a8ac",
+        "install.sh": "90d1549729ead1abf43fb82acb85147e0142bb15a96e7d4a60596aa295ecf7a4",
+        "uninstall.sh": "1e0a148007244ef40c9a1c0d6e8be5c2550aadbab63bb64490537f2b583c9be7",
+        "update.sh": "36daa26bb0ba56dd9e54f63e08a88da8a4aa2109ee553316fd6e4e6ed8d0307a"
       },
       "platforms": {
         "windows": {
@@ -106,9 +109,66 @@
               "addToPath": false
             }
           ]
+        },
+        "linux": {
+          "installDir": "$HOME/.local/opt/inspector",
+          "arch": "x86_64",
+          "binaries": [
+            {
+              "name": "vexelray-inspector",
+              "version": "0.1.2",
+              "kind": "native",
+              "file": "vexelray-inspector",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/inspector-v0.1.2/vexelray-inspector",
+              "sha256": "6a8f137504339c215ad23bee9ccf98ec99cfbd5e58a73b9373215ba25c31d937",
+              "size": 47122688,
+              "installPath": "{installDir}/vexelray-inspector",
+              "executable": true,
+              "addToPath": true,
+              "appId": "dev.sibarum.vexelray-inspector",
+              "icon": {
+                "file": "vexelray-inspector.png",
+                "url": "https://github.com/sibarum/vexelray-dist/releases/download/inspector-v0.1.2/vexelray-inspector.png",
+                "sha256": "ca0a1fa3a500aa02a1f1258fdd997fc0b63fb25a16853184f080e896cfb8b231",
+                "size": 10998,
+                "installPath": "{installDir}/vexelray-inspector.png",
+                "pixels": 256
+              },
+              "shortcuts": {
+                "desktop": true,
+                "startMenu": true,
+                "label": "VexelRay Inspector",
+                "gui": true
+              }
+            },
+            {
+              "name": "inspector-ffmpeg-record",
+              "version": "0.1.2",
+              "kind": "archive",
+              "file": "inspector-ffmpeg-record-linux-x86_64.tar.gz",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/inspector-v0.1.2/inspector-ffmpeg-record-linux-x86_64.tar.gz",
+              "sha256": "1997dd68c32d5b998328f852b639a278edd44d736ca4b73cf8a91d413a66772a",
+              "size": 4514261,
+              "installPath": "{installDir}/ffmpeg-record",
+              "executable": false,
+              "addToPath": false
+            },
+            {
+              "name": "notices",
+              "version": "0.1.2",
+              "kind": "file",
+              "file": "THIRD-PARTY-NOTICES.txt",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/inspector-v0.1.2/THIRD-PARTY-NOTICES.txt",
+              "sha256": "fc8d6d2022ba45b7bc784ca133be201ebbb905843f0ea30a39e2f232edef9352",
+              "size": 60811,
+              "installPath": "{installDir}/THIRD-PARTY-NOTICES.txt",
+              "executable": false,
+              "addToPath": false
+            }
+          ]
         }
       },
-      "updatedAt": "2026-10-25T19:39:54Z"
+      "updatedAt": "2026-10-25T21:53:52Z"
     },
     {
       "version": "0.1.2-SNAPSHOT",

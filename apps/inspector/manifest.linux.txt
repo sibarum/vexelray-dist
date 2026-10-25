@@ -1,10 +1,19 @@
 vexelray-installer-linux	1
 id	inspector
 name	VexelRay Inspector
-latest	0.1.2-SNAPSHOT
-tool	install.sh	74fd4359a158f13924d00f178d1b26bb5032bc457b360776c0e0933aa78d3748	https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/inspector/install.sh
+latest	0.1.2
+tool	install.sh	90d1549729ead1abf43fb82acb85147e0142bb15a96e7d4a60596aa295ecf7a4	https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/inspector/install.sh
 tool	uninstall.sh	1e0a148007244ef40c9a1c0d6e8be5c2550aadbab63bb64490537f2b583c9be7	https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/inspector/uninstall.sh
 tool	update.sh	36daa26bb0ba56dd9e54f63e08a88da8a4aa2109ee553316fd6e4e6ed8d0307a	https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/inspector/update.sh
+version	0.1.2
+dir	0.1.2	$HOME/.local/opt/inspector
+arch	0.1.2	x86_64
+bin	0.1.2	vexelray-inspector	native	0.1.2	6a8f137504339c215ad23bee9ccf98ec99cfbd5e58a73b9373215ba25c31d937	47122688	1	vexelray-inspector	https://github.com/sibarum/vexelray-dist/releases/download/inspector-v0.1.2/vexelray-inspector	vexelray-inspector
+icon	0.1.2	vexelray-inspector	ca0a1fa3a500aa02a1f1258fdd997fc0b63fb25a16853184f080e896cfb8b231	256	vexelray-inspector.png	https://github.com/sibarum/vexelray-dist/releases/download/inspector-v0.1.2/vexelray-inspector.png	vexelray-inspector.png
+shortcut	0.1.2	vexelray-inspector	1	1	1	VexelRay Inspector
+appid	0.1.2	vexelray-inspector	dev.sibarum.vexelray-inspector
+bin	0.1.2	inspector-ffmpeg-record	archive	0.1.2	1997dd68c32d5b998328f852b639a278edd44d736ca4b73cf8a91d413a66772a	4514261	0	inspector-ffmpeg-record-linux-x86_64.tar.gz	https://github.com/sibarum/vexelray-dist/releases/download/inspector-v0.1.2/inspector-ffmpeg-record-linux-x86_64.tar.gz	ffmpeg-record
+bin	0.1.2	notices	file	0.1.2	fc8d6d2022ba45b7bc784ca133be201ebbb905843f0ea30a39e2f232edef9352	60811	0	THIRD-PARTY-NOTICES.txt	https://github.com/sibarum/vexelray-dist/releases/download/inspector-v0.1.2/THIRD-PARTY-NOTICES.txt	THIRD-PARTY-NOTICES.txt
 version	0.1.2-SNAPSHOT
 dir	0.1.2-SNAPSHOT	$HOME/.local/opt/inspector
 arch	0.1.2-SNAPSHOT	x86_64

@@ -103,4 +103,72 @@ Read it first - it is one file: [`install.ps1`](https://raw.githubusercontent.co
 matches their application's manifest, and those installers accept a download only when its SHA-256
 matches too.
 
-macOS and Linux installers are planned.
+## Linux
+
+Open a terminal and run (no `sudo`: everything is installed for your user only):
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/sibarum/vexelray-dist/main/install.sh | sh
+```
+
+That installs each of the applications below as an install of its own, with its own folder, updater and
+uninstaller, so you can remove one and keep the others. Running the same line again updates each of them to its latest version. Vexplore, Fluid Sim, Rigid Sim and Maistro have no Linux version yet, so they are left out.
+
+| Application | What it is | Id | Installed to |
+| --- | --- | --- | --- |
+| [Vex](https://sibarum.github.io/vexelray-framework/apps/text-editor.html) | A tabbed text editor with a file navigator, on the VexelRay stack. | `text-editor` | `~/.local/opt/text-editor` |
+| [Pix](https://sibarum.github.io/vexelray-framework/apps/pix.html) | An image viewer: one picture, as large as the window allows, and the rest of its folder a key press away. | `pix` | `~/.local/opt/pix` |
+| [MainFrame](https://sibarum.github.io/vexelray-framework/apps/mainframe.html) | A terminal window that wraps the native Windows shell over ConPTY, built on the VexelRay stack. | `mainframe` | `~/.local/opt/mainframe` |
+| [Calculator](https://sibarum.github.io/vexelray-framework/apps/calculator.html) | A small calculator window onto cott-engine. | `calculator` | `~/.local/opt/calculator` |
+| [VexelRay Inspector](https://github.com/sibarum/vexelray-inspector) | DevTools for VexelRay applications, drawn as clockwork: attach to a running app and watch its frame loop beat, park and stall. | `inspector` | `~/.local/opt/inspector` |
+
+Each application is installed by its own installer, the same one its own install command runs. This
+script downloads that installer, checks it against the SHA-256 in the application's published manifest,
+and runs it. The installer then checks every file it downloads in the same way. An application that has
+not been published yet is skipped and reported.
+
+### Only some of them, or everything
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/sibarum/vexelray-dist/main/install.sh | INSTALL_ONLY=text-editor,pix sh
+curl -fsSL https://raw.githubusercontent.com/sibarum/vexelray-dist/main/install.sh | sh -s -- --install-everything
+```
+
+`--install-everything` (or `INSTALL_EVERYTHING=1`) installs the optional applications too.
+
+VexelRay Inspector is optional: left out unless `INSTALL_ONLY` names `inspector`, everything is asked for, or it is installed already (then kept up to date).
+
+### Options
+
+These are passed on to every application's installer, set the same way as `INSTALL_ONLY`:
+
+| Variable | Effect |
+| --- | --- |
+| `INSTALL_NO_SHORTCUTS=1` | no menu entries or desktop launchers |
+| `INSTALL_NO_PATH=1` | link nothing into `~/.local/bin` |
+| `INSTALL_NO_ASSOCIATIONS=1` | do not register any application to open file types |
+| `INSTALL_FORCE=1` | reinstall even where the latest version is already installed |
+| `INSTALL_SKIP_CHECKS=1` | install even where this computer does not meet an application's system requirements |
+
+A particular version or folder applies to one application, so this script ignores `INSTALL_VERSION` and
+`INSTALL_DIR`. To use them, run that application's own installer.
+
+### Update and uninstall
+
+Run the install command again to update everything, or update one application from its folder with its
+`update.sh`. To remove one application, or all of them:
+
+```sh
+"$HOME/.local/opt/text-editor/uninstall.sh"
+"$HOME/.local/opt/text-editor/uninstall.sh" --all
+```
+
+`--list` shows every install it knows about. Each application's install record is in `~/.local/share/vexelray-installer/installs`,
+which is also how the applications find and start each other.
+
+### Is it safe to pipe a script into sh?
+
+Read it first - it is one file: [`install.sh`](https://raw.githubusercontent.com/sibarum/vexelray-dist/main/install.sh). It runs only installers whose SHA-256
+matches their application's manifest, never asks for root, and writes nowhere outside your home folder.
+
+A macOS installer is planned.

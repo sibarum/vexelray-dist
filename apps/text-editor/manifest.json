@@ -29,7 +29,7 @@
     },
     "install.sh": {
       "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/text-editor/install.sh",
-      "sha256": "65ce78a700719d1ef7c483a2febcc01108f2df282f2d915f2ed4ad8a1ee50f57"
+      "sha256": "6dcc5fd2b55ade53ae69748b2ab10863c51cc27d6385e2a4e7e7e38b67104b35"
     },
     "uninstall.sh": {
       "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/text-editor/uninstall.sh",
@@ -50,7 +50,10 @@
         "uninstall.ps1": "096b28148a8af8926d2a945d9bb7c64b392929cc282523fddce33c1030ecee8a",
         "update.ps1": "f0c60e268238c5d6994f7619bec6708341a160127d7018afd6032df7c4f4625a",
         "diagnose.ps1": "bcf6c0fde6e13649a1d88cb895e141b80e0e6eb5e1768f03dcd4ac9785021866",
-        "manager.ps1": "ddbc2c0256962ef6ce451ef972decd84db0220576a16200ed15cd459a068445e"
+        "manager.ps1": "ddbc2c0256962ef6ce451ef972decd84db0220576a16200ed15cd459a068445e",
+        "install.sh": "6dcc5fd2b55ade53ae69748b2ab10863c51cc27d6385e2a4e7e7e38b67104b35",
+        "uninstall.sh": "f1867641443c59ff677226b62f7c501db0e09d708bd21efe8b5cf2787a01b818",
+        "update.sh": "b2cf2adf9982ae74eadc41a0382f7cb20338f602e049e81ee99ab77b4feaafb5"
       },
       "platforms": {
         "windows": {
@@ -310,9 +313,291 @@
               "addToPath": false
             }
           ]
+        },
+        "linux": {
+          "installDir": "$HOME/.local/opt/text-editor",
+          "arch": "x86_64",
+          "binaries": [
+            {
+              "name": "text-editor",
+              "version": "0.1.2",
+              "kind": "native",
+              "file": "text-editor",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/text-editor-v0.1.2/text-editor",
+              "sha256": "bcbf2a2c7a2eeeea9e544b3f27324c9122ad3daf0f8cb209383d57786e16b638",
+              "size": 100600064,
+              "installPath": "{installDir}/text-editor",
+              "executable": true,
+              "addToPath": true,
+              "appId": "dev.vexelray.demo.text-editor-vexel-demo",
+              "icon": {
+                "file": "text-editor.png",
+                "url": "https://github.com/sibarum/vexelray-dist/releases/download/text-editor-v0.1.2/text-editor.png",
+                "sha256": "0a742625dee1b468a19b0deac14f67ad9a4eb5a94247b9d383e47d015dfb62ed",
+                "size": 9511,
+                "installPath": "{installDir}/text-editor.png",
+                "pixels": 256
+              },
+              "fileIcons": [
+                {
+                  "file": "text-editor-file-plain-text.png",
+                  "url": "https://github.com/sibarum/vexelray-dist/releases/download/text-editor-v0.1.2/text-editor-file-plain-text.png",
+                  "sha256": "d0d8ba64c4131d1b26d4ff5e02fd72a31433ed91fa6344250bc753b0b92c2db6",
+                  "size": 2890,
+                  "installPath": "{installDir}/text-editor-file-plain-text.png",
+                  "pixels": 256
+                },
+                {
+                  "file": "text-editor-file-data-and-config.png",
+                  "url": "https://github.com/sibarum/vexelray-dist/releases/download/text-editor-v0.1.2/text-editor-file-data-and-config.png",
+                  "sha256": "5586c10e88e66b48b0801334729647befebd0bd4451484b3234840962c6a16ed",
+                  "size": 3562,
+                  "installPath": "{installDir}/text-editor-file-data-and-config.png",
+                  "pixels": 256
+                },
+                {
+                  "file": "text-editor-file-source-code.png",
+                  "url": "https://github.com/sibarum/vexelray-dist/releases/download/text-editor-v0.1.2/text-editor-file-source-code.png",
+                  "sha256": "dfe1d70ee4508e30c74018dc61e10025b2b388e8052e69a3341cfd82884cc973",
+                  "size": 4005,
+                  "installPath": "{installDir}/text-editor-file-source-code.png",
+                  "pixels": 256
+                },
+                {
+                  "file": "text-editor-vex-terminal.png",
+                  "url": "https://github.com/sibarum/vexelray-dist/releases/download/text-editor-v0.1.2/text-editor-vex-terminal.png",
+                  "sha256": "ec7439ab4fedfef1c5131ca90410abc0b6a102e71242accbf0060882974ba997",
+                  "size": 7112,
+                  "installPath": "{installDir}/text-editor-vex-terminal.png",
+                  "pixels": 256
+                }
+              ],
+              "shortcuts": {
+                "desktop": true,
+                "startMenu": true,
+                "label": "Vex",
+                "gui": true
+              },
+              "fileAssociations": [
+                {
+                  "extension": ".txt",
+                  "mimeType": "text/plain",
+                  "ownType": false,
+                  "description": "Text Document",
+                  "icon": "text-editor-file-plain-text.png"
+                },
+                {
+                  "extension": ".log",
+                  "mimeType": "text/plain",
+                  "ownType": false,
+                  "description": "Log File",
+                  "icon": "text-editor-file-plain-text.png"
+                },
+                {
+                  "extension": ".md",
+                  "mimeType": "text/markdown",
+                  "ownType": false,
+                  "description": "Markdown Document",
+                  "icon": "text-editor-file-plain-text.png"
+                },
+                {
+                  "extension": ".markdown",
+                  "mimeType": "text/markdown",
+                  "ownType": false,
+                  "description": "Markdown Document",
+                  "icon": "text-editor-file-plain-text.png"
+                },
+                {
+                  "extension": ".json",
+                  "mimeType": "application/json",
+                  "ownType": false,
+                  "description": "JSON File",
+                  "icon": "text-editor-file-data-and-config.png"
+                },
+                {
+                  "extension": ".jsonc",
+                  "mimeType": "application/x-text-editor-jsonc",
+                  "ownType": true,
+                  "description": "JSON with Comments File",
+                  "icon": "text-editor-file-data-and-config.png"
+                },
+                {
+                  "extension": ".xml",
+                  "mimeType": "application/xml",
+                  "ownType": false,
+                  "description": "XML Document",
+                  "icon": "text-editor-file-data-and-config.png"
+                },
+                {
+                  "extension": ".xsd",
+                  "mimeType": "application/x-text-editor-xsd",
+                  "ownType": true,
+                  "description": "XML Schema",
+                  "icon": "text-editor-file-data-and-config.png"
+                },
+                {
+                  "extension": ".xsl",
+                  "mimeType": "application/x-text-editor-xsl",
+                  "ownType": true,
+                  "description": "XSL Stylesheet",
+                  "icon": "text-editor-file-data-and-config.png"
+                },
+                {
+                  "extension": ".yaml",
+                  "mimeType": "application/yaml",
+                  "ownType": false,
+                  "description": "YAML File",
+                  "icon": "text-editor-file-data-and-config.png"
+                },
+                {
+                  "extension": ".yml",
+                  "mimeType": "application/yaml",
+                  "ownType": false,
+                  "description": "YAML File",
+                  "icon": "text-editor-file-data-and-config.png"
+                },
+                {
+                  "extension": ".ini",
+                  "mimeType": "application/x-text-editor-ini",
+                  "ownType": true,
+                  "description": "Configuration Settings",
+                  "icon": "text-editor-file-data-and-config.png"
+                },
+                {
+                  "extension": ".properties",
+                  "mimeType": "application/x-text-editor-properties",
+                  "ownType": true,
+                  "description": "Properties File",
+                  "icon": "text-editor-file-data-and-config.png"
+                },
+                {
+                  "extension": ".html",
+                  "mimeType": "application/x-text-editor-html",
+                  "ownType": true,
+                  "description": "HTML Document",
+                  "icon": "text-editor-file-source-code.png"
+                },
+                {
+                  "extension": ".htm",
+                  "mimeType": "application/x-text-editor-htm",
+                  "ownType": true,
+                  "description": "HTML Document",
+                  "icon": "text-editor-file-source-code.png"
+                },
+                {
+                  "extension": ".css",
+                  "mimeType": "application/x-text-editor-css",
+                  "ownType": true,
+                  "description": "CSS Stylesheet",
+                  "icon": "text-editor-file-source-code.png"
+                },
+                {
+                  "extension": ".mjs",
+                  "mimeType": "application/x-text-editor-mjs",
+                  "ownType": true,
+                  "description": "JavaScript Module",
+                  "icon": "text-editor-file-source-code.png"
+                },
+                {
+                  "extension": ".cjs",
+                  "mimeType": "application/x-text-editor-cjs",
+                  "ownType": true,
+                  "description": "CommonJS Module",
+                  "icon": "text-editor-file-source-code.png"
+                },
+                {
+                  "extension": ".java",
+                  "mimeType": "application/x-text-editor-java",
+                  "ownType": true,
+                  "description": "Java Source File",
+                  "icon": "text-editor-file-source-code.png"
+                },
+                {
+                  "extension": ".py",
+                  "mimeType": "application/x-text-editor-py",
+                  "ownType": true,
+                  "description": "Python Source File",
+                  "icon": "text-editor-file-source-code.png"
+                },
+                {
+                  "extension": ".pyi",
+                  "mimeType": "application/x-text-editor-pyi",
+                  "ownType": true,
+                  "description": "Python Stub File",
+                  "icon": "text-editor-file-source-code.png"
+                },
+                {
+                  "extension": ".sh",
+                  "mimeType": "application/x-text-editor-sh",
+                  "ownType": true,
+                  "description": "Shell Script",
+                  "icon": "text-editor-vex-terminal.png"
+                },
+                {
+                  "extension": ".bash",
+                  "mimeType": "application/x-text-editor-bash",
+                  "ownType": true,
+                  "description": "Bash Script",
+                  "icon": "text-editor-vex-terminal.png"
+                },
+                {
+                  "extension": ".psd1",
+                  "mimeType": "application/x-text-editor-psd1",
+                  "ownType": true,
+                  "description": "PowerShell Data File",
+                  "icon": "text-editor-vex-terminal.png"
+                },
+                {
+                  "extension": ".diff",
+                  "mimeType": "text/x-diff",
+                  "ownType": false,
+                  "description": "Diff File",
+                  "icon": "text-editor-file-plain-text.png"
+                },
+                {
+                  "extension": ".patch",
+                  "mimeType": "text/x-diff",
+                  "ownType": false,
+                  "description": "Patch File",
+                  "icon": "text-editor-file-plain-text.png"
+                },
+                {
+                  "extension": ".dockerfile",
+                  "mimeType": "application/x-text-editor-dockerfile",
+                  "ownType": true,
+                  "description": "Dockerfile",
+                  "icon": "text-editor-file-plain-text.png"
+                }
+              ]
+            },
+            {
+              "name": "text-editor-ffmpeg-record",
+              "version": "0.1.2",
+              "kind": "archive",
+              "file": "text-editor-ffmpeg-record-linux-x86_64.tar.gz",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/text-editor-v0.1.2/text-editor-ffmpeg-record-linux-x86_64.tar.gz",
+              "sha256": "1997dd68c32d5b998328f852b639a278edd44d736ca4b73cf8a91d413a66772a",
+              "size": 4514261,
+              "installPath": "{installDir}/ffmpeg-record",
+              "executable": false,
+              "addToPath": false
+            },
+            {
+              "name": "notices",
+              "version": "0.1.2",
+              "kind": "file",
+              "file": "THIRD-PARTY-NOTICES.txt",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/text-editor-v0.1.2/THIRD-PARTY-NOTICES.txt",
+              "sha256": "53329c675145c0e2baac341806446f71898a1171fa81b57a7501d5665238face",
+              "size": 106866,
+              "installPath": "{installDir}/THIRD-PARTY-NOTICES.txt",
+              "executable": false,
+              "addToPath": false
+            }
+          ]
         }
       },
-      "updatedAt": "2026-10-25T19:33:43Z"
+      "updatedAt": "2026-10-25T21:49:54Z"
     },
     {
       "version": "0.1.2-SNAPSHOT",

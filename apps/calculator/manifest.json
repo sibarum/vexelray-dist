@@ -29,7 +29,7 @@
     },
     "install.sh": {
       "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/calculator/install.sh",
-      "sha256": "70481b3fca74c1503ba3e46ec670c1bc3677f9400acc5d85d2deaa3a6684c796"
+      "sha256": "fabafda0811f558097c30fcb59f31a8f2ead4299d66edf1fda1739a17d3ab965"
     },
     "uninstall.sh": {
       "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/calculator/uninstall.sh",
@@ -50,7 +50,10 @@
         "uninstall.ps1": "e273d7b04a626dd3e1213559055670a0b9edeecdcefa082bb38d1f18641afb64",
         "update.ps1": "7692b5dfecf190a7a2376f50f5ed360f288cc4cbf97079e54302d64684cd14dd",
         "diagnose.ps1": "debf2175bbb9f6e035f7a561f9bb1ae31d49e7f824b48f3da4aa7d2f0b9caab4",
-        "manager.ps1": "eb90fd545aea2b06a01a7ab10b1a9079dcc941057be3f86202ba5d6d53deb825"
+        "manager.ps1": "eb90fd545aea2b06a01a7ab10b1a9079dcc941057be3f86202ba5d6d53deb825",
+        "install.sh": "fabafda0811f558097c30fcb59f31a8f2ead4299d66edf1fda1739a17d3ab965",
+        "uninstall.sh": "3b4403e3553bc429d0ef4478662b776c1fc2951bde2a098dab7d47c3f2633da4",
+        "update.sh": "11911e5136140ce89e53c31203cea8f294e995b08ed3247f9d8d5c4725012728"
       },
       "platforms": {
         "windows": {
@@ -106,9 +109,66 @@
               "addToPath": false
             }
           ]
+        },
+        "linux": {
+          "installDir": "$HOME/.local/opt/calculator",
+          "arch": "x86_64",
+          "binaries": [
+            {
+              "name": "calculator",
+              "version": "0.1.2",
+              "kind": "native",
+              "file": "calculator",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/calculator-v0.1.2/calculator",
+              "sha256": "49039dfc423d64b9b377651c437b44e87f9b127ee126b40f3c78bd58ce348b3d",
+              "size": 48367872,
+              "installPath": "{installDir}/calculator",
+              "executable": true,
+              "addToPath": true,
+              "appId": "dev.vexelray.demo.calculator-vexel-demo",
+              "icon": {
+                "file": "calculator.png",
+                "url": "https://github.com/sibarum/vexelray-dist/releases/download/calculator-v0.1.2/calculator.png",
+                "sha256": "55126c54f3603e6b903f23e908b08b66050456a067ecd7f74502176761ef47b2",
+                "size": 9765,
+                "installPath": "{installDir}/calculator.png",
+                "pixels": 256
+              },
+              "shortcuts": {
+                "desktop": true,
+                "startMenu": true,
+                "label": "Calculator",
+                "gui": true
+              }
+            },
+            {
+              "name": "calculator-ffmpeg-record",
+              "version": "0.1.2",
+              "kind": "archive",
+              "file": "calculator-ffmpeg-record-linux-x86_64.tar.gz",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/calculator-v0.1.2/calculator-ffmpeg-record-linux-x86_64.tar.gz",
+              "sha256": "1997dd68c32d5b998328f852b639a278edd44d736ca4b73cf8a91d413a66772a",
+              "size": 4514261,
+              "installPath": "{installDir}/ffmpeg-record",
+              "executable": false,
+              "addToPath": false
+            },
+            {
+              "name": "notices",
+              "version": "0.1.2",
+              "kind": "file",
+              "file": "THIRD-PARTY-NOTICES.txt",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/calculator-v0.1.2/THIRD-PARTY-NOTICES.txt",
+              "sha256": "8bfb7d7b78a47feac0a39fde77672dd83660ea83a4bfd1af0fff1137bffbbf87",
+              "size": 60787,
+              "installPath": "{installDir}/THIRD-PARTY-NOTICES.txt",
+              "executable": false,
+              "addToPath": false
+            }
+          ]
         }
       },
-      "updatedAt": "2026-10-25T19:36:51Z"
+      "updatedAt": "2026-10-25T21:53:15Z"
     },
     {
       "version": "0.1.2-SNAPSHOT",

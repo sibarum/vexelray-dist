@@ -410,12 +410,17 @@ vi_launcher() {
 
 # --- menus, desktop, file types -----------------------------------------------------------------------
 
-vi_desktop_id() { printf 'vexelray-%s-%s.desktop\n' "$VI_ID" "$(printf '%s' "$1" | tr -c 'A-Za-z0-9._-' '-')"; }
+# vi_desktop_id NAME [APP-ID]: named after the program's app id, which its windows carry, so a dock can match them to it;
+# a program without one gets a name of the installer's own.
+vi_desktop_id() {
+    if [ -n "${2:-}" ]; then printf '%s.desktop\n' "$2"
+    else printf 'vexelray-%s-%s.desktop\n' "$VI_ID" "$(printf '%s' "$1" | tr -c 'A-Za-z0-9._-' '-')"; fi
+}
 
 # A path an Exec line can quote as it is; the escapes the desktop entry spec has for the rest are not worth it.
 vi_exec_ok() { case $1 in *[\"\`\$\\%]*) return 1 ;; *) return 0 ;; esac; }
 
-# vi_desktop_entry FILE LABEL EXEC ICON TERMINAL MIME-TYPES HIDDEN
+# vi_desktop_entry FILE LABEL EXEC ICON TERMINAL MIME-TYPES HIDDEN [APP-ID]
 vi_desktop_entry() {
     {
         printf '[Desktop Entry]\nType=Application\nVersion=1.0\n'
@@ -426,6 +431,7 @@ vi_desktop_entry() {
         printf 'Terminal=%s\n' "$5"
         [ -n "$6" ] && printf 'MimeType=%s\n' "$6"
         [ "$7" = 1 ] && printf 'NoDisplay=true\n'
+        [ -n "${8:-}" ] && printf 'StartupWMClass=%s\n' "$8"
         printf 'X-Vexelray-Installer=%s\n' "$VI_ID"
     } > "$1"
 }
@@ -443,6 +449,31 @@ vi_mimeapps_drop() {
             next
         }
         { print }' "$vi_f" > "$vi_f.vi-new" && mv -f -- "$vi_f.vi-new" "$vi_f"
+}
+
+# vi_pins_follow OLD-STATE: a dock pin (GNOME's favourites) follows its program when its desktop entry has a new name,
+# since the entry under the old one is gone. The old name is the one the last install recorded, or, from before it
+# recorded one, the name the installer gave every entry then.
+vi_pins_follow() {
+    command -v gsettings >/dev/null 2>&1 || return 0
+    vi_fav=$(gsettings get org.gnome.shell favorite-apps 2>/dev/null) || return 0
+    vi_was_fav=$vi_fav
+    awk -F'\t' '$1 == "entry" { print $2 "\t" $3 }' "$VI_NEWSTATE" > "$VI_TMP/entries"
+    while IFS="$vi_tab" read -r vi_n vi_id; do
+        vi_was=$(awk -F'\t' -v n="$vi_n" '$1 == "entry" && $2 == n { print $3; exit }' "$1")
+        # a binary renamed along with its install: the old install's one menu entry, if it had just one
+        [ -n "$vi_was" ] || vi_was=$(awk -F'\t' -v a="$XDG_DATA_HOME/applications/" '
+            $1 == "shortcut" && index($2, a) == 1 { n++; e = substr($2, length(a) + 1) } END { if (n == 1) print e }' "$1")
+        [ -n "$vi_was" ] || vi_was=$(vi_desktop_id "$vi_n")
+        [ "$vi_was" = "$vi_id" ] && continue
+        case $vi_fav in *"'$vi_id'"*) continue ;; esac
+        case $vi_fav in
+            *"'$vi_was'"*) vi_fav=$(printf '%s' "$vi_fav" | sed "s/'$(printf '%s' "$vi_was" | sed 's/[.]/\\./g')'/'$vi_id'/") ;;
+        esac
+    done < "$VI_TMP/entries"
+    [ "$vi_fav" = "$vi_was_fav" ] || gsettings set org.gnome.shell favorite-apps "$vi_fav" 2>/dev/null \
+        || vi_warn "Could not move $VI_NAME's dock pin to its renamed menu entry; pin it again."
+    return 0
 }
 
 vi_xml() { printf '%s' "$1" | sed -e 's/&/\&amp;/g' -e 's/</\&lt;/g' -e 's/>/\&gt;/g' -e 's/"/\&quot;/g'; }
@@ -517,10 +548,24 @@ vi_main() {
     vi_tx_recover "$VI_REG/$VI_ID.journal"
     find "$VI_CACHE" -type f -mtime +14 -exec rm -f {} + 2>/dev/null
 
-    old="$VI_REG/$VI_ID.state"
-    [ -f "$old" ] || old=/dev/null
+    # a copy, since the commit replaces the record and what follows it still compares the two
+    old="$VI_TMP/old-state"
+    cp -- "$VI_REG/$VI_ID.state" "$old" 2>/dev/null || old=/dev/null
     VI_OLD_VERSION=$(vi_state "$old" version)
     old_dir=$(vi_state "$old" installDir)
+    # Not installed under this id, but under one it had before a rename: that install's choices carry over, and it is
+    # removed once this one is in place. Its updater passes its own folder, which stays the old install's.
+    replaced='' prev=$old
+    if [ "$old" = /dev/null ]; then
+        for vi_r in $(awk -F'\t' '$1 == "replaces" { print $2 }' "$VI_MF"); do
+            if cp -- "$VI_REG/$vi_r.state" "$VI_TMP/replaced-state" 2>/dev/null; then
+                replaced=$vi_r prev="$VI_TMP/replaced-state"
+                vi_info "Replaces $(vi_state "$prev" name) $(vi_state "$prev" version), installed as $replaced"
+                [ -n "${INSTALL_DIR:-}" ] && [ "$(vi_expand "$INSTALL_DIR")" = "$(vi_state "$prev" installDir)" ] && INSTALL_DIR=
+                break
+            fi
+        done
+    fi
     if [ -n "${INSTALL_DIR:-}" ]; then dir=$(vi_expand "$INSTALL_DIR")
     elif [ -n "$old_dir" ]; then dir=$old_dir
     else dir=$(vi_expand "$(vi_val2 dir "$want")"); fi
@@ -528,9 +573,9 @@ vi_main() {
     while [ "${dir%/}" != "$dir" ]; do dir=${dir%/}; done
     case $dir in ''|"$HOME"|*"$vi_tab"*) vi_die "'$dir' cannot be the install folder; give it a folder of its own." ;; esac
 
-    no_sc=$(vi_optout "${INSTALL_NO_SHORTCUTS:-}" "$(vi_state_opt "$old" noShortcuts)")
-    no_path=$(vi_optout "${INSTALL_NO_PATH:-}" "$(vi_state_opt "$old" noPath)")
-    no_assoc=$(vi_optout "${INSTALL_NO_ASSOCIATIONS:-}" "$(vi_state_opt "$old" noAssociations)")
+    no_sc=$(vi_optout "${INSTALL_NO_SHORTCUTS:-}" "$(vi_state_opt "$prev" noShortcuts)")
+    no_path=$(vi_optout "${INSTALL_NO_PATH:-}" "$(vi_state_opt "$prev" noPath)")
+    no_assoc=$(vi_optout "${INSTALL_NO_ASSOCIATIONS:-}" "$(vi_state_opt "$prev" noAssociations)")
 
     if [ "$VI_OLD_VERSION" = "$want" ] && [ "$old_dir" = "$dir" ] && ! vi_on "${INSTALL_FORCE:-}"; then
         vi_say "$VI_NAME $want is already installed in $dir. Set INSTALL_FORCE=1 to reinstall."
@@ -700,7 +745,9 @@ EOF
         run=$(awk -F'\t' -v n="$name" '$1 == "command" && $2 == n { print $5; exit }' "$VI_NEWSTATE")
         if ! vi_exec_ok "$run"; then vi_warn "No menu entry or file types for $name: its path has a character a desktop entry cannot hold ($run)."; continue; fi
         icon=$(awk -F'\t' -v n="$name" '$1 == "file" && $2 == "icon" && $3 == n { print $6; exit }' "$VI_NEWSTATE")
-        id=$(vi_desktop_id "$name")
+        appid=$(vi_rec appid "$want" | awk -F'\t' -v n="$name" '$3 == n { print $4; exit }')
+        id=$(vi_desktop_id "$name" "$appid")
+        vi_st entry "$name" "$id"
         if [ -n "$sc" ]; then
             IFS="$vi_tab" read -r vi_k _ vi_n sdesk smenu sgui label <<EOF
 $sc
@@ -711,13 +758,13 @@ EOF
         if [ "$smenu" = 1 ] || [ -n "$mimes" ]; then
             hidden=1
             [ "$smenu" = 1 ] && hidden=0
-            vi_desktop_entry "$VI_TMP/$id" "$label" "$run" "$icon" "$term" "$mimes" "$hidden"
+            vi_desktop_entry "$VI_TMP/$id" "$label" "$run" "$icon" "$term" "$mimes" "$hidden" "$appid"
             vi_put "$VI_TMP/$id" "$apps/$id" 644
             vi_st shortcut "$apps/$id"
             [ "$hidden" = 0 ] && vi_info "Menu entry: $label"
         fi
         if [ "$sdesk" = 1 ] && [ -n "$desktop_dir" ] && [ -d "$desktop_dir" ]; then
-            vi_desktop_entry "$VI_TMP/d-$id" "$label" "$run" "$icon" "$term" "" 0
+            vi_desktop_entry "$VI_TMP/d-$id" "$label" "$run" "$icon" "$term" "" 0 "$appid"
             vi_put "$VI_TMP/d-$id" "$desktop_dir/$id" 755
             command -v gio >/dev/null 2>&1 && gio set "$desktop_dir/$id" metadata::trusted true >/dev/null 2>&1
             vi_st shortcut "$desktop_dir/$id"
@@ -730,7 +777,11 @@ EOF
                 isdef=0
                 if command -v xdg-mime >/dev/null 2>&1; then
                     cur=$(xdg-mime query default "$mime" 2>/dev/null)
-                    if [ -z "$cur" ] || [ "$cur" = "$id" ]; then isdef=1; printf '%s\t%s\n' "$mime" "$id" >> "$VI_TMP/defaults"; fi
+                    # still ours when the default is the entry an earlier version registered under another name
+                    if [ -z "$cur" ] || [ "$cur" = "$id" ] || awk -F'\t' -v m="$mime" -v d="$cur" \
+                            '$1 == "assoc" && $3 == m && $5 == d { f = 1 } END { exit !f }' "$prev"; then
+                        isdef=1; printf '%s\t%s\n' "$mime" "$id" >> "$VI_TMP/defaults"
+                    fi
                 fi
                 vi_st assoc "$ext" "$mime" "$isdef" "$id"
                 if [ "$isdef" = 1 ]; then vi_info "Opens $ext files (default)"; else vi_info "Opens $ext files (listed under Open With)"; fi
@@ -780,8 +831,8 @@ EOF
             [ -n "$run" ] || continue
             lnk="$bindir/$(printf '%s' "$name" | tr -c 'A-Za-z0-9._-' '-')"
             if [ -e "$lnk" ] || [ -L "$lnk" ]; then
-                # ours when the last install recorded it, or when it already points here
-                if ! awk -F'\t' -v l="$lnk" '$1 == "link" && $2 == l { f = 1 } END { exit !f }' "$old" \
+                # ours when the last install recorded it (or the one this replaces), or when it already points here
+                if ! awk -F'\t' -v l="$lnk" '$1 == "link" && $2 == l { f = 1 } END { exit !f }' "$prev" \
                         && ! { [ -L "$lnk" ] && [ "$(readlink "$lnk")" = "$run" ]; }; then
                     vi_warn "$lnk is already there and is not $VI_NAME's, so it was left alone; $run is not on PATH."
                     continue
@@ -811,6 +862,7 @@ EOF
         grep -qx "$mime$vi_tab$id" "$VI_TMP/defaults" || vi_mimeapps_drop "$mime" "$id"
     done
     vi_refresh_desktop
+    vi_pins_follow "$prev"
     while IFS="$vi_tab" read -r mime id; do
         xdg-mime default "$id" "$mime" 2>/dev/null || vi_warn "Could not make $VI_NAME the default for $mime."
     done < "$VI_TMP/defaults"
@@ -819,6 +871,26 @@ EOF
     done
     # what this install downloaded is in place now
     printf '%s' "$VI_USED" | while IFS= read -r vi_c; do [ -n "$vi_c" ] && rm -f -- "$vi_c"; done
+
+    # 9. the install this one replaces goes, by this install's own uninstaller. What both placed under the same name (a
+    # command, a menu entry) is this install's now, so it comes out of the old record first.
+    if [ -n "$replaced" ] && [ -f "$VI_REG/$replaced.state" ]; then
+        vi_step "Removing $(vi_state "$prev" name) $(vi_state "$prev" version), which $VI_NAME replaces"
+        awk -F'\t' 'FNR == NR {
+                if ($1 == "file") mine[$6] = 1; else if ($1 == "shortcut" || $1 == "link") mine[$2] = 1
+                else if ($1 == "entry") entry[$3] = 1
+                next }
+            $1 == "file" && ($6 in mine) { next }
+            ($1 == "shortcut" || $1 == "link") && ($2 in mine) { next }
+            $1 == "assoc" && ($5 in entry) { next }
+            { print }' "$VI_NEWSTATE" "$VI_REG/$replaced.state" > "$VI_TMP/replaced-left" \
+            && cat "$VI_TMP/replaced-left" > "$VI_REG/$replaced.state"
+        if sh "$dir/uninstall.sh" --id "$replaced" --yes > "$VI_TMP/replaced.log" 2>&1; then
+            vi_info "Removed $replaced"
+        else
+            vi_warn "Could not remove $replaced, which $VI_NAME replaces: $(tail -n 1 "$VI_TMP/replaced.log"). Remove it with: sh \"$dir/uninstall.sh\" --id $replaced"
+        fi
+    fi
 
     vi_say ""
     vi_say "$VI_NAME $want installed."

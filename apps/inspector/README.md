@@ -119,7 +119,7 @@ Open a terminal and run (no `sudo`: it installs for your user only):
 curl -fsSL https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/inspector/install.sh | sh
 ```
 
-It downloads VexelRay Inspector 0.1.2-SNAPSHOT, checks every file against the SHA-256 in the
+It downloads VexelRay Inspector 0.1.2, checks every file against the SHA-256 in the
 [install manifest](https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/inspector/manifest.json), and installs into `~/.local/opt/inspector`. It needs `curl` (or
 `wget`), `tar` and `sha256sum`, which every desktop distribution has.
 
@@ -159,8 +159,9 @@ set that variable to `0` and run the install command again.
 
 | File | Kind | Version | Size | Installed to |
 | --- | --- | --- | --- | --- |
-| `vexelray-inspector` | native executable | 0.1.2-SNAPSHOT | 42.9 MB | `~/.local/opt/inspector/vexelray-inspector` |
-| `THIRD-PARTY-NOTICES.txt` | file | 0.1.2-SNAPSHOT | 0.1 MB | `~/.local/opt/inspector/THIRD-PARTY-NOTICES.txt` |
+| `vexelray-inspector` | native executable | 0.1.2 | 44.9 MB | `~/.local/opt/inspector/vexelray-inspector` |
+| `inspector-ffmpeg-record-linux-x86_64.tar.gz` | archive (unpacked) | 0.1.2 | 4.3 MB | `~/.local/opt/inspector/ffmpeg-record/` |
+| `THIRD-PARTY-NOTICES.txt` | file | 0.1.2 | 0.1 MB | `~/.local/opt/inspector/THIRD-PARTY-NOTICES.txt` |
 
 Everything installed is recorded in `~/.local/opt/inspector/install-manifest.json`, and a copy in
 `~/.local/share/vexelray-installer/installs/inspector.json`, the same record the Windows installer writes: other programs

@@ -1,10 +1,19 @@
 vexelray-installer-linux	1
 id	calculator
 name	Calculator
-latest	0.1.2-SNAPSHOT
-tool	install.sh	70481b3fca74c1503ba3e46ec670c1bc3677f9400acc5d85d2deaa3a6684c796	https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/calculator/install.sh
+latest	0.1.2
+tool	install.sh	fabafda0811f558097c30fcb59f31a8f2ead4299d66edf1fda1739a17d3ab965	https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/calculator/install.sh
 tool	uninstall.sh	3b4403e3553bc429d0ef4478662b776c1fc2951bde2a098dab7d47c3f2633da4	https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/calculator/uninstall.sh
 tool	update.sh	11911e5136140ce89e53c31203cea8f294e995b08ed3247f9d8d5c4725012728	https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/calculator/update.sh
+version	0.1.2
+dir	0.1.2	$HOME/.local/opt/calculator
+arch	0.1.2	x86_64
+bin	0.1.2	calculator	native	0.1.2	49039dfc423d64b9b377651c437b44e87f9b127ee126b40f3c78bd58ce348b3d	48367872	1	calculator	https://github.com/sibarum/vexelray-dist/releases/download/calculator-v0.1.2/calculator	calculator
+icon	0.1.2	calculator	55126c54f3603e6b903f23e908b08b66050456a067ecd7f74502176761ef47b2	256	calculator.png	https://github.com/sibarum/vexelray-dist/releases/download/calculator-v0.1.2/calculator.png	calculator.png
+shortcut	0.1.2	calculator	1	1	1	Calculator
+appid	0.1.2	calculator	dev.vexelray.demo.calculator-vexel-demo
+bin	0.1.2	calculator-ffmpeg-record	archive	0.1.2	1997dd68c32d5b998328f852b639a278edd44d736ca4b73cf8a91d413a66772a	4514261	0	calculator-ffmpeg-record-linux-x86_64.tar.gz	https://github.com/sibarum/vexelray-dist/releases/download/calculator-v0.1.2/calculator-ffmpeg-record-linux-x86_64.tar.gz	ffmpeg-record
+bin	0.1.2	notices	file	0.1.2	8bfb7d7b78a47feac0a39fde77672dd83660ea83a4bfd1af0fff1137bffbbf87	60787	0	THIRD-PARTY-NOTICES.txt	https://github.com/sibarum/vexelray-dist/releases/download/calculator-v0.1.2/THIRD-PARTY-NOTICES.txt	THIRD-PARTY-NOTICES.txt
 version	0.1.2-SNAPSHOT
 dir	0.1.2-SNAPSHOT	$HOME/.local/opt/calculator
 arch	0.1.2-SNAPSHOT	x86_64
