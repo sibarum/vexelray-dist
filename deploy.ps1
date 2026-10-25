@@ -27,13 +27,17 @@
   Serve local\ there (serve.ps1) and the scripts install from this computer exactly as they would from GitHub.
   It never publishes, and changes nothing outside local\ and logs\.
 
-  -Platform windows (with -Local) generates only the windows sections, so the Linux binaries need not be built:
-  a local install on this computer with no Linux VM involved. local-linux.sh does the same for linux.
+  -Platform windows generates only the windows sections, so the Linux binaries need not be built. What the
+  manifests already have for the other platforms is kept, so each operating system's build of a version is
+  published into its release on its own (pull this repository first: the manifests are merged); Linux publishes
+  its own with deploy.sh, in the VM. With -Local it is a local install on this computer with no Linux VM involved;
+  local-linux.sh does the same for linux. A published snapshot preflight (-Preflight) carries every platform.
 #>
-param([switch]$Publish, [switch]$Preflight, [switch]$Local, [int]$Port = 8417, [string]$Platform)
+param([switch]$Publish, [switch]$Preflight, [switch]$Local, [int]$Port = 8417,
+      [ValidateSet('', 'windows')][string]$Platform)
 $ErrorActionPreference = 'Stop'
 if ($Local -and $Publish) { throw '-Local publishes nothing; use -Preflight -Publish' }
-if ($Platform -and -not $Local) { throw '-Platform is for -Local: a published installer has every platform' }
+if ($Platform -and $Preflight) { throw '-Platform is for a release, or with -Local: a published preflight has every platform' }
 
 $dist = $PSScriptRoot
 $root = Split-Path $dist -Parent

@@ -3,26 +3,37 @@
   Cuts a source release of every VexelRay repository, publishes it, or moves them all to the next snapshot.
 
 .DESCRIPTION
-  .\release.ps1 release   each repo: X-SNAPSHOT -> X, build and test all in order, then commit "Release X" and tag
-                          vX (only once every build has passed; a failure commits nothing)
-  .\release.ps1 publish   each repo: push develop and its release tag, and fast-forward its release branch (main or
-                          master, whichever origin has; main when it has neither) to develop. Every repo is checked
-                          first; one that cannot be published stops the run before anything is pushed
-  .\release.ps1 next      each repo: X -> X+1-SNAPSHOT (last number bumped), install all, commit
-  .\release.ps1 finish    publish, next, then push each develop: everything after a release, in one go
-  .\release.ps1 status    each repo: name, version, branch, commit, changed files, subject
+  A release is cut here, on Windows, which always goes first: on a release branch cut from develop (release/0.1.2),
+  which every repository has. Each other operating system then builds that branch and deploys on its own, as late as
+  it is ready; every binary names the version in the poms, and the commit it was built from.
 
-  -DryRun                 publish and finish: the checks, and what would be pushed, without pushing
+  .\release.ps1 release  -Branch release/X   each repo: switch to the branch, X-SNAPSHOT -> X, build and test all in
+                          order, then commit "Release X" and tag vX (only once every build has passed; a failure
+                          commits nothing). The checkouts are left on the branch, to build and deploy from
+  .\release.ps1 publish  -Branch release/X   each repo: push the branch and its tag vX. Every repo is checked first;
+                          one that cannot be published stops the run before anything is pushed
+  .\release.ps1 next      each repo: switch to develop, X-SNAPSHOT -> X+1-SNAPSHOT (last number bumped) once vX is
+                          tagged, install all, commit
+  .\release.ps1 finish   -Branch release/X   publish, next, then push each develop
+  .\release.ps1 deployed -Branch release/X -Platform windows|linux
+                          each repo that platform was built from: tag vX-<platform> on the commit it was built from
+                          (this checkout's HEAD; for linux, the commits in logs\linux\BUILD.txt) and push the tag, so
+                          the repositories say what each platform shipped. Run it right after that platform's publish
+  .\release.ps1 switch   -Branch release/X   each repo onto that branch (or develop), once none has uncommitted
+                          changes: for the Linux VM, which shares these checkouts, after next moved develop on
+  .\release.ps1 status   each repo: name, version, branch, commit, changed files, subject
 
-  Run with the sibling checkouts beside this folder and clean working trees for the poms. Only publish and finish
-  push. Logs land in logs\.
+  -DryRun                 publish, finish and deployed: the checks, and what would be pushed, without pushing
+
+  Run with the sibling checkouts beside this folder and clean working trees for the poms. Only publish, finish and
+  deployed push. Logs land in logs\.
 
   Only the version strings are rewritten: in every tracked pom.xml, and in vexelray-framework's project template
   presets. A -SNAPSHOT string that is not some repository's own version stops the run, because the rewrite would
   otherwise leave a dependency behind.
 #>
-param([Parameter(Position = 0)][ValidateSet('release', 'publish', 'next', 'finish', 'status')][string]$Command,
-      [switch]$DryRun)
+param([Parameter(Position = 0)][ValidateSet('release', 'publish', 'next', 'finish', 'deployed', 'switch', 'status')][string]$Command,
+      [string]$Branch, [ValidateSet('windows', 'linux')][string]$Platform, [switch]$DryRun)
 $ErrorActionPreference = 'Stop'
 
 $Here  = $PSScriptRoot
@@ -124,7 +135,25 @@ function Commit([string]$repo, [string]$subject) {
     Git $repo commit -q -m $subject -m $Trailer | Out-Null
 }
 
+function Need-Branch {
+    if (-not $Branch) { Stop-Release "$Command needs -Branch, the release branch (release/0.1.2)" }
+}
+
+# Every repo onto the release branch, all checked before any moves: each has it, and nothing uncommitted.
+function Switch-ToBranch {
+    $problems = @()
+    foreach ($r in $Repos) {
+        if (-not (Ok $r rev-parse -q --verify "refs/heads/$Branch")) { $problems += "$r has no branch $Branch" }
+        if ((Git $r status --porcelain -uno).Trim()) { $problems += "$r has uncommitted changes" }
+    }
+    if ($problems) { Stop-Release ("Nothing switched:`n  " + ($problems -join "`n  ")) }
+    foreach ($r in $Repos) { Git $r switch -q $Branch | Out-Null }
+    Say "every repository is on $Branch"
+}
+
 function Do-Release {
+    Need-Branch
+    Switch-ToBranch
     $snapshots = [ordered]@{}
     foreach ($r in $Repos) { $snapshots[$r] = Own-Version $r }
     foreach ($r in $Repos) {
@@ -173,57 +202,55 @@ function Release-Tag([string]$repo) {
 }
 
 function Do-Publish {
+    Need-Branch
     $plan = @(); $problems = @()
     foreach ($r in $Repos) {
         if ((Lines (Git $r remote)) -notcontains 'origin') { $problems += "$r has no origin remote"; continue }
         if (-not (Ok $r fetch -q --tags origin)) { $problems += "${r}: fetching origin failed"; continue }
+        if ((Git $r branch --show-current).Trim() -ne $Branch) { $problems += "$r is not on $Branch"; continue }
         $tag, $why = Release-Tag $r
         if ($why) { $problems += $why; continue }
-        if ((Git $r branch --show-current).Trim() -ne 'develop') { $problems += "$r is not on develop" }
         if ((Git $r status --porcelain -uno).Trim()) { $problems += "$r has uncommitted changes" }
-        if ((Ok $r rev-parse -q --verify refs/remotes/origin/develop) -and
-            -not (Ok $r merge-base --is-ancestor origin/develop develop)) {
-            $problems += "${r}: origin/develop has commits develop has not"
+        if ((Ok $r rev-parse -q --verify "refs/remotes/origin/$Branch") -and
+            -not (Ok $r merge-base --is-ancestor "origin/$Branch" $Branch)) {
+            $problems += "${r}: origin/$Branch has commits $Branch has not"
         }
-        # main or master, whichever origin has; main, to be created, when it has neither
-        $have = @('main', 'master' | Where-Object { Ok $r rev-parse -q --verify "refs/remotes/origin/$_" })
-        $branch = if ($have.Count -eq 1) { $have[0] } else { 'main' }
-        if ($have.Count -gt 1) { $problems += "${r}: origin has both main and master; which one releases is unclear" }
-        elseif ($have.Count -eq 1 -and -not (Ok $r merge-base --is-ancestor "origin/$branch" develop)) {
-            $problems += "${r}: origin/$branch has commits develop has not, so it cannot fast-forward"
-        }
-        $plan += [pscustomobject]@{ Repo = $r; Tag = $tag; Branch = $branch; New = $have.Count -eq 0 }
+        $plan += [pscustomobject]@{ Repo = $r; Tag = $tag }
     }
     if ($problems) { Stop-Release ("Nothing pushed:`n  " + ($problems -join "`n  ")) }
-    foreach ($p in $plan) {
-        Say "[$($p.Repo)] push develop and $($p.Tag), $(if ($p.New) { 'create' } else { 'fast-forward' }) $($p.Branch)"
-    }
+    foreach ($p in $plan) { Say "[$($p.Repo)] push $Branch and $($p.Tag)" }
     if ($DryRun) { Say 'DRY RUN: nothing pushed'; return }
     foreach ($p in $plan) {
         $r = $p.Repo
-        # develop:<branch> is a plain push, so origin refuses anything but a fast-forward, and no checkout moves
-        if (-not (Ok $r push -q origin develop $p.Tag "develop:refs/heads/$($p.Branch)")) {
+        # a plain push, so origin refuses anything but a fast-forward
+        if (-not (Ok $r push -q origin $Branch $p.Tag)) {
             Stop-Release "[$r] push failed; the repositories before it are published, rerun to go on"
         }
-        if (Ok $r rev-parse -q --verify "refs/heads/$($p.Branch)") { Git $r fetch -q origin "$($p.Branch):$($p.Branch)" | Out-Null }
-        Say "[$r] published $($p.Tag) on $($p.Branch)"
+        Say "[$r] published $($p.Tag) on $Branch"
     }
     Say 'PUBLISH DONE'
 }
 
+# develop, still at the X-SNAPSHOT the release branch was cut at, moves on once vX is tagged there.
 function Do-Next {
-    $releases = [ordered]@{}; $tags = @{}
+    $problems = @()
     foreach ($r in $Repos) {
-        $tag, $why = Release-Tag $r
-        if ($why) { Stop-Release $why }
-        $tags[$r] = $tag
-        $releases[$r] = Own-Version $r
+        if ((Git $r status --porcelain -uno).Trim()) { $problems += "$r has uncommitted changes"; continue }
+        $v = Own-Version $r 'develop'
+        if (-not $v.EndsWith('-SNAPSHOT')) { $problems += "${r}: develop is at $v, not a snapshot"; continue }
+        $rel = $v.Substring(0, $v.Length - '-SNAPSHOT'.Length)
+        if (-not (Git $r tag -l "v$rel").Trim()) { $problems += "${r}: develop is at $v, and v$rel is not tagged yet" }
     }
-    # From the commit before the release, where every version is still X-SNAPSHOT: a bare "1.0" is also the XML
-    # declaration's version and any number of other things, so it is never what gets matched.
+    if ($problems) { Stop-Release ("Nothing moved:`n  " + ($problems -join "`n  ")) }
+    foreach ($r in $Repos) { Git $r switch -q develop | Out-Null }
+    # Only whole X-SNAPSHOT strings: a bare "1.0" is also the XML declaration's version and any number of other
+    # things, so it is never what gets matched.
     $mapping = [ordered]@{}
-    foreach ($v in $releases.Values) { $mapping["$v-SNAPSHOT"] = Bump $v }
-    foreach ($r in $Repos) { Rewrite $r $mapping "$($tags[$r])~1" }
+    foreach ($r in $Repos) {
+        $v = Own-Version $r
+        $mapping[$v] = Bump $v.Substring(0, $v.Length - '-SNAPSHOT'.Length)
+    }
+    foreach ($r in $Repos) { Rewrite $r $mapping 'HEAD' }
     Say 'versions rewritten'
     foreach ($r in $Repos) {
         Say "[$r] install"
@@ -234,6 +261,50 @@ function Do-Next {
         Say "[$r] $(Own-Version $r)"
     }
     Say 'NEXT DONE'
+}
+
+# vX-<platform> on the commit each repository's build for that platform was made from. Each binary names its commit
+# too, but only to someone holding it: the tags say in the repositories what each platform shipped as X, to diff,
+# rebuild or branch a fix from.
+function Do-Deployed {
+    Need-Branch
+    if (-not $Platform) { Stop-Release 'deployed needs -Platform: windows or linux' }
+    $built = [ordered]@{}
+    if ($Platform -eq 'linux') {
+        $stamp = Join-Path $Logs 'linux\BUILD.txt'
+        if (-not (Test-Path $stamp)) { Stop-Release 'no logs\linux\BUILD.txt: nothing says what the Linux build was made from' }
+        foreach ($line in Get-Content $stamp) {
+            if ($line -match '^\s*(#|$)') { continue }
+            $f = $line -split '\s+'
+            if ($Repos -contains $f[0]) { $built[$f[0]] = $f[1] }
+        }
+    } else {
+        foreach ($r in $Repos) {
+            if ((Git $r branch --show-current).Trim() -ne $Branch) { Stop-Release "$r is not on $Branch, so its HEAD is not what $Platform was built from" }
+            if ((Git $r status --porcelain -uno).Trim()) { Stop-Release "$r has uncommitted changes, so its HEAD is not what $Platform was built from" }
+            $built[$r] = (Git $r rev-parse HEAD).Trim()
+        }
+    }
+    $plan = @(); $problems = @()
+    foreach ($r in $built.Keys) {
+        $c = $built[$r]
+        if (-not (Ok $r merge-base --is-ancestor $c $Branch)) { $problems += "${r}: $($c.Substring(0, 9)) is not on $Branch"; continue }
+        $v = Own-Version $r $c
+        if ($v.EndsWith('-SNAPSHOT')) { $problems += "${r}: $($c.Substring(0, 9)) is at $v, before the release"; continue }
+        if (-not (Ok $r merge-base --is-ancestor "v$v" $c)) { $problems += "${r}: v$v is not in the history of $($c.Substring(0, 9))"; continue }
+        $tag = "v$v-$Platform"
+        $have = (Git $r tag -l $tag).Trim()
+        if ($have -and (Git $r rev-parse "$tag^{commit}").Trim() -ne $c) { $problems += "${r}: $tag is already on another commit"; continue }
+        $plan += [pscustomobject]@{ Repo = $r; Tag = $tag; Commit = $c; Version = $v; New = -not $have }
+    }
+    if ($problems) { Stop-Release ("Nothing tagged:`n  " + ($problems -join "`n  ")) }
+    foreach ($p in $plan) { Say "[$($p.Repo)] $($p.Tag) on $($p.Commit.Substring(0, 9))$(if (-not $p.New) { ', already tagged' })" }
+    if ($DryRun) { Say 'DRY RUN: nothing tagged or pushed'; return }
+    foreach ($p in $plan) {
+        if ($p.New) { Git $p.Repo tag -a $p.Tag $p.Commit -m "Release $($p.Version) for $Platform" | Out-Null }
+        if (-not (Ok $p.Repo push -q origin $p.Tag)) { Stop-Release "[$($p.Repo)] pushing $($p.Tag) failed; rerun to go on" }
+    }
+    Say 'DEPLOYED TAGS DONE'
 }
 
 function Do-PushDevelop {
@@ -266,6 +337,8 @@ try {
         'publish' { Do-Publish }
         'next'    { Do-Next }
         'finish'  { Do-Publish; if (-not $DryRun) { Do-Next; Do-PushDevelop } }
+        'deployed' { Do-Deployed }
+        'switch'  { Need-Branch; Switch-ToBranch }
         'status'  { Do-Status }
         default   { Get-Help $PSCommandPath -Detailed; exit 1 }
     }

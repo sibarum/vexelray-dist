@@ -40,11 +40,18 @@
 .PARAMETER WindowsOnly
   Leave the Linux VM out: no request to it, no linux step, and no generate step (the installers it writes carry
   every platform). For trying the Windows build alone; preflight.sh is the same for Linux. Not enough to publish.
+
+.PARAMETER Platform
+  windows: the preflight of a Windows release, which is published on its own (deploy.ps1 -Platform windows):
+  build, start, notices, versions and generate, with the Linux VM left out. Linux releases itself, in the VM
+  (preflight.sh --release, then deploy.sh).
 #>
 param([switch]$SkipBuild, [int]$Seconds = 8, [switch]$BuildOnly, [switch]$LinuxLocal, [int]$LinuxMinutes = 240,
-      [switch]$WindowsOnly)
+      [switch]$WindowsOnly, [ValidateSet('', 'windows')][string]$Platform)
 if ($WindowsOnly -and $LinuxLocal) { Write-Host '-WindowsOnly leaves the VM out; -LinuxLocal asks it to install' -ForegroundColor Red; exit 1 }
+if ($Platform -and $WindowsOnly) { Write-Host '-Platform windows is -WindowsOnly with the installers generated; give one' -ForegroundColor Red; exit 1 }
 $ErrorActionPreference = 'Stop'
+$linuxHere = -not $WindowsOnly -and $Platform -ne 'windows'
 
 $dist  = $PSScriptRoot
 $root  = Split-Path $dist -Parent
@@ -143,7 +150,7 @@ function Get-LinuxWatch {
     $w
 }
 
-$linuxApps = if ($WindowsOnly) { @() } else { @($apps | Where-Object { $_.App.linux } | ForEach-Object { $_.App.name }) }
+$linuxApps = if (-not $linuxHere) { @() } else { @($apps | Where-Object { $_.App.linux } | ForEach-Object { $_.App.name }) }
 $linuxRequest = $null
 if ($linuxApps) {
     # Asked now, so the VM builds while this computer does.
@@ -183,8 +190,8 @@ foreach ($a in $apps) {
 if ($dead) { $dead | ForEach-Object { Write-Host "  $_" -ForegroundColor Red }; Fail 'an application does not start' }
 
 Step 'linux'
-if ($WindowsOnly) {
-    Write-Host '  left out (-WindowsOnly)'
+if (-not $linuxHere) {
+    Write-Host "  left out ($(if ($WindowsOnly) { '-WindowsOnly' } else { '-Platform windows' }))"
 } elseif (-not $linuxApps) {
     Write-Host '  no application has a linux section'
 } else {
@@ -242,13 +249,19 @@ if ($LASTEXITCODE -ne 0) { Fail 'the notices' }
 if ($BuildOnly) { Write-Host "`nBuilt, started and checked." -ForegroundColor Green; exit 0 }
 
 Step 'versions'
+# Published means this version's entry in the manifest already has a build for the platform: one publishes into a
+# release on its own, so another platform's build of the same version is no reason to bump.
+$platforms = @('windows') + @(if ($linuxHere) { 'linux' })
 foreach ($a in $apps) {
     $manifest = Join-Path $dist "apps\$($a.App.id)\manifest.json"
-    $latest = if (Test-Path $manifest) { (Get-Content $manifest -Raw | ConvertFrom-Json).latest }
-    if ($latest -eq $a.App.version) {
-        Write-Host "  $($a.App.name) $($a.App.version) is already published; bump it in $($a.Config) if it changed" -ForegroundColor Yellow
+    $m = if (Test-Path $manifest) { Get-Content $manifest -Raw | ConvertFrom-Json }
+    $entry = @($m.versions | Where-Object { $_.version -eq $a.App.version }) | Select-Object -First 1
+    $done = @($platforms | Where-Object { $a.App.$_ -and $entry.platforms.$_ })
+    $has = @($entry.platforms.PSObject.Properties.Name | Where-Object { $_ })
+    if ($done) {
+        Write-Host "  $($a.App.name) $($a.App.version) is already published for $($done -join ', '); bump it in $($a.Config) if it changed" -ForegroundColor Yellow
     } else {
-        Write-Host "  $($a.App.name) $($a.App.version) (published: $(if ($latest) { $latest } else { 'none' }))"
+        Write-Host "  $($a.App.name) $($a.App.version) (latest: $(if ($m.latest) { $m.latest } else { 'none' })$(if ($has) { "; this version has $($has -join ', ')" }))"
     }
 }
 
@@ -258,11 +271,13 @@ if ($WindowsOnly) {
 }
 
 Step 'generate'
-try { & (Join-Path $dist 'deploy.ps1') } catch { Fail "deploy.ps1: $_" }
+$deployArgs = @{}
+if ($Platform) { $deployArgs.Platform = $Platform }
+try { & (Join-Path $dist 'deploy.ps1') @deployArgs } catch { Fail "deploy.ps1: $_" }
 
 Step 'diff'
 git -C $dist status --short
 $site = Join-Path $root 'sibarum.github.io'
 if (Test-Path (Join-Path $site '.git')) { git -C $site status --short }
 
-Write-Host "`nPreflight passed. Look at git diff here (and in ..\sibarum.github.io), then .\deploy.ps1 -Publish." -ForegroundColor Green
+Write-Host "`nPreflight passed. Look at git diff here (and in ..\sibarum.github.io), then .\deploy.ps1 -Publish$(if ($Platform) { " -Platform $Platform" })." -ForegroundColor Green

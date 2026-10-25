@@ -11,12 +11,16 @@ build.sh (Linux VM) ──► Linux binaries in target-linux/ ┘               
                                                                         └──► ..\sibarum.github.io\  (git, served by GitHub Pages)
 ```
 
-Windows and Linux ship in the same release: an app with a `linux` section in its `installer.json` (Vex, Pix,
-MainFrame, Calculator and VexelRay Inspector so far) has its Linux binaries uploaded beside its exe, and its manifest
-names both. Its Linux native image is built on Linux, so a release is built twice from one checkout: `build.cmd` on
-the Windows host and `build.sh` in a Linux VM that shares the folder. On Linux every build goes to `target-linux/`
-instead of `target/` (each repository's `linux-build-output` profile), so the two never overwrite each other.
-`deploy.ps1` runs on Windows only, and generates and publishes both.
+Windows and Linux share a release: an app with a `linux` section in its `installer.json` (Vex, Pix, MainFrame,
+Calculator and VexelRay Inspector so far) has its Linux binaries uploaded beside its exe, and its manifest names
+both. Its Linux native image is built on Linux: `build.cmd` on the Windows host, `build.sh` in a Linux VM that shares
+the folder. On Linux every build goes to `target-linux/` instead of `target/` (each repository's
+`linux-build-output` profile), so the two never overwrite each other.
+
+Each operating system is [released on its own](#releasing-a-new-version-of-the-apps), on its own machine, from the
+release branch Windows cut: `deploy.ps1 -Platform windows` on Windows, `deploy.sh` in the VM. Each adds its build of
+a version to that version's release and manifest, keeping what the others put there. A snapshot
+[preflight](#preflight-release) is still built on Windows and published for every platform at once.
 
 ## What lives where
 
@@ -29,7 +33,7 @@ instead of `target/` (each repository's `linux-build-output` profile), so the tw
 | `apps/<id>/` (here, committed) | each app's `install.ps1`, `uninstall.ps1`, `update.ps1`, `manifest.json` and install page; with a `linux` section, `install.sh`, `uninstall.sh`, `update.sh` and `manifest.linux.txt` too |
 | `install.ps1`, `install.sh`, `README.md` (here, committed) | the suite: runs each app's installer in turn. `install.sh` is the Linux one, of the apps that have a `linux` section |
 | `../sibarum.github.io` (its own repo, committed) | the landing page at https://sibarum.github.io: `index.html`, the icons and screenshots in `img/`, and copies of the suite's `install.ps1` and `install.sh`, so the commands are shorter. Generated from `installer-suite.json` (its `site` section, and each member's `image`) |
-| releases on `sibarum/vexelray-dist` | the binaries, one release per app version, tagged `<id>-v<version>` (`pix-v0.1.0`) |
+| releases on `sibarum/vexelray-dist` | the binaries, one release per app version, tagged `<id>-v<version>` (`pix-v0.1.0`), with each platform's files added as that platform publishes |
 | `exe/`, `assets/`, `logs/` (here, ignored) | build output; never committed. `logs/linux/` is `build.sh`'s, with `BUILD.txt`: the commit of every checkout the Linux binaries were built from, `LOCAL.txt`: the build `local-linux.sh --install` installed, and `REQUEST.txt`, `WATCH.txt`: the preflight's request to the VM's watcher and its answer |
 | `preflight/` (here, committed) | the [preflight](#preflight-release) suite installer, pinned to the last snapshots published, and `BUILD.txt` |
 | `local/` (here, ignored) | the last preflight's local copy, served from `127.0.0.1` |
@@ -111,8 +115,10 @@ each app's `target\`.
 
 Each OS can also be tried alone, with nothing to coordinate with the other: the Windows preflight below on this
 computer, [the Linux preflight](#the-linux-preflight) in the VM. Both end in a real install of the snapshot from a
-local copy of the installers. Neither can publish: a published preflight carries every platform, so that still takes
-the whole preflight above, or the [preflight release](#preflight-release).
+local copy of the installers. Neither publishes a snapshot: a published preflight carries every platform, so that
+still takes the whole preflight above, or the [preflight release](#preflight-release). A release is different: each
+platform [releases its own](#releasing-a-new-version-of-the-apps), with `-Platform windows` here or `--release` in
+the VM.
 
 ### The Windows preflight
 
@@ -140,8 +146,9 @@ The same, for Linux alone, in the VM from a terminal on its desktop, with no Win
 It reports each checkout not on `develop` or with uncommitted changes, runs `./build.sh` (build, then start each
 app), names each app whose version is already published, and runs `./local-linux.sh --install` (a real install on the
 VM, from a local preflight in `~/vexelray-local`). `--skip-build` uses the binaries already built, `--no-local` stops
-before the install, and `--skip-tests`, `--seconds` and `--no-start` go to `build.sh`. The notices and generating
-`apps/` stay with `preflight.ps1`, which needs the exes; a release still goes through it.
+before the install, and `--skip-tests`, `--seconds` and `--no-start` go to `build.sh`. The notices stay with
+`preflight.ps1`, which needs the exes. `--release` is the preflight of a Linux release: every checkout must be on the
+release branch, and it ends by generating the Linux installers into `apps/` with `./deploy.sh`.
 
 ### The Linux build
 
@@ -171,38 +178,88 @@ longer match the exes; build again.
 
 ## Releasing a new version of the apps
 
-1. **Bump the version** in the `installer.json` of each app that changed. A published version is final: its
-   release exists, and every install that has it compares against it. Bump the `badge` in `installer-suite.json`'s
-   `site` as well (not for a [snapshot](#snapshot-releases)). An app whose version did not change is regenerated identically (only an `updatedAt` stamp moves;
-   discard that with `git checkout -- apps`).
-2. **Preflight, and look before publishing.** Commit the bumps first. The preflight has the VM's watcher run
-   [the Linux build](#the-linux-build) while it builds on Windows (without a watcher, run `./build.sh` in the VM):
+Windows always goes first: it cuts the release, on a release branch, `release/X` in every repository in
+`release.ps1`'s list, cut from `develop`. Every binary, on every platform, names the version in the poms, so the
+versions move in lock-step and only here. Each other platform then builds that branch, and publishes the same
+version into the same releases, on its own machine and whenever it is ready, however far behind Windows it is. A fix
+one platform needs is committed on the branch (and on `develop`), so each platform may be built from a different
+commit of it: each binary names the commit it was built from, and the `vX-<platform>` tags say it in the
+repositories.
+
+1. **Cut the branch** from `develop`, in every repository in the list, with nothing uncommitted:
    ```powershell
-   .\preflight.ps1
+   foreach ($r in (.\release.ps1 status).Repo) { git -C ..\$r branch release/0.1.2 develop }
+   ```
+2. **Cut the source release** on it ([below](#source-releases-tags-on-every-repository)): every repository is
+   switched to the branch, `X-SNAPSHOT` becomes `X`, everything is built and tested, then committed and tagged `vX`:
+   ```powershell
+   .\release.ps1 release -Branch release/0.1.2
+   ```
+3. **Bump the version** in the `installer.json` of each app that changed, and commit it on the branch. A published
+   version is final: its release exists, and every install that has it compares against it. Bump the `badge` in
+   `installer-suite.json`'s `site` as well (not for a [snapshot](#snapshot-releases)).
+4. **Windows.** Preflight, look at the diff, publish, then tag what was built:
+   ```powershell
+   .\preflight.ps1 -Platform windows
    git diff
+   .\deploy.ps1 -Publish -Platform windows
+   .\release.ps1 deployed -Branch release/0.1.2 -Platform windows
    ```
-   The diff should show only the apps you bumped: a new entry in their `manifest.json`, and their pages.
-3. **Publish.** Creates each new release and uploads its exe, Linux binaries, icons and notices:
+   The diff should show only the apps you bumped: Windows' part of their version's entry in `manifest.json`, and
+   their pages. `-Platform windows` leaves the Linux VM out; what the manifests have for Linux stays as it is.
+   `deployed` tags `vX-windows` on each checkout's HEAD and pushes the tags; run it before anything moves the
+   checkouts. Then [commit, and merge to `main`](#commit-and-merge-to-main).
+5. **Push the branch, and move `develop` on**: `finish` pushes the branch and the `vX` tags, moves each `develop` to
+   the next snapshot, and pushes it. After a fix on the branch, `.\release.ps1 publish -Branch release/0.1.2` pushes
+   it.
    ```powershell
-   .\deploy.ps1 -Publish
+   .\release.ps1 finish -Branch release/0.1.2
    ```
-4. **Commit, and merge to `main`.** Every installer and updater reads the manifests from `main` (the `branch` in
-   each `installer.json`, baked into every generated script), so pushing `develop` alone shows nobody anything. Once
-   `main` has them, the install command and every app's updater offer the new version. GitHub's raw host caches for
-   a few minutes. Push the landing page as well when it changed (a new app, a new description or screenshot);
-   GitHub Pages publishes it within a minute.
-   ```powershell
-   git add -A; git commit -m "Pix 0.1.1"; git push origin develop
-   git checkout main; git merge develop; git push origin main; git checkout develop
-   git -C ..\sibarum.github.io add -A; git -C ..\sibarum.github.io commit -m "Pix 0.1.1"; git -C ..\sibarum.github.io push
+6. **Linux, when it is ready**, in the VM. The VM shares these checkouts, so put them on the branch first (from
+   Windows, `.\release.ps1 switch -Branch release/0.1.2`, and `-Branch develop` after), and pull this repository: the
+   publish merges into the manifests Windows committed.
+   ```bash
+   ./preflight.sh --release
+   git diff
+   ./deploy.sh --publish
    ```
-5. **Try it** on a machine (or a user account) without the apps, on Windows and on Linux:
+   `preflight.sh --release` builds the branch, starts each app, installs a local preflight, then generates the Linux
+   installers into `apps/` without publishing. `deploy.sh --publish` adds each app's Linux files to the release
+   Windows created (or creates it, for a version Windows has not published), and refuses binaries that
+   `logs/linux/BUILD.txt` does not name as these checkouts. Then, on Windows,
+   `.\release.ps1 deployed -Branch release/0.1.2 -Platform linux` tags `vX-linux` on the commits in `BUILD.txt`, and
+   [commit, and merge to `main`](#commit-and-merge-to-main) again.
+7. **Try it** on a machine (or a user account) without the apps, on each platform published:
    ```powershell
    irm https://sibarum.github.io/install.ps1 | iex
    ```
    ```bash
    curl -fsSL https://sibarum.github.io/install.sh | sh
    ```
+
+Each installer offers the newest version that has a build for it: Linux's `manifest.linux.txt` names its own, and
+the manifest's `latest` is Windows', since every Windows updater already installed reads it. So a version published
+for one platform is offered there at once, and nowhere else until it is published there too. A file both platforms
+ship under one name (`THIRD-PARTY-NOTICES.txt`) is one upload, so a later platform whose copy differs is refused;
+give them the same contents.
+
+macOS has no installer target yet (`vexelray-installer` generates Windows and Linux sections), and no `build.sh` or
+`deploy.sh` run there; once it has them, it publishes into the same releases the same way, from a checkout of the
+pushed branch.
+
+### Commit, and merge to `main`
+
+After each platform's publish. Every installer and updater reads the manifests from `main` (the `branch` in each
+`installer.json`, baked into every generated script), so pushing `develop` alone shows nobody anything. Once `main`
+has them, the install command and every app's updater offer the new version. GitHub's raw host caches for a few
+minutes. Push the landing page as well when it changed (a new app, a new description or screenshot); GitHub Pages
+publishes it within a minute.
+
+```powershell
+git add -A; git commit -m "0.1.2 for Windows"; git push origin develop
+git checkout main; git merge develop; git push origin main; git checkout develop
+git -C ..\sibarum.github.io add -A; git -C ..\sibarum.github.io commit -m "0.1.2 for Windows"; git -C ..\sibarum.github.io push
+```
 
 ## Snapshot releases
 
@@ -293,32 +350,38 @@ one app, rebuild only it and run with `-SkipBuild`. To release afterwards, follo
 
 ## Source releases (tags on every repository)
 
-Separate from the installers, and not needed for every app release. `release.ps1` cuts a release of all 28
-repositories at once, from PowerShell:
+`release.ps1` cuts a release of all 28 repositories at once, on the release branch each of them has (see
+[above](#releasing-a-new-version-of-the-apps) for cutting it), from PowerShell:
 
 ```powershell
-.\release.ps1 release
+.\release.ps1 release -Branch release/0.1.2
 ```
 
-`release` turns each repository's `X-SNAPSHOT` into `X` (in its poms and in the framework's project template),
-builds and tests all of them in order, and only when every one has passed commits `Release X` and tags `vX`. It
-pushes nothing. Once the apps are published (an app's `installer.json` commit after the tag is fine), the rest is
+`release` switches every repository to the branch (once none has uncommitted changes), turns each `X-SNAPSHOT`
+into `X` (in its poms and in the framework's project template), builds and tests all of them in order, and only
+when every one has passed commits `Release X` and tags `vX`. It pushes nothing, and leaves the checkouts on the
+branch. Once the first platform is published (an app's `installer.json` commit after the tag is fine), the rest is
 one command:
 
 ```powershell
-.\release.ps1 finish -DryRun
-.\release.ps1 finish
+.\release.ps1 finish -Branch release/0.1.2 -DryRun
+.\release.ps1 finish -Branch release/0.1.2
 ```
 
 `finish` is `publish`, then `next`, then a push of each `develop`:
 
-- `publish` checks every repository first: on `develop`, nothing uncommitted, HEAD at or after its release tag with
-  the poms unchanged since, and a release branch that can fast-forward. Any problem stops it before anything is
-  pushed. Then each pushes `develop` and its tag, and moves its release branch to `develop`: `main` or `master`,
-  whichever origin has, or a new `main` when it has neither. Only fast-forwards; it never merges.
-- `next` moves each to the next snapshot (`0.1.0` to `0.1.1-SNAPSHOT`), installs it locally and commits.
+- `publish` checks every repository first: on the branch, nothing uncommitted, HEAD at or after its release tag
+  with the poms unchanged since, and nothing on `origin`'s copy of the branch that this one lacks. Any problem stops
+  it before anything is pushed. Then each pushes the branch and its tag. `main` and `master` are left where they are.
+- `next` switches each to `develop`, still at the `X-SNAPSHOT` the branch was cut at, and once `vX` is tagged moves
+  it to the next snapshot (`0.1.2-SNAPSHOT` to `0.1.3-SNAPSHOT`), installs it locally and commits.
 
-Each step runs alone as well. A push that fails part way leaves the repositories before it published; rerun.
+Each step runs alone as well, and so do the two that are not part of `finish`: `deployed`, which tags
+`vX-<platform>` on what a platform was built from and pushes those tags, and `switch`, which moves every checkout to
+a branch. A push that fails part way leaves the repositories before it published; rerun.
+
+Up to 0.1.1, `release` ran on `develop` and `publish` fast-forwarded `main` or `master` to it; those are still at
+the 0.1.1 release.
 
 Nothing is deployed to a Maven repository. 0.1.0 (1.0 for atchung, kronometer, tactroller and cardinal; 0.2.0
 for supirvast) was cut on 13 October 2026.
