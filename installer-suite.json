@@ -8,7 +8,7 @@
 
   "site": {
     "url": "https://sibarum.github.io",
-    "badge": "0.1.1 · experimental prerelease",
+    "badge": "{version} · experimental prerelease",
     "tagline": "Nine desktop applications for Windows and Linux, drawn live on the GPU, which know about each other.",
     "requirements": "Needs Windows 10 or 11 (64-bit) and a graphics card with an up-to-date driver: everything here draws with Vulkan.",
     "linux": {

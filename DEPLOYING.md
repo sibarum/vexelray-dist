@@ -196,8 +196,8 @@ repositories.
    .\release.ps1 release -Branch release/0.1.2
    ```
 3. **Bump the version** in the `installer.json` of each app that changed, and commit it on the branch. A published
-   version is final: its release exists, and every install that has it compares against it. Bump the `badge` in
-   `installer-suite.json`'s `site` as well (not for a [snapshot](#snapshot-releases)).
+   version is final: its release exists, and every install that has it compares against it. The pages need no bump:
+   they read the version from the manifests you commit (see `versions.js` in sibarum.github.io's README).
 4. **Windows.** Preflight, look at the diff, publish, then tag what was built:
    ```powershell
    .\preflight.ps1 -Platform windows
