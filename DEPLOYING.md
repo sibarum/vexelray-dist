@@ -109,6 +109,26 @@ It stops at the first step that fails. Logs are in `logs\`.
 After fixing one app, rebuild only it and rerun with `.\preflight.ps1 -SkipBuild`, which uses the exes already in
 each app's `target\`.
 
+Each OS can also be tried alone, with nothing to coordinate with the other: the Windows preflight below on this
+computer, [the Linux preflight](#the-linux-preflight) in the VM. Both end in a real install of the snapshot from a
+local copy of the installers. Neither can publish: a published preflight carries every platform, so that still takes
+the whole preflight above, or the [preflight release](#preflight-release).
+
+### The Windows preflight
+
+For Windows alone, with no Linux VM involved. Double-click **`preflight-windows.cmd`**, or from PowerShell:
+
+```powershell
+.\release-preflight.ps1 -WindowsOnly
+```
+
+It is the [preflight release](#preflight-release) with the VM left out: the sources and versions steps,
+`preflight.ps1 -BuildOnly -WindowsOnly` (build, start and notices, no linux step), then the local install with
+`deploy.ps1 -Local -Platform windows`, which generates only the `windows` sections, so no Linux binaries are needed.
+It stops there and publishes nothing. `-SkipBuild`, `-SkipLocal` and `-AllowDirty` work as they do there.
+`.\preflight.ps1 -WindowsOnly` alone checks without installing: build, start, notices and versions, but no generate
+step, since the installers it writes carry every platform.
+
 ### The Linux preflight
 
 The same, for Linux alone, in the VM from a terminal on its desktop, with no Windows host needed:

@@ -38,9 +38,13 @@
 .PARAMETER AllowDirty
   Build even with uncommitted changes or a branch other than develop. The preflight is then not what was committed,
   so it is never published.
+.PARAMETER WindowsOnly
+  Leave the Linux VM out: build and install on this computer alone (step 4 with deploy.ps1 -Platform windows), and
+  publish nothing, since a published preflight has every platform. preflight.sh is the same for Linux, on the VM.
+  Double-click preflight-windows.cmd to run it.
 #>
 param([switch]$LocalOnly, [switch]$Publish, [switch]$NoBump, [switch]$SkipBuild, [switch]$SkipLocal,
-      [switch]$AllowDirty, [int]$Port = 8417)
+      [switch]$AllowDirty, [switch]$WindowsOnly, [int]$Port = 8417)
 $ErrorActionPreference = 'Stop'
 
 $dist  = $PSScriptRoot
@@ -123,7 +127,8 @@ if ($synced) { $repos = @(Status) }   # BUILD.txt names the commits built
 Step 'build'
 $pfArgs = @{ BuildOnly = $true }
 if ($SkipBuild) { $pfArgs.SkipBuild = $true }
-if (-not $SkipLocal) { $pfArgs.LinuxLocal = $true }
+if ($WindowsOnly) { $pfArgs.WindowsOnly = $true }
+elseif (-not $SkipLocal) { $pfArgs.LinuxLocal = $true }
 & (Join-Path $dist 'preflight.ps1') @pfArgs
 if ($LASTEXITCODE -ne 0) { Fail 'preflight.ps1 (above)' }
 foreach ($a in $apps) {
@@ -145,7 +150,9 @@ foreach ($a in $apps) { $c = Get-Content $a.Config -Raw | ConvertFrom-Json; $con
 # ---- 4. local --------------------------------------------------------------------------
 if (-not $SkipLocal) {
     Step 'local'
-    try { & (Join-Path $dist 'deploy.ps1') -Local -Port $Port } catch { Fail "deploy.ps1 -Local: $_" }
+    $deployArgs = @{ Local = $true; Port = $Port }
+    if ($WindowsOnly) { $deployArgs.Platform = 'windows' }
+    try { & (Join-Path $dist 'deploy.ps1') @deployArgs } catch { Fail "deploy.ps1 -Local: $_" }
     Write-Build (Join-Path $dist 'local') "for http://127.0.0.1:$Port"
     $server = Start-Process powershell -PassThru -WindowStyle Hidden -ArgumentList '-NoProfile', '-ExecutionPolicy', 'Bypass',
         '-File', (Join-Path $dist 'serve.ps1'), '-Root', (Join-Path $dist 'local'), '-Port', $Port
@@ -180,9 +187,10 @@ if (-not $SkipLocal) {
 
 # ---- 5. publish ------------------------------------------------------------------------
 $url = "https://raw.githubusercontent.com/$($suite.repo)/$($suite.branch)/preflight/install.ps1"
-if ($LocalOnly -or $dirty) {
+if ($LocalOnly -or $dirty -or $WindowsOnly) {
     Write-Host "`nPreflight built and tried locally; nothing published." -ForegroundColor Green
-    if (-not $dirty) { Write-Host 'To publish this build: .\release-preflight.ps1 -SkipBuild -SkipLocal -Publish' }
+    if ($WindowsOnly) { Write-Host 'Windows only: publishing needs the Linux build too (.\release-preflight.ps1 without -WindowsOnly).' }
+    elseif (-not $dirty) { Write-Host 'To publish this build: .\release-preflight.ps1 -SkipBuild -SkipLocal -Publish' }
     exit 0
 }
 if (-not $Publish) {

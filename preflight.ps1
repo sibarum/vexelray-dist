@@ -36,8 +36,14 @@
 
 .PARAMETER LinuxMinutes
   How long to wait for the VM before failing.
+
+.PARAMETER WindowsOnly
+  Leave the Linux VM out: no request to it, no linux step, and no generate step (the installers it writes carry
+  every platform). For trying the Windows build alone; preflight.sh is the same for Linux. Not enough to publish.
 #>
-param([switch]$SkipBuild, [int]$Seconds = 8, [switch]$BuildOnly, [switch]$LinuxLocal, [int]$LinuxMinutes = 240)
+param([switch]$SkipBuild, [int]$Seconds = 8, [switch]$BuildOnly, [switch]$LinuxLocal, [int]$LinuxMinutes = 240,
+      [switch]$WindowsOnly)
+if ($WindowsOnly -and $LinuxLocal) { Write-Host '-WindowsOnly leaves the VM out; -LinuxLocal asks it to install' -ForegroundColor Red; exit 1 }
 $ErrorActionPreference = 'Stop'
 
 $dist  = $PSScriptRoot
@@ -137,7 +143,7 @@ function Get-LinuxWatch {
     $w
 }
 
-$linuxApps = @($apps | Where-Object { $_.App.linux } | ForEach-Object { $_.App.name })
+$linuxApps = if ($WindowsOnly) { @() } else { @($apps | Where-Object { $_.App.linux } | ForEach-Object { $_.App.name }) }
 $linuxRequest = $null
 if ($linuxApps) {
     # Asked now, so the VM builds while this computer does.
@@ -177,7 +183,9 @@ foreach ($a in $apps) {
 if ($dead) { $dead | ForEach-Object { Write-Host "  $_" -ForegroundColor Red }; Fail 'an application does not start' }
 
 Step 'linux'
-if (-not $linuxApps) {
+if ($WindowsOnly) {
+    Write-Host '  left out (-WindowsOnly)'
+} elseif (-not $linuxApps) {
     Write-Host '  no application has a linux section'
 } else {
     # Read-Host fails under -NonInteractive, and has no one to answer it with redirected input
@@ -242,6 +250,11 @@ foreach ($a in $apps) {
     } else {
         Write-Host "  $($a.App.name) $($a.App.version) (published: $(if ($latest) { $latest } else { 'none' }))"
     }
+}
+
+if ($WindowsOnly) {
+    Write-Host "`nWindows preflight passed. Publishing needs the Linux build too: run .\preflight.ps1 without -WindowsOnly." -ForegroundColor Green
+    exit 0
 }
 
 Step 'generate'

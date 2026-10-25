@@ -26,10 +26,14 @@
   instead of GitHub: apps\<id>\, releases\<tag>\ (laid out as GitHub's release downloads are) and install.ps1.
   Serve local\ there (serve.ps1) and the scripts install from this computer exactly as they would from GitHub.
   It never publishes, and changes nothing outside local\ and logs\.
+
+  -Platform windows (with -Local) generates only the windows sections, so the Linux binaries need not be built:
+  a local install on this computer with no Linux VM involved. local-linux.sh does the same for linux.
 #>
-param([switch]$Publish, [switch]$Preflight, [switch]$Local, [int]$Port = 8417)
+param([switch]$Publish, [switch]$Preflight, [switch]$Local, [int]$Port = 8417, [string]$Platform)
 $ErrorActionPreference = 'Stop'
 if ($Local -and $Publish) { throw '-Local publishes nothing; use -Preflight -Publish' }
+if ($Platform -and -not $Local) { throw '-Platform is for -Local: a published installer has every platform' }
 
 $dist = $PSScriptRoot
 $root = Split-Path $dist -Parent
@@ -70,6 +74,7 @@ foreach ($a in $members) {
     $assets = Join-Path $out "assets\$($app.id)"
     $javaArgs = @('-jar', $jar, '--config', $a.Config, '--version', $app.version, '--out', $appOut, '--assets', $assets)
     if ($Local) { $javaArgs += @('--base-url', "$base/apps/$($app.id)", '--asset-base-url', "$base/releases") }
+    if ($Platform) { $javaArgs += @('--platform', $Platform) }
     if ($Publish) { $javaArgs += '--publish' }
     Write-Host "== $($app.name) $($app.version)"
     & java @javaArgs
