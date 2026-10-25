@@ -12,7 +12,7 @@ irm https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/text-edito
 ```
 
 That is the whole install. A window opens where you can change the folder and choose shortcuts,
-PATH and file types, then press **Install**. It downloads Vex 0.1.1, checks every file
+PATH and file types, then press **Install**. It downloads Vex 0.1.2, checks every file
 against the SHA-256 in the [install manifest](https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/text-editor/manifest.json), and installs for your user only.
 
 What it does:
@@ -49,8 +49,9 @@ the PATH entry or file types back, set that variable to `'0'` and run the instal
 
 | File | Kind | Version | Size | Installed to |
 | --- | --- | --- | --- | --- |
-| `text-editor.exe` | native executable | 0.1.2-SNAPSHOT | 93.5 MB | `%LOCALAPPDATA%\Programs\Vex\text-editor.exe` |
-| `THIRD-PARTY-NOTICES.txt` | file | 0.1.2-SNAPSHOT | 0.1 MB | `%LOCALAPPDATA%\Programs\Vex\THIRD-PARTY-NOTICES.txt` |
+| `text-editor.exe` | native executable | 0.1.2 | 95.3 MB | `%LOCALAPPDATA%\Programs\Vex\text-editor.exe` |
+| `text-editor-ffmpeg-record-windows-x86_64.zip` | archive (unpacked) | 0.1.2 | 5.5 MB | `%LOCALAPPDATA%\Programs\Vex\ffmpeg-record\` |
+| `THIRD-PARTY-NOTICES.txt` | file | 0.1.2 | 0.1 MB | `%LOCALAPPDATA%\Programs\Vex\THIRD-PARTY-NOTICES.txt` |
 
 Everything installed is recorded in `%LOCALAPPDATA%\Programs\Vex\install-manifest.json`, and a copy
 in `%LOCALAPPDATA%\vexelray-installer\installs\text-editor.json`.
@@ -119,7 +120,7 @@ Open a terminal and run (no `sudo`: it installs for your user only):
 curl -fsSL https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/text-editor/install.sh | sh
 ```
 
-It downloads Vex 0.1.1, checks every file against the SHA-256 in the
+It downloads Vex 0.1.2-SNAPSHOT, checks every file against the SHA-256 in the
 [install manifest](https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/text-editor/manifest.json), and installs into `~/.local/opt/text-editor`. It needs `curl` (or
 `wget`), `tar` and `sha256sum`, which every desktop distribution has.
 
@@ -197,5 +198,5 @@ A macOS installer is planned; the manifest is already organised per platform.
 
 ## Versions
 
-Current version: **0.1.1**. The full history of published versions, with the files,
+Current version: **0.1.2**. The full history of published versions, with the files,
 sizes and checksums of each, is in [`manifest.json`](https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/text-editor/manifest.json).

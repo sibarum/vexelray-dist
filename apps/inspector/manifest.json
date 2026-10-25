@@ -5,11 +5,11 @@
   "publisher": "sibarum",
   "description": "DevTools for VexelRay applications, drawn as clockwork: attach to a running app and watch its frame loop beat, park and stall.",
   "repo": "sibarum/vexelray-dist",
-  "latest": "0.1.1",
+  "latest": "0.1.2",
   "tools": {
     "install.ps1": {
       "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/inspector/install.ps1",
-      "sha256": "005645b22d340853b14fd65830db7c273c44682c2adf868e955ad23e28049653"
+      "sha256": "2fe40c8b461b21e84d29e84a4e1a879693d7fc05ed4e835dff715e69d9ee2ae3"
     },
     "uninstall.ps1": {
       "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/inspector/uninstall.ps1",
@@ -41,6 +41,75 @@
     }
   },
   "versions": [
+    {
+      "version": "0.1.2",
+      "publishedAt": "2026-10-25T19:18:36Z",
+      "notes": "",
+      "installer": {
+        "install.ps1": "2fe40c8b461b21e84d29e84a4e1a879693d7fc05ed4e835dff715e69d9ee2ae3",
+        "uninstall.ps1": "88ddafa4f038ff00b7992c71cc0ccd0f1ac47fdd12c6b496f2c02543e28cec0a",
+        "update.ps1": "09aceadf15f87e24cdc3fb3bf01383ecf8583075d4bf4ba8ea329d8ca5c87a67",
+        "diagnose.ps1": "b100a782269a0334a83d65169ba0d12510084d92148a5854e67f5fb8764d04b2",
+        "manager.ps1": "bb40e3d9c2455ed5e6acaac22c49fdccb7b56911f9f74e6e7d5e3ced2ca5a8ac"
+      },
+      "platforms": {
+        "windows": {
+          "installDir": "%LOCALAPPDATA%\\Programs\\VexelRay Inspector",
+          "binaries": [
+            {
+              "name": "vexelray-inspector",
+              "version": "0.1.2",
+              "kind": "native",
+              "file": "vexelray-inspector.exe",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/inspector-v0.1.2/vexelray-inspector.exe",
+              "sha256": "a86f280252642ae597b3343bcc8221c9757777a2a8336ea5aa13664eb90560cf",
+              "size": 46436352,
+              "installPath": "{installDir}\\vexelray-inspector.exe",
+              "executable": true,
+              "addToPath": true,
+              "icon": {
+                "file": "vexelray-inspector.ico",
+                "url": "https://github.com/sibarum/vexelray-dist/releases/download/inspector-v0.1.2/vexelray-inspector.ico",
+                "sha256": "b32265b30797dace5f54435893c9573cafcc87c1917afb481b63ec757272406b",
+                "size": 30632,
+                "installPath": "{installDir}\\vexelray-inspector.ico"
+              },
+              "shortcuts": {
+                "desktop": true,
+                "startMenu": true,
+                "label": "VexelRay Inspector",
+                "gui": false
+              }
+            },
+            {
+              "name": "inspector-ffmpeg-record",
+              "version": "0.1.2",
+              "kind": "archive",
+              "file": "inspector-ffmpeg-record-windows-x86_64.zip",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/inspector-v0.1.2/inspector-ffmpeg-record-windows-x86_64.zip",
+              "sha256": "3113d10f6ffea9bdd07973cf99b56a57ad9905fe7f3c07705621f3383197f6b5",
+              "size": 5731677,
+              "installPath": "{installDir}\\ffmpeg-record",
+              "executable": false,
+              "addToPath": false
+            },
+            {
+              "name": "notices",
+              "version": "0.1.2",
+              "kind": "file",
+              "file": "THIRD-PARTY-NOTICES.txt",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/inspector-v0.1.2/THIRD-PARTY-NOTICES.txt",
+              "sha256": "fc8d6d2022ba45b7bc784ca133be201ebbb905843f0ea30a39e2f232edef9352",
+              "size": 60811,
+              "installPath": "{installDir}\\THIRD-PARTY-NOTICES.txt",
+              "executable": false,
+              "addToPath": false
+            }
+          ]
+        }
+      },
+      "updatedAt": "2026-10-25T19:39:54Z"
+    },
     {
       "version": "0.1.2-SNAPSHOT",
       "publishedAt": "2026-10-23T19:00:45Z",

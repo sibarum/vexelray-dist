@@ -5,11 +5,11 @@
   "publisher": "sibarum",
   "description": "A terminal window that wraps the native Windows shell over ConPTY, built on the VexelRay stack.",
   "repo": "sibarum/vexelray-dist",
-  "latest": "0.1.1",
+  "latest": "0.1.2",
   "tools": {
     "install.ps1": {
       "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/mainframe/install.ps1",
-      "sha256": "4c26a9b033ab53a089eb3036bc6dee3b73b3d1fa0dc97b65a9a9efe513452dba"
+      "sha256": "e7d8fe3fbf900f8a1c0f50adc1ee409c52f3e5575b2b74587a82495752591f99"
     },
     "uninstall.ps1": {
       "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/mainframe/uninstall.ps1",
@@ -41,6 +41,75 @@
     }
   },
   "versions": [
+    {
+      "version": "0.1.2",
+      "publishedAt": "2026-10-25T19:18:33Z",
+      "notes": "",
+      "installer": {
+        "install.ps1": "e7d8fe3fbf900f8a1c0f50adc1ee409c52f3e5575b2b74587a82495752591f99",
+        "uninstall.ps1": "af14cffb2b236592525635689dda61f4451d9e894aeaf494e6661388e2287237",
+        "update.ps1": "f7cbe84912c78bca89d07e93a3e1a488c6962308aa394385f5c5c5b409a26bbe",
+        "diagnose.ps1": "14f188ad047e43a3c7902dd2412e4f702c5972a14bca3d8b81f5fe9c70fbb18d",
+        "manager.ps1": "bb98fbd36ac7436aac6abd5c0e3afc50311c399d9adac247cfc0904356c3b67d"
+      },
+      "platforms": {
+        "windows": {
+          "installDir": "%LOCALAPPDATA%\\Programs\\MainFrame",
+          "binaries": [
+            {
+              "name": "mainframe",
+              "version": "0.1.2",
+              "kind": "native",
+              "file": "mainframe.exe",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/mainframe-v0.1.2/mainframe.exe",
+              "sha256": "88b58f9323e3b2ec401cd230187275f9071c578a05891ec5a515b2f5cc813421",
+              "size": 47558656,
+              "installPath": "{installDir}\\mainframe.exe",
+              "executable": true,
+              "addToPath": true,
+              "icon": {
+                "file": "mainframe.ico",
+                "url": "https://github.com/sibarum/vexelray-dist/releases/download/mainframe-v0.1.2/mainframe.ico",
+                "sha256": "8a18b4537d5689974c75f311b9f71b0c6eb7fa38818aabd94bc8ed48da3d75ee",
+                "size": 24959,
+                "installPath": "{installDir}\\mainframe.ico"
+              },
+              "shortcuts": {
+                "desktop": true,
+                "startMenu": true,
+                "label": "MainFrame",
+                "gui": false
+              }
+            },
+            {
+              "name": "mainframe-ffmpeg-record",
+              "version": "0.1.2",
+              "kind": "archive",
+              "file": "mainframe-ffmpeg-record-windows-x86_64.zip",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/mainframe-v0.1.2/mainframe-ffmpeg-record-windows-x86_64.zip",
+              "sha256": "3113d10f6ffea9bdd07973cf99b56a57ad9905fe7f3c07705621f3383197f6b5",
+              "size": 5731677,
+              "installPath": "{installDir}\\ffmpeg-record",
+              "executable": false,
+              "addToPath": false
+            },
+            {
+              "name": "notices",
+              "version": "0.1.2",
+              "kind": "file",
+              "file": "THIRD-PARTY-NOTICES.txt",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/mainframe-v0.1.2/THIRD-PARTY-NOTICES.txt",
+              "sha256": "849b407d028f65e52a14aee38bf2b8305864b1366d06822a3fe979d0e3ebec08",
+              "size": 60784,
+              "installPath": "{installDir}\\THIRD-PARTY-NOTICES.txt",
+              "executable": false,
+              "addToPath": false
+            }
+          ]
+        }
+      },
+      "updatedAt": "2026-10-25T19:36:19Z"
+    },
     {
       "version": "0.1.2-SNAPSHOT",
       "publishedAt": "2026-10-23T18:57:28Z",

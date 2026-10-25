@@ -5,11 +5,11 @@
   "publisher": "sibarum",
   "description": "Rigid-body simulation experiments on the VexelRay stack: spheres that collide, bounce, spin and roll, live on the GPU.",
   "repo": "sibarum/vexelray-dist",
-  "latest": "0.1.1",
+  "latest": "0.1.2",
   "tools": {
     "install.ps1": {
       "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/rigid-sim/install.ps1",
-      "sha256": "09ec64f40b73e61abcab3aaa1427273f8b5742d98d979b286006d029a275ecf4"
+      "sha256": "a480f46749ba064358adec0d2d02deb72753335417ba3e82a2bfc887f8740445"
     },
     "uninstall.ps1": {
       "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/rigid-sim/uninstall.ps1",
@@ -29,6 +29,75 @@
     }
   },
   "versions": [
+    {
+      "version": "0.1.2",
+      "publishedAt": "2026-10-25T19:18:35Z",
+      "notes": "",
+      "installer": {
+        "install.ps1": "a480f46749ba064358adec0d2d02deb72753335417ba3e82a2bfc887f8740445",
+        "uninstall.ps1": "4102b32475fd13cd157a6bce5ea8315104c306f0e8f26c673d802ccbe0f08cc6",
+        "update.ps1": "6c8d269f4501d1cab50b52bb3a7bb58a188605da0f0596b8a747804aae4728e6",
+        "diagnose.ps1": "908db7e3867708a4c806da9acc654febdc86ae68238983f077aae4b4461edf90",
+        "manager.ps1": "eebe79377df4d16503430e52c24aea4673adf15fe4ada393290c2671593fd41d"
+      },
+      "platforms": {
+        "windows": {
+          "installDir": "%LOCALAPPDATA%\\Programs\\Rigid Sim",
+          "binaries": [
+            {
+              "name": "rigid-sim",
+              "version": "0.1.2",
+              "kind": "native",
+              "file": "rigid-sim.exe",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/rigid-sim-v0.1.2/rigid-sim.exe",
+              "sha256": "201497dc179881f1c74efc7c920b0b67168385e136f030487b5b0ed3bf7facf1",
+              "size": 69271552,
+              "installPath": "{installDir}\\rigid-sim.exe",
+              "executable": true,
+              "addToPath": false,
+              "icon": {
+                "file": "rigid-sim.ico",
+                "url": "https://github.com/sibarum/vexelray-dist/releases/download/rigid-sim-v0.1.2/rigid-sim.ico",
+                "sha256": "ec9757de39305a0b9d0da15cd3c4c260486bd8f13a495a624e5eb65d9f8126ce",
+                "size": 29819,
+                "installPath": "{installDir}\\rigid-sim.ico"
+              },
+              "shortcuts": {
+                "desktop": true,
+                "startMenu": true,
+                "label": "Rigid Sim",
+                "gui": false
+              }
+            },
+            {
+              "name": "rigid-sim-ffmpeg-record",
+              "version": "0.1.2",
+              "kind": "archive",
+              "file": "rigid-sim-ffmpeg-record-windows-x86_64.zip",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/rigid-sim-v0.1.2/rigid-sim-ffmpeg-record-windows-x86_64.zip",
+              "sha256": "3113d10f6ffea9bdd07973cf99b56a57ad9905fe7f3c07705621f3383197f6b5",
+              "size": 5731677,
+              "installPath": "{installDir}\\ffmpeg-record",
+              "executable": false,
+              "addToPath": false
+            },
+            {
+              "name": "notices",
+              "version": "0.1.2",
+              "kind": "file",
+              "file": "THIRD-PARTY-NOTICES.txt",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/rigid-sim-v0.1.2/THIRD-PARTY-NOTICES.txt",
+              "sha256": "457028f9287883aaada3ad9763fe4ba1edea682773f9f9217d735e428efbc57c",
+              "size": 73416,
+              "installPath": "{installDir}\\THIRD-PARTY-NOTICES.txt",
+              "executable": false,
+              "addToPath": false
+            }
+          ]
+        }
+      },
+      "updatedAt": "2026-10-25T19:38:28Z"
+    },
     {
       "version": "0.1.2-SNAPSHOT",
       "publishedAt": "2026-10-23T18:59:35Z",

@@ -1140,14 +1140,29 @@ function ViInvokeInstall {
     if (Test-Path -LiteralPath $recPath) {
         try { $old = Get-Content -Raw -LiteralPath $recPath | ConvertFrom-Json } catch { }
     }
+    # Not installed under this id, but under one it had before a rename: that install's choices carry over, and it is
+    # removed once this one is in place. Its updater passes its own folder, which stays the old install's.
+    $replaced = $null
+    if (-not $old) {
+        foreach ($rid in @($manifest.replaces)) {
+            if (-not $rid) { continue }
+            $replaced = ViReadRecord $rid
+            if ($replaced) {
+                ViInfo "Replaces $($replaced.name) $($replaced.version), installed as $rid"
+                if ($Dir -and (ViPathNorm $Dir) -eq (ViPathNorm $replaced.installDir)) { $Dir = '' }
+                break
+            }
+        }
+    }
+    $prev = if ($old) { $old } else { $replaced }
     if ($Dir) { $installDir = (ViExpand $Dir).TrimEnd('\') }
     elseif ($old) { $installDir = $old.installDir }
     else { $installDir = (ViExpand $plat.installDir).TrimEnd('\') }
 
     # opt-outs: a switch or INSTALL_NO_*=1 skips, INSTALL_NO_*=0 opts back in, otherwise the last install's choice stands
-    $skipShortcuts = ViOptOut $NoShortcuts $env:INSTALL_NO_SHORTCUTS $old.options.noShortcuts
-    $skipPath = ViOptOut $NoPath $env:INSTALL_NO_PATH $old.options.noPath
-    $skipAssoc = ViOptOut $NoAssociations $env:INSTALL_NO_ASSOCIATIONS $old.options.noAssociations
+    $skipShortcuts = ViOptOut $NoShortcuts $env:INSTALL_NO_SHORTCUTS $prev.options.noShortcuts
+    $skipPath = ViOptOut $NoPath $env:INSTALL_NO_PATH $prev.options.noPath
+    $skipAssoc = ViOptOut $NoAssociations $env:INSTALL_NO_ASSOCIATIONS $prev.options.noAssociations
     $bins = @($plat.binaries)
 
     # with a window those are the defaults it offers; pressing Install (or Reinstall) is the go-ahead
@@ -1531,6 +1546,30 @@ function ViInvokeInstall {
         New-ItemProperty -Path $uninstallKey -Name EstimatedSize -Value $sizeKb -PropertyType DWord -Force | Out-Null
 
         try { ViInstallManager $installDir $skipShortcuts } catch { ViWarn "The app manager was not set up: $($_.Exception.Message)" }
+
+        # 9. the install this one replaces goes, by this install's own uninstaller. What both registered under the same
+        # name (a shortcut, a PATH entry, a file type) is this install's now, so it comes out of the old record first.
+        if ($replaced) {
+            ViStep "Removing $($replaced.name) $($replaced.version), which $appName replaces"
+            try {
+                $mineFiles = @($files | ForEach-Object { $_.path })
+                $minePath = @($pathEntries | ForEach-Object { ViPathNorm $_ })
+                $mineProgIds = @($associations | ForEach-Object { $_.progId })
+                $left = [ordered]@{}
+                foreach ($p in $replaced.PSObject.Properties) { $left[$p.Name] = $p.Value }
+                $left.files = @(@($replaced.files) | Where-Object { $_ -and $mineFiles -notcontains $_.path })
+                $left.shortcuts = @(@($replaced.shortcuts) | Where-Object { $_ -and $shortcuts -notcontains $_ })
+                $left.pathEntries = @(@($replaced.pathEntries) | Where-Object { $_ -and $minePath -notcontains (ViPathNorm $_) })
+                $left.fileAssociations = @(@($replaced.fileAssociations) | Where-Object { $_ -and $mineProgIds -notcontains $_.progId })
+                $left.registryKeys = @(@($replaced.registryKeys) | Where-Object { $_ -and $_ -ne $uninstallKey })
+                ViWriteText (Join-Path $regDir "$($replaced.id).json") ($left | ConvertTo-Json -Depth 10)
+                & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $installDir 'uninstall.ps1') -Id $replaced.id -Yes | Out-Host
+                if ($LASTEXITCODE -ne 0) { throw "its uninstaller exited with code $LASTEXITCODE" }
+                ViInfo "Removed $($replaced.id)"
+            } catch {
+                ViWarn "Could not remove $($replaced.id), which $appName replaces: $($_.Exception.Message). Remove it with: `"$(Join-Path $installDir 'uninstall.cmd')`" -Id $($replaced.id)"
+            }
+        }
 
         ViSay ""
         ViSay "$appName $($entry.version) installed." Green

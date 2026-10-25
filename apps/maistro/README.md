@@ -12,7 +12,7 @@ irm https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/maistro/in
 ```
 
 That is the whole install. A window opens where you can change the folder and choose shortcuts,
-PATH and file types, then press **Install**. It downloads Maistro 0.1.1, checks every file
+PATH and file types, then press **Install**. It downloads Maistro 0.1.2, checks every file
 against the SHA-256 in the [install manifest](https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/maistro/manifest.json), and installs for your user only.
 
 What it does:
@@ -48,8 +48,9 @@ the PATH entry or file types back, set that variable to `'0'` and run the instal
 
 | File | Kind | Version | Size | Installed to |
 | --- | --- | --- | --- | --- |
-| `maistro.exe` | native executable | 0.1.2-SNAPSHOT | 42.9 MB | `%LOCALAPPDATA%\Programs\Maistro\maistro.exe` |
-| `THIRD-PARTY-NOTICES.txt` | file | 0.1.2-SNAPSHOT | 0.1 MB | `%LOCALAPPDATA%\Programs\Maistro\THIRD-PARTY-NOTICES.txt` |
+| `maistro.exe` | native executable | 0.1.2 | 44.8 MB | `%LOCALAPPDATA%\Programs\Maistro\maistro.exe` |
+| `maistro-ffmpeg-record-windows-x86_64.zip` | archive (unpacked) | 0.1.2 | 5.5 MB | `%LOCALAPPDATA%\Programs\Maistro\ffmpeg-record\` |
+| `THIRD-PARTY-NOTICES.txt` | file | 0.1.2 | 0.1 MB | `%LOCALAPPDATA%\Programs\Maistro\THIRD-PARTY-NOTICES.txt` |
 
 Everything installed is recorded in `%LOCALAPPDATA%\Programs\Maistro\install-manifest.json`, and a copy
 in `%LOCALAPPDATA%\vexelray-installer\installs\maistro.json`.
@@ -114,5 +115,5 @@ macOS and Linux installers are planned; the manifest is already organised per pl
 
 ## Versions
 
-Current version: **0.1.1**. The full history of published versions, with the files,
+Current version: **0.1.2**. The full history of published versions, with the files,
 sizes and checksums of each, is in [`manifest.json`](https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/maistro/manifest.json).

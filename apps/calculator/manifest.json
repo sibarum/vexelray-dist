@@ -5,11 +5,11 @@
   "publisher": "sibarum",
   "description": "A small calculator window onto cott-engine.",
   "repo": "sibarum/vexelray-dist",
-  "latest": "0.1.1",
+  "latest": "0.1.2",
   "tools": {
     "install.ps1": {
       "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/calculator/install.ps1",
-      "sha256": "effec796ea36d71a323655f7c882b853f62c599ae68790a5ce5d16db71372350"
+      "sha256": "830106de1d7e0a9c6a05fcbac6eebbeb16f2c16de26667cba6b743936021abee"
     },
     "uninstall.ps1": {
       "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/calculator/uninstall.ps1",
@@ -41,6 +41,75 @@
     }
   },
   "versions": [
+    {
+      "version": "0.1.2",
+      "publishedAt": "2026-10-25T19:18:34Z",
+      "notes": "",
+      "installer": {
+        "install.ps1": "830106de1d7e0a9c6a05fcbac6eebbeb16f2c16de26667cba6b743936021abee",
+        "uninstall.ps1": "e273d7b04a626dd3e1213559055670a0b9edeecdcefa082bb38d1f18641afb64",
+        "update.ps1": "7692b5dfecf190a7a2376f50f5ed360f288cc4cbf97079e54302d64684cd14dd",
+        "diagnose.ps1": "debf2175bbb9f6e035f7a561f9bb1ae31d49e7f824b48f3da4aa7d2f0b9caab4",
+        "manager.ps1": "eb90fd545aea2b06a01a7ab10b1a9079dcc941057be3f86202ba5d6d53deb825"
+      },
+      "platforms": {
+        "windows": {
+          "installDir": "%LOCALAPPDATA%\\Programs\\Calculator",
+          "binaries": [
+            {
+              "name": "calculator",
+              "version": "0.1.2",
+              "kind": "native",
+              "file": "calculator.exe",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/calculator-v0.1.2/calculator.exe",
+              "sha256": "f1b175a53f31559bbec7f1265f01e6783d6528f8c5417ecbeedb5f3638d63e85",
+              "size": 47316992,
+              "installPath": "{installDir}\\calculator.exe",
+              "executable": true,
+              "addToPath": true,
+              "icon": {
+                "file": "calculator.ico",
+                "url": "https://github.com/sibarum/vexelray-dist/releases/download/calculator-v0.1.2/calculator.ico",
+                "sha256": "c93ef49f4a01767da7dcfd7ee7cba8a4fe0cdd30abf29694570fd649875f0582",
+                "size": 26499,
+                "installPath": "{installDir}\\calculator.ico"
+              },
+              "shortcuts": {
+                "desktop": true,
+                "startMenu": true,
+                "label": "Calculator",
+                "gui": false
+              }
+            },
+            {
+              "name": "calculator-ffmpeg-record",
+              "version": "0.1.2",
+              "kind": "archive",
+              "file": "calculator-ffmpeg-record-windows-x86_64.zip",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/calculator-v0.1.2/calculator-ffmpeg-record-windows-x86_64.zip",
+              "sha256": "3113d10f6ffea9bdd07973cf99b56a57ad9905fe7f3c07705621f3383197f6b5",
+              "size": 5731677,
+              "installPath": "{installDir}\\ffmpeg-record",
+              "executable": false,
+              "addToPath": false
+            },
+            {
+              "name": "notices",
+              "version": "0.1.2",
+              "kind": "file",
+              "file": "THIRD-PARTY-NOTICES.txt",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/calculator-v0.1.2/THIRD-PARTY-NOTICES.txt",
+              "sha256": "8bfb7d7b78a47feac0a39fde77672dd83660ea83a4bfd1af0fff1137bffbbf87",
+              "size": 60787,
+              "installPath": "{installDir}\\THIRD-PARTY-NOTICES.txt",
+              "executable": false,
+              "addToPath": false
+            }
+          ]
+        }
+      },
+      "updatedAt": "2026-10-25T19:36:51Z"
+    },
     {
       "version": "0.1.2-SNAPSHOT",
       "publishedAt": "2026-10-23T18:58:17Z",
