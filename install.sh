@@ -17,10 +17,12 @@
 #   INSTALL_FORCE=1            "
 #   INSTALL_SKIP_CHECKS=1      "
 #   INSTALL_EVERYTHING=1       the optional applications too, like the rest
-# Or as arguments: curl -fsSL <url> | sh -s -- --install-everything
-# INSTALL_VERSION and INSTALL_DIR name one application's version and folder, so they are not passed
-# on: run that application's own installer to use them. An application this script pins to a version
-# (a preflight of snapshot builds) is installed at that version, and reinstalled even when it is current.
+#   INSTALL_VERSION=1.2.3      that release of every application instead of the latest; one that does not
+#                              have it is skipped. Run the line again without it to go back to the latest
+# Or as arguments: curl -fsSL <url> | sh -s -- --install-everything --version 1.2.3
+# INSTALL_DIR names one application's folder, so it is not passed on: run that application's own installer
+# to use it. An application this script pins to a version (a preflight of snapshot builds) is installed at
+# that version whatever INSTALL_VERSION says, and reinstalled even when it is current.
 
 VI_SUITE='VexelRay'
 
@@ -69,10 +71,15 @@ vi_get() {
 
 vi_main() {
     vi_everything=${INSTALL_EVERYTHING:-0}
+    vi_version=${INSTALL_VERSION:-}
     while [ $# -gt 0 ]; do
         case $1 in
             --install-everything) vi_everything=1 ;;
             --do-not-prompt-me|--quiet|-Quiet) ;;
+            --version|-Version)
+                if [ $# -gt 1 ]; then shift; vi_version=$1
+                else vi_version=; vi_warn "$1 needs a version, such as $1 0.1.2; installing the latest."; fi ;;
+            --version=*) vi_version=${1#--version=} ;;
             *) vi_warn "Ignoring unknown argument: $1" ;;
         esac
         shift
@@ -94,10 +101,10 @@ vi_main() {
         vi_unknown=$(printf '%s\n' "$vi_only" | awk -F'\t' 'FNR == NR { known[$1] = 1; next } !($1 in known)' "$vi_tmp/members" -)
         [ -z "$vi_unknown" ] || vi_die "INSTALL_ONLY names $(printf '%s\n' "$vi_unknown" | awk '{ printf "%s%s", s, $0; s = ", " }'), which the suite does not have. It has: $(awk -F'\t' '{ printf "%s%s", s, $1; s = ", " }' "$vi_tmp/members")"
     fi
-    for vi_n in INSTALL_VERSION INSTALL_DIR; do
-        eval "vi_set=\${$vi_n:-}"
-        [ -n "$vi_set" ] && vi_warn "$vi_n names one application's version or folder, so it is not passed on; run that application's own installer to use it."
-    done
+    [ -n "${INSTALL_DIR:-}" ] && vi_warn "INSTALL_DIR names one application's folder, so it is not passed on; run that application's own installer to use it."
+    # v0.1.2 and 0.1.2 are the same release, as in an application's own installer
+    vi_version=${vi_version#[vV]}
+    [ -n "$vi_version" ] && vi_say "Installing release $vi_version, not the latest."
 
     vi_done=; vi_failed=; vi_missing=
     while IFS="$vi_tab" read -r vi_id vi_name vi_url vi_pin vi_opt vi_lin vi_reg; do
@@ -126,9 +133,12 @@ vi_main() {
             vi_missing="$vi_missing${vi_missing:+, }$vi_name"
             continue
         fi
-        if [ "$vi_pin" != - ] && ! awk -F'\t' -v v="$vi_pin" '$1 == "version" && $2 == v { f = 1 } END { exit !f }' "$vi_mf"; then
-            vi_warn "$vi_name $vi_pin has not been published yet; skipped."
-            vi_missing="$vi_missing${vi_missing:+, }$vi_name $vi_pin"
+        # the version asked for: the pinned one, or else the release named, or else - for the latest
+        vi_ask=$vi_pin
+        [ "$vi_ask" = - ] && [ -n "$vi_version" ] && vi_ask=$vi_version
+        if [ "$vi_ask" != - ] && ! awk -F'\t' -v v="$vi_ask" '$1 == "version" && $2 == v { f = 1 } END { exit !f }' "$vi_mf"; then
+            vi_warn "$vi_name $vi_ask has not been published yet; skipped."
+            vi_missing="$vi_missing${vi_missing:+, }$vi_name $vi_ask"
             continue
         fi
         vi_t=$(awk -F'\t' '$1 == "tool" && $2 == "install.sh"' "$vi_mf")
@@ -148,6 +158,9 @@ EOF
         # a pinned version is installed even over itself: a snapshot is rebuilt under the same version
         if [ "$vi_pin" != - ]; then
             INSTALL_VERSION=$vi_pin INSTALL_DIR='' INSTALL_FORCE=1 sh "$vi_tmp/$vi_id.sh" < /dev/null
+        elif [ "$vi_ask" != - ]; then
+            # a release asked for is installed like the latest: left alone when it is the one installed
+            INSTALL_VERSION=$vi_ask INSTALL_DIR='' sh "$vi_tmp/$vi_id.sh" < /dev/null
         else
             INSTALL_VERSION='' INSTALL_DIR='' sh "$vi_tmp/$vi_id.sh" < /dev/null
         fi

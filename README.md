@@ -72,8 +72,19 @@ These are passed on to every application's installer:
 
 With the window, the first three set how its boxes start.
 
-A particular version or folder applies to one application, so this script ignores `INSTALL_VERSION` and
-`INSTALL_DIR`. To use them, run that application's own installer.
+### A particular release
+
+```powershell
+$env:INSTALL_VERSION = '0.1.2'; irm https://raw.githubusercontent.com/sibarum/vexelray-dist/main/install.ps1 | iex
+& ([scriptblock]::Create((irm https://raw.githubusercontent.com/sibarum/vexelray-dist/main/install.ps1))) --version 0.1.2
+```
+
+`INSTALL_VERSION` (or `--version`) installs that release of every application instead of the latest. An
+application that does not have that release is skipped and reported. Running the line again without it goes
+back to the latest.
+
+A folder applies to one application, so this script ignores `INSTALL_DIR`. To use it, run that application's
+own installer.
 
 ### Update
 
@@ -148,8 +159,18 @@ These are passed on to every application's installer, set the same way as `INSTA
 | `INSTALL_FORCE=1` | reinstall even where the latest version is already installed |
 | `INSTALL_SKIP_CHECKS=1` | install even where this computer does not meet an application's system requirements |
 
-A particular version or folder applies to one application, so this script ignores `INSTALL_VERSION` and
-`INSTALL_DIR`. To use them, run that application's own installer.
+### A particular release
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/sibarum/vexelray-dist/main/install.sh | sh -s -- --version 0.1.2
+```
+
+`--version` (or `INSTALL_VERSION`) installs that release of every application instead of the latest. An
+application that does not have that release is skipped and reported. Running the line again without it goes
+back to the latest.
+
+A folder applies to one application, so this script ignores `INSTALL_DIR`. To use it, run that application's
+own installer.
 
 ### Update and uninstall
 

@@ -17,13 +17,16 @@
 #   INSTALL_SKIP_CHECKS=1      "
 #   INSTALL_QUIET=1            no window: ask nothing and report in the console only
 #   INSTALL_EVERYTHING=1       the optional applications too, like the rest
+#   INSTALL_VERSION=1.2.3      that release of every application instead of the latest; one that does not
+#                              have it is skipped. Run the line again without it to go back to the latest
 # Or as arguments, to the script run from a file or as a script block:
 #   & ([scriptblock]::Create((irm https://raw.githubusercontent.com/sibarum/vexelray-dist/main/install.ps1))) --install-everything --do-not-prompt-me
 #   --install-everything       INSTALL_EVERYTHING=1
 #   --do-not-prompt-me         INSTALL_QUIET=1 (-Quiet is the same)
-# INSTALL_VERSION and INSTALL_DIR name one application's version and folder, so they are not passed
-# on: run that application's own installer to use them. An application this script pins to a version
-# (a preflight of snapshot builds) is installed at that version, and reinstalled even when it is current.
+#   --version 1.2.3            INSTALL_VERSION=1.2.3
+# INSTALL_DIR names one application's folder, so it is not passed on: run that application's own installer
+# to use it. An application this script pins to a version (a preflight of snapshot builds) is installed at
+# that version whatever INSTALL_VERSION says, and reinstalled even when it is current.
 #
 # Run from a console a person is at, the installer opens one window: a box for each application (those in
 # INSTALL_ONLY, or else those not installed or out of date, are ticked) and the shortcut, PATH and file-type
@@ -106,11 +109,20 @@ function SuiteFetchManifest($m, [string]$tmp) {
     $manifest
 }
 
-# The version to install: the member's pinned version (a preflight suite of snapshot builds), or else the
-# manifest's latest. $null when the manifest does not list the pinned version.
+# The version asked for: the member's pinned version (a preflight suite of snapshot builds), or else the
+# release INSTALL_VERSION or --version names, or else $null, for the manifest's latest.
+function SuiteAsked($m) {
+    if ($m.version) { return $m.version }
+    if ($SuiteVersion) { return $SuiteVersion }
+    return $null
+}
+
+# The version to install: the one asked for, or else the manifest's latest. $null when the manifest does
+# not list the version asked for.
 function SuiteWant($m, $manifest) {
-    if (-not $m.version) { return $manifest.latest }
-    if (@($manifest.versions | Where-Object { $_.version -eq $m.version }).Count -gt 0) { return $m.version }
+    $asked = SuiteAsked $m
+    if (-not $asked) { return $manifest.latest }
+    if (@($manifest.versions | Where-Object { $_.version -eq $asked }).Count -gt 0) { return $asked }
     return $null
 }
 
@@ -159,7 +171,7 @@ function SuiteInstallOne($m, [string]$tmp, $manifests) {
         }
         $want = SuiteWant $m $manifest
         if (-not $want) {
-            SuiteSay "    $($m.name) $($m.version) has not been published yet; skipped." Yellow
+            SuiteSay "    $($m.name) $(SuiteAsked $m) has not been published yet; skipped." Yellow
             return 'unpublished'
         }
         $tool = $manifest.tools.'install.ps1'
@@ -176,7 +188,9 @@ function SuiteInstallOne($m, [string]$tmp, $manifests) {
         $sb = [scriptblock]::Create([IO.File]::ReadAllText($script))
         # A pinned version is installed even over itself: a snapshot is rebuilt under the same version.
         $force = $env:INSTALL_FORCE
+        # A release asked for is installed like the latest: left alone when it is the one installed.
         if ($m.version) { $env:INSTALL_VERSION = $want; $env:INSTALL_FORCE = '1' }
+        elseif ($SuiteVersion) { $env:INSTALL_VERSION = $want }
         try {
             if ($SuiteUi) { & $sb 6>&1 3>&1 | ForEach-Object { SuiteEcho $_ $m.name } | Out-Null }
             else { $null = & $sb }
@@ -423,7 +437,7 @@ function SuiteUiOptions($members, $manifests, [string[]]$only) {
         $mf = $manifests[$m.id]
         if (-not $mf) { $info.Text = 'not published yet'; $cb.Checked = $false; $cb.Enabled = $false; continue }
         $want = SuiteWant $m $mf
-        if (-not $want) { $info.Text = "$($m.version) not published yet"; $cb.Checked = $false; $cb.Enabled = $false; continue }
+        if (-not $want) { $info.Text = "$(SuiteAsked $m) not published yet";$cb.Checked = $false; $cb.Enabled = $false; continue }
         $published++
         $entry = @($mf.versions) | Where-Object { $_.version -eq $want } | Select-Object -First 1
         $mb = @($entry.platforms.windows.binaries | Where-Object { $_ })
@@ -436,7 +450,7 @@ function SuiteUiOptions($members, $manifests, [string[]]$only) {
         if ($only) { $cb.Checked = $only -contains $m.id }
         else { $cb.Checked = (-not $rec -and -not $m.optional) -or ($rec -and $rec.version -ne $want) -or [bool]$m.version }
     }
-    $ui.Title.Text = "Install $($SuiteCfg.name)"
+    $ui.Title.Text = if ($SuiteVersion) { "Install $($SuiteCfg.name) $SuiteVersion" } else { "Install $($SuiteCfg.name)" }
     $ui.Sub.Text = if ($published -gt 0 -and $current -eq $published) { 'Everything is installed and up to date. Tick an application to reinstall it.' }
                    else { 'Choose the applications to install.' }
 
@@ -578,13 +592,14 @@ function SuiteInstall([bool]$quiet) {
     $broke = $false
     $chosen = $null
     try {
-        # Per-application options would apply to every application here, so they are set aside.
-        foreach ($n in 'INSTALL_VERSION', 'INSTALL_DIR') {
-            if ($saved[$n]) {
-                SuiteSay "$n applies to one application and is ignored here; run that application's own installer to use it." Yellow
-                [Environment]::SetEnvironmentVariable($n, $null, 'Process')
-            }
+        # A folder would apply to every application here, so it is set aside. The version was read into
+        # $SuiteVersion, and each application's installer is handed it in turn.
+        if ($saved['INSTALL_DIR']) {
+            SuiteSay "INSTALL_DIR applies to one application and is ignored here; run that application's own installer to use it." Yellow
+            [Environment]::SetEnvironmentVariable('INSTALL_DIR', $null, 'Process')
         }
+        [Environment]::SetEnvironmentVariable('INSTALL_VERSION', $null, 'Process')
+        if ($SuiteVersion) { SuiteSay "Installing release $SuiteVersion, not the latest." }
         # Each application's installer would open a window of its own, one after another; the suite keeps
         # them all in this console, or in its own window.
         [Environment]::SetEnvironmentVariable('INSTALL_QUIET', '1', 'Process')
@@ -666,13 +681,23 @@ function SuiteInstall([bool]$quiet) {
 
 $SuiteQuiet = $false
 $SuiteEverything = $env:INSTALL_EVERYTHING -eq '1'
-foreach ($SuiteA in $args) {
+$SuiteVersion = $env:INSTALL_VERSION
+for ($SuiteI = 0; $SuiteI -lt $args.Count; $SuiteI++) {
+    $SuiteA = [string]$args[$SuiteI]
     switch -Regex ($SuiteA) {
         '^(-Quiet|--do-not-prompt-me)$' { $SuiteQuiet = $true }
         '^--install-everything$' { $SuiteEverything = $true }
+        '^(--version|-Version)$' {
+            $SuiteI++
+            $SuiteVersion = if ($SuiteI -lt $args.Count) { [string]$args[$SuiteI] } else { '' }
+            if (-not $SuiteVersion) { Write-Warning "$SuiteA needs a version, such as $SuiteA 0.1.2; installing the latest." }
+        }
+        '^--version=' { $SuiteVersion = $SuiteA.Substring(10) }
         default { Write-Warning "Ignoring unknown argument: $SuiteA" }
     }
 }
+# v0.1.2 and 0.1.2 are the same release, as in an application's own installer
+if ($SuiteVersion) { $SuiteVersion = $SuiteVersion.Trim() -replace '^[vV]', '' }
 # everything: the optional applications are treated like the rest (INSTALL_ONLY still says which, when set)
 if ($SuiteEverything) { foreach ($SuiteM in @($SuiteCfg.members | Where-Object { $_.optional })) { $SuiteM.optional = $false } }
 $SuiteOk = $false
