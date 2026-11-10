@@ -85,8 +85,8 @@ C = {
     "jdk-xml": Component(
         "Apache Xerces and the W3C DOM, in the Java class library (java.xml)", "", "https://openjdk.org/",
         [], [], ["com.sun.org.apache.xerces.internal.dom.AttrNS"],
-        "Vex reads and checks XML with the Java class library's XML parser, which is based on Apache Xerces. "
-        "Oracle's notices for it follow.",
+        "{name} reads XML with the Java class library's XML parser, which is based on Apache Xerces. Oracle's "
+        "notices for it follow.",
         [("Apache Xerces, in the Java class library", lambda: markdown("jdk/java.xml-xerces.md")),
          ("W3C DOM, in the Java class library", lambda: markdown("jdk/java.xml-dom.md"))]),
     "truffle": Component(
@@ -107,6 +107,14 @@ C = {
         ["Copyright 2022 The Noto Project Authors (https://github.com/notofonts/latin-greek-cyrillic)"],
         ["NotoSans-Italic.ttf"],
         "Built into the program as signed-distance-field atlases, like Noto Sans above.", new=True),
+    "press-start-2p": Component(
+        "Press Start 2P font", "", "https://fonts.google.com/specimen/Press+Start+2P",
+        ["OFL-1.1"],
+        ["Copyright 2012 The Press Start 2P Project Authors (cody@zone38.net), with Reserved Font Name "
+         "\"Press Start 2P\"."],
+        ["dev.sibarum.pix.Wordmark"],
+        "The wordmark in the title bar is a 79 by 7 pixel picture of the word RASTERWARE in this font's capitals. "
+        "The font itself is not included."),
     "nfd": Component(
         "nativefiledialog-extended (nfd.dll)", "", "https://github.com/btzy/nativefiledialog-extended",
         ["Zlib"],
@@ -143,7 +151,7 @@ C = {
         "TextMate grammars from Visual Studio Code", "", "https://github.com/microsoft/vscode",
         ["MIT"], ["Copyright (c) 2015 - present Microsoft Corporation"],
         ["This file has been converted from"],
-        "The grammars Vex highlights with are taken from Visual Studio Code, which converted them from these "
+        "The grammars {name} highlights with are taken from Visual Studio Code, which converted them from these "
         "projects: microsoft/vscode-JSON.tmLanguage, microsoft/TypeScript-TmLanguage, mmims/language-batchfile, "
         "microsoft/vscode-css, textmate/diff.tmbundle, moby/moby (Dockerfile), textmate/html.tmbundle, "
         "textmate/ini.tmbundle, redhat-developer/vscode-java, microsoft/vscode-markdown-tm-grammar, "
@@ -179,7 +187,7 @@ SIMS = EVERY_APP + ["spirv-tools", "spirv-cross"]
 
 # id: (checkout holding installer.json, components, has imagelib, a note for files installed beside the exe)
 APPS = {
-    "vexplore": ("vexplore", EVERY_APP, True,
+    "vexplore": ("vexplore", EVERY_APP + ["jdk-xml"], True,
                  "The ffmpeg folder next to Vexplore holds FFmpeg's libraries, which Vexplore uses to show frames "
                  "from a video in its Preview Dock. They are not part of vexplore.exe. FFmpeg is licensed under the "
                  "GNU Lesser General Public License; its licence and where to get its source are in "
@@ -188,20 +196,20 @@ APPS = {
                  "as public domain or under MIT No Attribution, and asks for no notice."),
     "text-editor": ("text-editor-vexel-demo",
                     EVERY_APP + ["noto-styles", "jdk-xml", "tm4e", "vscode-grammars", "joni", "jcodings", "gson",
-                                 "snakeyaml", "javaparser", "vineflower"], False, ""),
-    "pix": ("Pix", EVERY_APP, True,
-            "The ffmpeg folder next to Pix holds FFmpeg's libraries, which Pix uses to show a frame of a video and "
+                                 "snakeyaml"], False, ""),
+    "pix": ("Pix", EVERY_APP[:3] + ["press-start-2p"] + EVERY_APP[3:] + ["jdk-xml"], True,
+            "The ffmpeg folder next to {name} holds FFmpeg's libraries, which {name} uses to show a frame of a video and "
             "play its sound. They are not part of pix.exe. FFmpeg is licensed under the GNU Lesser General Public "
             "License; its licence and where to get its source are in ffmpeg\\FFMPEG-LICENSE.txt and "
             "ffmpeg\\FFMPEG-SOURCE.txt. The same folder's ffwrap.dll has miniaudio (https://miniaud.io, by David "
             "Reid) built in, which plays the sound; it is offered as public domain or under MIT No Attribution, "
             "and asks for no notice."),
-    "mainframe": ("mainframe", EVERY_APP, False, ""),
+    "mainframe": ("mainframe", EVERY_APP + ["jdk-xml"], False, ""),
     "calculator": ("calculator-vexel-demo", EVERY_APP, False, ""),
     "fluid-sim": ("vexelray-sim-fluid", SIMS, False, ""),
     "rigid-sim": ("vexelray-sim-rigid", SIMS, False, ""),
     "maistro": ("vexelray-maistro", EVERY_APP, False, ""),
-    "inspector": ("vexelray-inspector", EVERY_APP, False, ""),
+    "inspector": ("vexelray-inspector", EVERY_APP + ["jdk-xml"], False, ""),
 }
 
 # Every app records its windows to video (the title bar's camera), through ffmpeg-wrapper-record's encoder, which its
@@ -317,7 +325,7 @@ def render(name, components, rust, beside):
             out.append("Licence: " + ", ".join(LICENSES[l][0] for l in c.licenses))
         out += c.notices
         if c.note:
-            out += ["", c.note]
+            out += ["", c.note.replace("{name}", name)]
         out.append("")
         for l in c.licenses:
             if l not in needed:
@@ -380,6 +388,7 @@ def main():
             config = json.load(h)
         name = config["name"]
         rust = crate_list if has_rust else None
+        beside = beside.replace("{name}", name)
         body = render(name, components, rust, "\n\n".join(p for p in (beside, RECORD.format(name=name)) if p))
         with open(os.path.join(folder, NAME), "w", encoding="utf-8", newline="") as h:
             h.write(body)
