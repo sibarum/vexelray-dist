@@ -133,6 +133,28 @@ It stops there and publishes nothing. `-SkipBuild`, `-SkipLocal` and `-AllowDirt
 `.\preflight.ps1 -WindowsOnly` alone checks without installing: build, start, notices and versions, but no generate
 step, since the installers it writes carry every platform.
 
+### Some apps, on this computer
+
+The everyday loop: rebuild the framework, native-image a few apps, and install them here, to use the latest build.
+From PowerShell:
+
+```powershell
+.\local-apps.ps1 IDE, MainFrame, Vexplore, Inspector, Rasterware
+```
+
+It clean-installs the libraries in order, then for each app named: its tests and release native image
+(`build.cmd <checkouts>`), a start to see that it stays up, its installer as `deploy.ps1 -Local -Platform windows`
+writes one but for these apps only (into `local\`), and a quiet install of them from `local\` served at
+`http://127.0.0.1:8417`. Last, it checks that each installed exe is the one just built. The versions are snapshots,
+the same as what was installed before, so the install record's version cannot tell. An app whose tests or native
+image fail is reported and left out, and the rest go on; a library that fails stops it. It needs no clean checkouts,
+no Linux VM and no token, and publishes, commits and pushes nothing.
+
+Apps are named by checkout (`mainframe`), installer id (`text-editor`) or name, with or without "VexelRay "
+(`IDE`, `Rasterware`, `Inspector`). `-SkipBuild` uses the exes already in each app's `target\`, `-NoInstall` stops
+once `local\` is written, and `-Seconds` and `-Port` are as in the preflight. `build.cmd` takes the same checkout names
+on its own: `build.cmd mainframe Pix`. Allow about 15 minutes for the libraries and a minute or two per app.
+
 ### The Linux preflight
 
 The same, for Linux alone, in the VM from a terminal on its desktop, with no Windows host needed:

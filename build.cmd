@@ -2,7 +2,11 @@
 rem Clean-installs the VexelRay stack in dependency order, then tests every application and builds its
 rem release native image. Run from anywhere; the sibling checkouts must sit beside this folder.
 rem Logs land in logs\. Stops at the first library that fails; an application that fails is reported and skipped.
+rem Arguments, if any, are the applications to build instead of all of them, by checkout name (local-apps.ps1 passes
+rem them): build.cmd mainframe Pix. The libraries are built either way.
 setlocal
+set "APPS=mainframe text-editor-vexel-demo Pix vexplore vexelray-sim-fluid vexelray-sim-rigid calculator-vexel-demo vexelray-maistro vexelray-inspector"
+if not "%~1"=="" set "APPS=%*"
 set "ROOT=%~dp0.."
 set "LOGS=%~dp0logs"
 if not exist "%LOGS%" mkdir "%LOGS%"
@@ -21,7 +25,7 @@ for %%r in (vexelray-build intrabuf atchung supirvast dxgi-bridge kronometer tac
 )
 
 set FAILED=
-for %%r in (mainframe text-editor-vexel-demo Pix vexplore vexelray-sim-fluid vexelray-sim-rigid calculator-vexel-demo vexelray-maistro vexelray-inspector) do (
+for %%r in (%APPS%) do (
   pushd "%ROOT%\%%r"
   echo [%%r] tests
   call mvn -B clean install > "%LOGS%\app-%%r.log" 2>&1
