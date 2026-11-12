@@ -12,8 +12,8 @@
     { "config": "../Pix/installer.json", "page": "https://sibarum.github.io/vexelray-framework/apps/pix.html" },
     { "config": "../mainframe/installer.json", "page": "https://sibarum.github.io/vexelray-framework/apps/mainframe.html" },
     { "config": "../calculator-vexel-demo/installer.json", "page": "https://sibarum.github.io/vexelray-framework/apps/calculator.html" },
-    { "config": "../vexelray-sim-fluid/installer.json", "optional": true, "page": "https://github.com/sibarum/vexelray-sim-fluid" },
-    { "config": "../vexelray-sim-rigid/installer.json", "optional": true, "page": "https://github.com/sibarum/vexelray-sim-rigid" },
+    { "config": "../vexelray-sim-physics/vexelray-sim-fluid/installer.json", "optional": true, "page": "https://github.com/sibarum/vexelray-sim-physics/tree/develop/vexelray-sim-fluid" },
+    { "config": "../vexelray-sim-physics/vexelray-sim-rigid/installer.json", "optional": true, "page": "https://github.com/sibarum/vexelray-sim-physics/tree/develop/vexelray-sim-rigid" },
     { "config": "../vexelray-maistro/installer.json", "optional": true, "page": "https://github.com/sibarum/vexelray-maistro" },
     { "config": "../vexelray-inspector/installer.json", "optional": true, "page": "https://github.com/sibarum/vexelray-inspector" }
   ]

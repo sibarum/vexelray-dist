@@ -16,7 +16,7 @@ rem vexplore's RemotesTest runs Git's sftp-server.exe, which needs msys-2.0.dll 
 rem prepended: usr\bin has its own link.exe, and native-image must find MSVC's first.
 set "PATH=%PATH%;C:\Program Files\Git\usr\bin"
 
-for %%r in (vexelray-build intrabuf atchung supirvast dxgi-bridge kronometer tactroller vexelray imagelib-wrapper vexelray-gui vexelray-framework ffmpeg-wrapper vexelray-codec vex-suite-common cott-engine cardinal concordance-indexer vexelray-sim-core vexelray-installer) do (
+for %%r in (vexelray-build intrabuf atchung supirvast dxgi-bridge kronometer tactroller vexelray imagelib-wrapper vexelray-gui vexelray-framework ffmpeg-wrapper vexelray-codec vex-suite-common cott-engine cardinal concordance-indexer vexelray-sim-physics vexelray-installer) do (
   echo [%%r] clean install
   pushd "%ROOT%\%%r"
   call mvn -B clean install > "%LOGS%\%%r.log" 2>&1
@@ -25,8 +25,10 @@ for %%r in (vexelray-build intrabuf atchung supirvast dxgi-bridge kronometer tac
 )
 
 set FAILED=
+rem An application named by a folder of vexelray-sim-physics (the fluid's and the rigid bodies' demos) is built there;
+rem vexelray-sim-physics' own clean install above has built and tested what they depend on.
 for %%r in (%APPS%) do (
-  pushd "%ROOT%\%%r"
+  if exist "%ROOT%\vexelray-sim-physics\%%r\pom.xml" ( pushd "%ROOT%\vexelray-sim-physics\%%r" ) else ( pushd "%ROOT%\%%r" )
   echo [%%r] tests
   call mvn -B clean install > "%LOGS%\app-%%r.log" 2>&1
   if errorlevel 1 ( echo [%%r] FAILED, see logs\app-%%r.log & set FAILED=1 ) else (

@@ -22,9 +22,18 @@ set -uo pipefail
 
 LIBS=(vexelray-build intrabuf atchung supirvast dxgi-bridge kronometer tactroller vexelray imagelib-wrapper vexelray-gui
       vexelray-framework ffmpeg-wrapper vexelray-codec vex-suite-common cott-engine cardinal concordance-indexer
-      vexelray-sim-core vexelray-installer)
+      vexelray-sim-physics vexelray-installer)
 APPS=(mainframe text-editor-vexel-demo Pix vexplore vexelray-sim-fluid vexelray-sim-rigid calculator-vexel-demo
       vexelray-maistro vexelray-inspector)
+# A checkout that holds applications in folders of its own: vexelray-sim-physics has the fluid's and the rigid
+# bodies' demos. Its own clean install, among LIBS, builds and tests them; each is then an application by its folder's
+# name. dir_of gives where a name is, relative to $root, which is also how BUILD.txt names it.
+NESTED=(vexelray-sim-physics)
+dir_of() {
+    local n
+    for n in "${NESTED[@]}"; do [ -f "$root/$n/$1/pom.xml" ] && { echo "$n/$1"; return; }; done
+    echo "$1"
+}
 # Built here without their tests. The preflight only takes a Linux build of the commits Windows has just built and
 # tested, so these have passed already; supirvast's are GPU-heavy and fail on the VM's software renderer (llvmpipe).
 # Nor are the tests of a *-windows module, which hold the Windows-only code and call Windows itself. Tests of code
@@ -67,7 +76,7 @@ test_args() { if skips_tests "$1"; then echo -DskipTests; else echo "-Dsurefire.
 windows_test_excludes() {
     local r
     for r in "${LIBS[@]}" "${APPS[@]}"; do
-        git -C "$root/$r" ls-files -- '*-windows/src/test/java/*.java' '*-windows/*/src/test/java/*.java'
+        git -C "$root/$(dir_of "$r")" ls-files -- '*-windows/src/test/java/*.java' '*-windows/*/src/test/java/*.java'
     done | sed -n 's|.*-windows/\(.*/\)\{0,1\}src/test/java/||p' | sort -u
 }
 
@@ -78,16 +87,16 @@ mvn_in() {
     local r=$1 log=$2 home code
     shift 2
     home=$(mktemp -d "${XDG_RUNTIME_DIR:-/tmp}/vexelray-home.XXXXXX") || return 1
-    (cd "$root/$r" && VEXELRAY_HOME=$home mvn -B "$@") > "$log" 2>&1
+    (cd "$root/$(dir_of "$r")" && VEXELRAY_HOME=$home mvn -B "$@") > "$log" 2>&1
     code=$?
     rm -rf "$home"
     return $code
 }
 
 # An application is built here when its installer.json has a "linux" section.
-has_linux() { grep -q '"linux"[[:space:]]*:' "$root/$1/installer.json" 2>/dev/null; }
+has_linux() { grep -q '"linux"[[:space:]]*:' "$root/$(dir_of "$1")/installer.json" 2>/dev/null; }
 # The files its linux section ships from target-linux/ (Windows sources are under target/).
-linux_sources() { grep -o '"source"[[:space:]]*:[[:space:]]*"target-linux/[^"]*"' "$root/$1/installer.json" | sed 's/.*"\(target-linux\/[^"]*\)"/\1/'; }
+linux_sources() { grep -o '"source"[[:space:]]*:[[:space:]]*"target-linux/[^"]*"' "$root/$(dir_of "$1")/installer.json" | sed 's/.*"\(target-linux\/[^"]*\)"/\1/'; }
 
 mkdir -p "$logs"
 
@@ -135,7 +144,7 @@ check_setup() {
             missing+=("ffmpeg-wrapper's Linux recording encoder: ./native/build.sh in ffmpeg-wrapper/ffmpeg-wrapper-record-linux")
     fi
     for r in "${LIBS[@]}" "${APPS[@]}"; do
-        [ -f "$root/$r/pom.xml" ] || missing+=("the checkout $root/$r")
+        [ -f "$root/$(dir_of "$r")/pom.xml" ] || missing+=("the checkout $root/$r")
     done
     if [ ${#missing[@]} -gt 0 ]; then
         echo "Install these first (DEPLOYING.md, One-time setup):" >&2
@@ -287,7 +296,7 @@ if [ $build = 1 ]; then
             echo "[$r] NATIVE FAILED, see logs/linux/native-$r.log" >&2; failed=1; continue
         fi
         for s in $(linux_sources "$r"); do
-            [ -f "$root/$r/$s" ] || { echo "[$r] the build left no $s, which installer.json ships" >&2; failed=1; }
+            [ -f "$root/$(dir_of "$r")/$s" ] || { echo "[$r] the build left no $s, which installer.json ships" >&2; failed=1; }
         done
         built+=("$r")
     done
@@ -297,13 +306,13 @@ if [ $build = 1 ]; then
     # preflight.ps1 reads it. --only keeps the other lines of the whole build it rebuilds one application of.
     built_from() {
         local changed=
-        [ -n "$(git -C "$root/$1" status --porcelain -uno)" ] && changed=' changed'
-        printf '%s %s%s\n' "$1" "$(git -C "$root/$1" rev-parse HEAD)" "$changed"
+        [ -n "$(git -C "$root/$(dir_of "$1")" status --porcelain -uno)" ] && changed=' changed'
+        printf '%s %s%s\n' "$(dir_of "$1")" "$(git -C "$root/$(dir_of "$1")" rev-parse HEAD)" "$changed"
     }
     {
         printf '# Linux build, %s, on %s, %s\n' "$(date '+%Y-%m-%d %H:%M')" "$(uname -n)" \
             "$([ $tests = 0 ] && echo 'no tests' || echo "tests but ${NO_TESTS[*]}'s and the -windows modules'")"
-        if [ -n "$only" ]; then grep -v -e '^#' -e "^$only " "$stamp"; fi
+        if [ -n "$only" ]; then grep -v -e '^#' -e "^$(dir_of "$only") " "$stamp"; fi
         for r in ${libs[@]+"${libs[@]}"} ${built[@]+"${built[@]}"}; do built_from "$r"; done
     } > "$stamp.tmp" && mv "$stamp.tmp" "$stamp"
     echo "Build done: logs/linux/BUILD.txt"
@@ -323,7 +332,7 @@ for r in $([ -n "$only" ] && echo "$only" || echo "${APPS[@]}"); do
     has_linux "$r" || continue
     for s in $(linux_sources "$r"); do
         case "$s" in *.tar.gz|*.tgz|*.txt|*.jar) continue ;; esac
-        bin="$root/$r/$s" name=$(basename "$s")
+        bin="$root/$(dir_of "$r")/$s" name=$(basename "$s")
         [ -x "$bin" ] || { echo "  $name: no executable $bin" >&2; dead=1; continue; }
         (cd "$(dirname "$bin")" && exec "$bin") > "$logs/start-$name.log" 2>&1 &
         pid=$!
