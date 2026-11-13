@@ -35,10 +35,12 @@ $suite = Get-Content (Join-Path $dist 'installer-suite.json') -Raw | ConvertFrom
 $known = foreach ($m in $suite.members) {
     $config = [IO.Path]::GetFullPath((Join-Path $dist $m.config))
     $app = Get-Content $config -Raw | ConvertFrom-Json
-    $exes = @($app.windows.binaries | Where-Object { $_.source -like '*.exe' } |
-              ForEach-Object { Join-Path (Split-Path $config -Parent) $_.source })
+    $exeBins = @($app.windows.binaries | Where-Object { $_.source -like '*.exe' })
+    $exes = @($exeBins | ForEach-Object { Join-Path (Split-Path $config -Parent) $_.source })
+    # The name the exe is installed under: its "file" when the installer renames it (vexelray-maistro.exe is maistro.exe).
+    $installedExe = if ($exeBins -and $exeBins[0].file) { $exeBins[0].file } elseif ($exes) { Split-Path $exes[0] -Leaf }
     [pscustomobject]@{ Member = $m; Config = $config; App = $app; Checkout = Split-Path (Split-Path $config -Parent) -Leaf
-                       Exe = $exes[0]; Names = @((Split-Path (Split-Path $config -Parent) -Leaf), $app.id, $app.name,
+                       Exe = $exes[0]; InstalledExe = $installedExe; Names = @((Split-Path (Split-Path $config -Parent) -Leaf), $app.id, $app.name,
                                                   ($app.name -replace '^VexelRay ', '')) }
 }
 $chosen = foreach ($a in $Apps) {
@@ -156,7 +158,7 @@ foreach ($a in $chosen) {
     $want = (Get-FileHash $a.Exe -Algorithm SHA256).Hash
     $file = if (Test-Path $rec) {
         (Get-Content $rec -Raw | ConvertFrom-Json).files | Where-Object { $_.path -like '*.exe' -and $_.kind -eq 'binary' } |
-            Where-Object { (Split-Path $_.path -Leaf) -eq (Split-Path $a.Exe -Leaf) } | Select-Object -First 1
+            Where-Object { (Split-Path $_.path -Leaf) -eq $a.InstalledExe } | Select-Object -First 1
     }
     $ok = $file -and (Test-Path $file.path) -and (Get-FileHash $file.path -Algorithm SHA256).Hash -eq $want
     if ($ok) { Write-Host "  $($a.App.name) $($a.App.version): installed, $($file.path)" -ForegroundColor Green }
