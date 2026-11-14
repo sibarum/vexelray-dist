@@ -5,7 +5,7 @@ rem Logs land in logs\. Stops at the first library that fails; an application th
 rem Arguments, if any, are the applications to build instead of all of them, by checkout name (local-apps.ps1 passes
 rem them): build.cmd mainframe Pix. The libraries are built either way.
 setlocal
-set "APPS=mainframe text-editor-vexel-demo Pix vexplore vexelray-sim-fluid vexelray-sim-rigid calculator-vexel-demo vexelray-maistro vexelray-inspector"
+set "APPS=mainframe text-editor-vexel-demo Pix vexplore vexelray-inspector"
 if not "%~1"=="" set "APPS=%*"
 set "ROOT=%~dp0.."
 set "LOGS=%~dp0logs"
@@ -16,7 +16,7 @@ rem vexplore's RemotesTest runs Git's sftp-server.exe, which needs msys-2.0.dll 
 rem prepended: usr\bin has its own link.exe, and native-image must find MSVC's first.
 set "PATH=%PATH%;C:\Program Files\Git\usr\bin"
 
-for %%r in (vexelray-build intrabuf vexelray-fields atchung supirvast dxgi-bridge kronometer tactroller vexelray imagelib-wrapper vexelray-gui vexelray-framework ffmpeg-wrapper vexelray-codec vex-suite-common cott-engine cardinal concordance-indexer vexelray-sim-physics vexelray-installer) do (
+for %%r in (vexelray-build intrabuf vexelray-fields atchung supirvast dxgi-bridge kronometer tactroller vexelray imagelib-wrapper vexelray-gui vexelray-framework ffmpeg-wrapper vexelray-codec vex-suite-common cott-engine cardinal concordance-indexer vexelray-installer) do (
   echo [%%r] clean install
   pushd "%ROOT%\%%r"
   call mvn -B clean install > "%LOGS%\%%r.log" 2>&1

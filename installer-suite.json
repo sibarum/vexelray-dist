@@ -1,7 +1,7 @@
 {
   "id": "vexelray",
   "name": "VexelRay",
-  "description": "Desktop applications built on the VexelRay stack: a file explorer, a text editor, an image viewer, a terminal, a calculator, fluid and rigid-body simulations, a desktop client for Claude Code, and an inspector that shows a running app's frame loop. They are separate programs that know about each other, so a file in the explorer opens in the editor or the viewer, and the editor can show a file in the explorer.",
+  "description": "Desktop applications built on the VexelRay stack: a file explorer, a text editor, an image viewer, a terminal, and an inspector that shows a running app's frame loop. They are separate programs that know about each other, so a file in the explorer opens in the editor or the viewer, and the editor can show a file in the explorer.",
 
   "repo": "sibarum/vexelray-dist",
   "branch": "main",
@@ -11,10 +11,6 @@
     { "config": "../text-editor-vexel-demo/installer.json", "page": "https://sibarum.github.io/vexelray-framework/apps/text-editor.html" },
     { "config": "../Pix/installer.json", "page": "https://sibarum.github.io/vexelray-framework/apps/pix.html" },
     { "config": "../mainframe/installer.json", "page": "https://sibarum.github.io/vexelray-framework/apps/mainframe.html" },
-    { "config": "../calculator-vexel-demo/installer.json", "page": "https://sibarum.github.io/vexelray-framework/apps/calculator.html" },
-    { "config": "../vexelray-sim-physics/vexelray-sim-fluid/installer.json", "optional": true, "page": "https://github.com/sibarum/vexelray-sim-physics/tree/develop/vexelray-sim-fluid" },
-    { "config": "../vexelray-sim-physics/vexelray-sim-rigid/installer.json", "optional": true, "page": "https://github.com/sibarum/vexelray-sim-physics/tree/develop/vexelray-sim-rigid" },
-    { "config": "../vexelray-maistro/installer.json", "optional": true, "page": "https://github.com/sibarum/vexelray-maistro" },
     { "config": "../vexelray-inspector/installer.json", "optional": true, "page": "https://github.com/sibarum/vexelray-inspector" }
   ]
 }
