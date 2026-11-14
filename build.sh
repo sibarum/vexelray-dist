@@ -20,7 +20,7 @@
 # GraalVM 25 is found by itself (JAVA_HOME, PATH, ~/.local/opt, /opt, /usr/lib/jvm, SDKMAN) when JAVA_HOME is not one.
 set -uo pipefail
 
-LIBS=(vexelray-build intrabuf atchung supirvast dxgi-bridge kronometer tactroller vexelray imagelib-wrapper vexelray-gui
+LIBS=(vexelray-build intrabuf vexelray-fields atchung supirvast dxgi-bridge kronometer tactroller vexelray imagelib-wrapper vexelray-gui
       vexelray-framework ffmpeg-wrapper vexelray-codec vex-suite-common cott-engine cardinal concordance-indexer
       vexelray-sim-physics vexelray-installer)
 APPS=(mainframe text-editor-vexel-demo Pix vexplore vexelray-sim-fluid vexelray-sim-rigid calculator-vexel-demo

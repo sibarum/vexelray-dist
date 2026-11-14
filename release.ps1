@@ -39,7 +39,7 @@ $ErrorActionPreference = 'Stop'
 $Here  = $PSScriptRoot
 $Root  = Split-Path $Here -Parent
 $Logs  = Join-Path $Here 'logs'
-$Repos = ('vexelray-build intrabuf atchung supirvast dxgi-bridge kronometer tactroller vexelray imagelib-wrapper ' +
+$Repos = ('vexelray-build intrabuf vexelray-fields atchung supirvast dxgi-bridge kronometer tactroller vexelray imagelib-wrapper ' +
           'vexelray-gui vexelray-framework ffmpeg-wrapper vexelray-codec vex-suite-common cott-engine cardinal ' +
           'concordance-indexer vexelray-sim-physics vexelray-installer mainframe text-editor-vexel-demo Pix vexplore ' +
           'calculator-vexel-demo vexelray-maistro vexelray-inspector') -split ' '
