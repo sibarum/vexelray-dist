@@ -22,7 +22,7 @@ set -uo pipefail
 
 LIBS=(vexelray-build intrabuf vexelray-fields atchung supirvast dxgi-bridge kronometer tactroller vexelray imagelib-wrapper vexelray-gui
       vexelray-framework ffmpeg-wrapper vexelray-codec vex-suite-common cott-engine cardinal concordance-indexer
-      vexelray-installer)
+      vexelray-installer pontif-framework)
 APPS=(mainframe text-editor-vexel-demo Pix vexplore vexelray-inspector)
 # A checkout that holds applications in folders of its own: vexelray-sim-physics has the fluid's and the rigid
 # bodies' demos. Its own clean install, among LIBS, builds and tests them; each is then an application by its folder's
@@ -38,6 +38,10 @@ dir_of() {
 # Nor are the tests of a *-windows module, which hold the Windows-only code and call Windows itself. Tests of code
 # that only Linux builds (the -linux modules) still run.
 NO_TESTS=(supirvast)
+# A library of which only some modules are built: their -pl, with -am for what they need from the same checkout.
+# text-editor-vexel-demo needs pontif-tooling and pontif-compiler, which need nothing outside pontif-framework; the
+# rest of it needs private artifacts (sibarum.dasum.gui, sibarum.elektro.queue) that no checkout here builds.
+declare -A MODULES=([pontif-framework]=pontif-tooling,pontif-compiler)
 
 dist=$(cd "$(dirname "$0")" && pwd)
 root=$(dirname "$dist")
@@ -277,7 +281,8 @@ if [ $build = 1 ]; then
 
     for r in "${libs[@]}"; do
         echo "[$r] clean install$(skips_tests "$r" && echo ', without tests')"
-        if ! mvn_in "$r" "$logs/$r.log" clean install "$(test_args "$r")"; then
+        if ! mvn_in "$r" "$logs/$r.log" clean install "$(test_args "$r")" \
+                ${MODULES[$r]:+-pl "${MODULES[$r]}" -am}; then
             echo "[$r] FAILED, see logs/linux/$r.log" >&2
             exit 1
         fi
