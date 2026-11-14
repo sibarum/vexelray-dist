@@ -36,8 +36,9 @@ dir_of() {
 # Built here without their tests. The preflight only takes a Linux build of the commits Windows has just built and
 # tested, so these have passed already; supirvast's are GPU-heavy and fail on the VM's software renderer (llvmpipe).
 # Nor are the tests of a *-windows module, which hold the Windows-only code and call Windows itself. Tests of code
-# that only Linux builds (the -linux modules) still run.
-NO_TESTS=(supirvast)
+# that only Linux builds (the -linux modules) still run. text-editor-vexel-demo's ViewTest fails here now and then,
+# a different test each run, and once hung in a frame: more of the jobs' answers land in one frame on the VM.
+NO_TESTS=(supirvast text-editor-vexel-demo)
 # A library of which only some modules are built: their -pl, with -am for what they need from the same checkout.
 # text-editor-vexel-demo needs pontif-tooling and pontif-compiler, which need nothing outside pontif-framework; the
 # rest of it needs private artifacts (sibarum.dasum.gui, sibarum.elektro.queue) that no checkout here builds.
