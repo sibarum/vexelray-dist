@@ -23,6 +23,13 @@ for %%r in (vexelray-build intrabuf vexelray-fields atchung supirvast dxgi-bridg
   if errorlevel 1 ( echo [%%r] FAILED, see logs\%%r.log & popd & goto :failed )
   popd
 )
+rem Of pontif-framework, only what the text editor needs: pontif-tooling and pontif-compiler, and what they need from
+rem the same checkout. The rest of it needs private artifacts no checkout here builds. build.sh does the same (MODULES).
+echo [pontif-framework] clean install
+pushd "%ROOT%\pontif-framework"
+call mvn -B clean install -pl pontif-tooling,pontif-compiler -am > "%LOGS%\pontif-framework.log" 2>&1
+if errorlevel 1 ( echo [pontif-framework] FAILED, see logs\pontif-framework.log & popd & goto :failed )
+popd
 
 set FAILED=
 rem An application named by a folder of vexelray-sim-physics (the fluid's and the rigid bodies' demos) is built there;
