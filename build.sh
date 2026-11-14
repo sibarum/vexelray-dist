@@ -22,8 +22,8 @@ set -uo pipefail
 
 LIBS=(vexelray-build intrabuf vexelray-fields atchung supirvast dxgi-bridge kronometer tactroller vexelray imagelib-wrapper vexelray-gui
       vexelray-framework ffmpeg-wrapper vexelray-codec vex-suite-common cott-engine cardinal concordance-indexer
-      vexelray-installer pontif-framework)
-APPS=(mainframe text-editor-vexel-demo Pix vexplore vexelray-inspector)
+      vexelray-sim-physics vexelray-installer pontif-framework)
+APPS=(mainframe text-editor-vexel-demo Pix vexplore calculator-vexel-demo vexelray-maistro vexelray-inspector)
 # A checkout that holds applications in folders of its own: vexelray-sim-physics has the fluid's and the rigid
 # bodies' demos. Its own clean install, among LIBS, builds and tests them; each is then an application by its folder's
 # name. dir_of gives where a name is, relative to $root, which is also how BUILD.txt names it.
