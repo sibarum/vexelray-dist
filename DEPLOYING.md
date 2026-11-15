@@ -408,6 +408,13 @@ for supirvast) was cut on 13 October 2026.
 stack's version, so `release` and `next` move it and every pom that names it with the rest. It joined the list after
 0.1.0 was cut, at `0.1.1-SNAPSHOT`, and so did `ffmpeg-wrapper`, which `vexelray-codec` decodes video with.
 
+`pontif-framework` joined for 0.2.0, at `1.0-SNAPSHOT`, because the VexelRay IDE (`text-editor-vexel-demo`) depends
+on its `pontif-tooling` and `pontif-compiler`. It is released only in part, as `build.cmd` and `build.sh` build it:
+`release` and `next` build those two modules and what they need (`-pl pontif-tooling,pontif-compiler -am`), and
+rewrite its root pom whole but every other pom only in its `<parent>`. Its GUI, net and GPU modules name dasum,
+elektroq and vastir snapshots that are in no repository's list, and are left naming them. The tag `v1.0` is on the
+whole repository, but only those modules were built and tested at it.
+
 ## When it goes wrong
 
 - **`'vswhere.exe' is not recognized`** is printed by `vcvars64.bat` and is harmless when the build goes on. If

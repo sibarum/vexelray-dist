@@ -30,7 +30,8 @@
 
   Only the version strings are rewritten: in every tracked pom.xml, and in vexelray-framework's project template
   presets. A -SNAPSHOT string that is not some repository's own version stops the run, because the rewrite would
-  otherwise leave a dependency behind.
+  otherwise leave a dependency behind. pontif-framework is released in part ($Modules): only the IDE's modules are
+  built, and outside its root pom only each pom's <parent> is rewritten or checked.
 #>
 param([Parameter(Position = 0)][ValidateSet('release', 'publish', 'next', 'finish', 'deployed', 'switch', 'status')][string]$Command,
       [string]$Branch, [ValidateSet('windows', 'linux')][string]$Platform, [switch]$DryRun)
@@ -41,8 +42,12 @@ $Root  = Split-Path $Here -Parent
 $Logs  = Join-Path $Here 'logs'
 $Repos = ('vexelray-build intrabuf vexelray-fields atchung supirvast dxgi-bridge kronometer tactroller vexelray imagelib-wrapper ' +
           'vexelray-gui vexelray-framework ffmpeg-wrapper vexelray-codec vex-suite-common cott-engine cardinal ' +
-          'concordance-indexer vexelray-sim-physics vexelray-installer mainframe text-editor-vexel-demo Pix vexplore ' +
-          'calculator-vexel-demo vexelray-maistro vexelray-inspector') -split ' '
+          'concordance-indexer vexelray-sim-physics vexelray-installer mainframe pontif-framework text-editor-vexel-demo ' +
+          'Pix vexplore calculator-vexel-demo vexelray-maistro vexelray-inspector') -split ' '
+# A repository released only in part: just these modules and what they need (-pl ... -am), as build.cmd and build.sh
+# build it. Its root pom is rewritten whole, every other pom only in its <parent>, so the modules left out keep naming
+# what they name (pontif's GUI, net and GPU modules name dasum, elektroq and vastir snapshots outside this list).
+$Modules = @{ 'pontif-framework' = 'pontif-tooling,pontif-compiler' }
 $Template = 'vexelray-framework-template/src/main/resources/dev/vexelray/framework/template/vexel-desktop/template.manifest'
 $Trailer  = 'Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>'
 $Snapshot = [regex]'\d+(?:\.\d+)*-SNAPSHOT'
@@ -103,12 +108,28 @@ function Bump([string]$release) {
     ($parts -join '.') + '-SNAPSHOT'
 }
 
+# What of a file's text holds versions this script moves: all of it, or only its <parent> in a partly released repo.
+$ParentBlock = [regex]'(?s)<parent>.*?</parent>'
+function Parent-Only([string]$repo, [string]$f) { $Modules.ContainsKey($repo) -and $f -ne 'pom.xml' }
+function Versioned([string]$repo, [string]$f, [string]$text) {
+    if (Parent-Only $repo $f) { ($ParentBlock.Matches($text) | ForEach-Object { $_.Value }) -join "`n" } else { $text }
+}
+
 # Each file as it is at rev, with exactly the strings in mapping replaced, in the file's own line endings.
 function Rewrite([string]$repo, $mapping, [string]$rev) {
     foreach ($f in Files $repo) {
         $text = (Git $repo show "${rev}:$f").Replace("`r`n", "`n")
-        foreach ($old in $mapping.Keys) {
-            $text = [regex]::Replace($text, '(?<![\w.])' + [regex]::Escape($old) + '(?![\w.-])', $mapping[$old].Replace('$', '$$'))
+        $swap = {
+            param([string]$t)
+            foreach ($old in $mapping.Keys) {
+                $t = [regex]::Replace($t, '(?<![\w.])' + [regex]::Escape($old) + '(?![\w.-])', $mapping[$old].Replace('$', '$$'))
+            }
+            $t
+        }
+        if (Parent-Only $repo $f) {
+            $text = $ParentBlock.Replace($text, [Text.RegularExpressions.MatchEvaluator]{ param($m) & $swap $m.Value })
+        } else {
+            $text = & $swap $text
         }
         $path = Join-Path (Join-Path $Root $repo) $f
         if ([IO.File]::ReadAllText($path).Contains("`r`n")) { $text = $text.Replace("`n", "`r`n") }
@@ -123,6 +144,7 @@ function Mvn([string]$repo, [string]$goals, [string]$log) {
     $env:PATH = "$path;C:\Program Files\Git\usr\bin"
     try {
         # cmd.exe parses its own command line, so it gets it as written, not quoted for a C program
+        if ($Modules.ContainsKey($repo)) { $goals += " -pl $($Modules[$repo]) -am" }
         $r = Run 'cmd.exe' @() (Join-Path $Root $repo) "/d /c `"mvn -B $goals > `"$(Join-Path $Logs $log)`" 2>&1`""
     } finally {
         $env:PATH = $path
@@ -166,7 +188,7 @@ function Do-Release {
     foreach ($v in $snapshots.Values) { $mapping[$v] = $v.Substring(0, $v.Length - '-SNAPSHOT'.Length) }
     foreach ($r in $Repos) {
         foreach ($f in Files $r) {
-            $stray = @($Snapshot.Matches((Git $r show "HEAD:$f")) | ForEach-Object { $_.Value } |
+            $stray = @($Snapshot.Matches((Versioned $r $f (Git $r show "HEAD:$f"))) | ForEach-Object { $_.Value } |
                        Where-Object { -not $mapping.Contains($_) } | Sort-Object -Unique)
             if ($stray) { Stop-Release "$r/$f names $($stray -join ', '), which is no repository's own version" }
         }
