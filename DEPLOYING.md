@@ -150,7 +150,7 @@ the same as what was installed before, so the install record's version cannot te
 image fail is reported and left out, and the rest go on; a library that fails stops it. It needs no clean checkouts,
 no Linux VM and no token, and publishes, commits and pushes nothing.
 
-Apps are named by checkout (`mainframe`), installer id (`text-editor`) or name, with or without "VexelRay "
+Apps are named by checkout (`mainframe`), installer id (`vexelray-ide`) or name, with or without "VexelRay "
 (`IDE`, `Rasterware`, `Inspector`). `-SkipBuild` uses the exes already in each app's `target\`, `-NoInstall` stops
 once `local\` is written, and `-Seconds` and `-Port` are as in the preflight. `build.cmd` takes the same checkout names
 on its own: `build.cmd mainframe Pix`. Allow about 15 minutes for the libraries and a minute or two per app.
@@ -292,7 +292,7 @@ version (`0.1.1-SNAPSHOT`) in their `installer.json` and release as above, leavi
   `$env:INSTALL_FORCE = '1'` to take a rebuilt one over the same version:
   ```powershell
   $env:INSTALL_VERSION = '0.1.1-SNAPSHOT'
-  irm https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/text-editor/install.ps1 | iex
+  irm https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexelray-ide/install.ps1 | iex
   ```
 - A snapshot sorts after the release before it and before its own release, so `update.cmd` leaves it alone until
   `0.1.1` is published, then updates to it. The suite's install command is different: it reinstalls each app's

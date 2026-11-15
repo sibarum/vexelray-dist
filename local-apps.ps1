@@ -12,7 +12,7 @@
   An application whose tests or native image fail is reported and left out of the rest; the others go on. A library
   that fails stops everything. Nothing is published, committed or pushed, and Linux is not involved.
 
-  Applications are named by checkout (mainframe), by installer id (text-editor), or by name with or without
+  Applications are named by checkout (mainframe), by installer id (vexelray-ide), or by name with or without
   "VexelRay " (IDE, Rasterware, Inspector): whatever installer-suite.json lists.
 
   Run from PowerShell, not Git Bash (vcvars64.bat, and MSVC's link.exe). From an agent's shell, run it inside one
