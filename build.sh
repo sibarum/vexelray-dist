@@ -67,6 +67,11 @@ while [ $# -gt 0 ]; do
     esac
 done
 [ "$(uname -s)" = Linux ] || { echo "build.sh is the Linux build; on Windows, run build.cmd" >&2; exit 1; }
+# llvmpipe's linear rasterizer, which it takes for a fragment shader that reads no varyings, reads that shader's push
+# constants as zero in some of its 64-pixel tiles: a technique filled from its push constants (TechniqueWindowTest)
+# came out green with black squares, the same squares every frame. Its ordinary rasterizer is right. Off for every
+# test and every application started here; a real GPU ignores the variable.
+export LP_PERF=${LP_PERF:+$LP_PERF,}no_rast_linear
 if [ -n "$only" ]; then
     [[ " ${APPS[*]} " == *" $only "* ]] || { echo "--only $only: not one of: ${APPS[*]}" >&2; exit 2; }
     [ -f "$stamp" ] || { echo "--only rebuilds one application of a whole build, and there is none yet: run ./build.sh" >&2; exit 1; }
@@ -99,8 +104,9 @@ mvn_in() {
 
 # An application is built here when its installer.json has a "linux" section.
 has_linux() { grep -q '"linux"[[:space:]]*:' "$root/$(dir_of "$1")/installer.json" 2>/dev/null; }
-# The files its linux section ships from target-linux/ (Windows sources are under target/).
-linux_sources() { grep -o '"source"[[:space:]]*:[[:space:]]*"target-linux/[^"]*"' "$root/$(dir_of "$1")/installer.json" | sed 's/.*"\(target-linux\/[^"]*\)"/\1/'; }
+# The files its linux section ships from a target-linux/ (Windows sources are under target/): at the checkout's root,
+# or in a module's (pix-gui/target-linux/pix), relative to the checkout.
+linux_sources() { grep -o '"source"[[:space:]]*:[[:space:]]*"\([^"]*/\)\{0,1\}target-linux/[^"]*"' "$root/$(dir_of "$1")/installer.json" | sed 's/.*"\([^"]*target-linux\/[^"]*\)"/\1/'; }
 
 mkdir -p "$logs"
 
