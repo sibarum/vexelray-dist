@@ -110,6 +110,88 @@ Read it first - it is one file: [`install.ps1`](https://raw.githubusercontent.co
 accepted when their SHA-256 matches the manifest, and the manifest and script live in this
 repository.
 
+## Install (Linux)
+
+Open a terminal and run (no `sudo`: it installs for your user only):
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexelray-inspector/install.sh | sh
+```
+
+It downloads VexelRay Inspector 0.2.0, checks every file against the SHA-256 in the
+[install manifest](https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexelray-inspector/manifest.json), and installs into `~/.local/opt/vexelray-inspector`. It needs `curl` (or
+`wget`), `tar` and `sha256sum`, which every desktop distribution has.
+
+What it does:
+
+- creates the install folder and places the binaries there, executable
+- adds VexelRay Inspector to your applications menu
+- puts a launcher on your desktop, if you have a Desktop folder
+- links `vexelray-inspector` into `~/.local/bin`, so it runs from a terminal (a link is never put over a file that is not its own)
+- writes an install manifest listing everything it installed and where
+- adds `uninstall.sh` and `update.sh` next to the binaries
+
+### System requirements
+
+- a x86_64 processor (`uname -m` says `x86_64`)
+
+The installer checks these before it downloads anything large and stops if one is not met. To install anyway, run it as `curl -fsSL https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexelray-inspector/install.sh | INSTALL_SKIP_CHECKS=1 sh`.
+
+### Options
+
+Set these for the `sh` that runs the script, as in `curl -fsSL https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexelray-inspector/install.sh | INSTALL_NO_PATH=1 sh`:
+
+| Variable | Effect |
+| --- | --- |
+| `INSTALL_VERSION=1.2.3` | install a specific version from the [history](#versions) |
+| `INSTALL_DIR=/opt/vexelray-inspector` | install somewhere other than `~/.local/opt/vexelray-inspector` |
+| `INSTALL_NO_SHORTCUTS=1` | no menu entry or desktop launcher |
+| `INSTALL_NO_PATH=1` | link nothing into `~/.local/bin` |
+| `INSTALL_NO_ASSOCIATIONS=1` | do not register VexelRay Inspector to open any file types |
+| `INSTALL_FORCE=1` | reinstall even if this version is already installed |
+| `INSTALL_SKIP_CHECKS=1` | install even if this computer does not meet the system requirements |
+
+Updates and reinstalls remember the `INSTALL_NO_*` choices of the last install. To get them back,
+set that variable to `0` and run the install command again.
+
+### What gets installed
+
+| File | Kind | Version | Size | Installed to |
+| --- | --- | --- | --- | --- |
+| `vexelray-inspector` | native executable | 0.2.0 | 55.6 MB | `~/.local/opt/vexelray-inspector/vexelray-inspector` |
+| `vexelray-inspector-ffmpeg-record-linux-x86_64.tar.gz` | archive (unpacked) | 0.2.0 | 4.3 MB | `~/.local/opt/vexelray-inspector/ffmpeg-record/` |
+| `THIRD-PARTY-NOTICES.txt` | file | 0.2.0 | 0.1 MB | `~/.local/opt/vexelray-inspector/THIRD-PARTY-NOTICES.txt` |
+
+Everything installed is recorded in `~/.local/opt/vexelray-inspector/install-manifest.json`, and a copy in
+`~/.local/share/vexelray-installer/installs/vexelray-inspector.json`, the same record the Windows installer writes: other programs
+find VexelRay Inspector through `commands.<name>.path` in it.
+
+### Update
+
+```sh
+"$HOME/.local/opt/vexelray-inspector/update.sh"
+```
+
+Checks for a newer version and installs it after asking. `--check` only looks, `--yes` does not ask.
+An update that fails or is interrupted puts back the version you had, exactly as it was; if the
+computer went off halfway, the next install or update first finishes putting it back.
+
+### Uninstall
+
+```sh
+"$HOME/.local/opt/vexelray-inspector/uninstall.sh"
+```
+
+Removes exactly what was installed: files, the menu entry and desktop launcher, the links in
+`~/.local/bin` and the file types. Files you added to the install folder are left alone. `--list`
+shows every install it knows about, `--all` removes them all, `--yes` does not ask. Report problems at https://github.com/sibarum/vexelray-dist/issues/new.
+
+### Is it safe to pipe a script into sh?
+
+Read it first - it is one file: [`install.sh`](https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexelray-inspector/install.sh). Downloads are only accepted when
+their SHA-256 matches the manifest, and the manifest and the script live in this repository. It never
+asks for root, and writes nowhere outside your home folder unless `INSTALL_DIR` says so.
+
 A macOS installer is planned; the manifest is already organised per platform.
 
 ## Versions

@@ -29,6 +29,18 @@
     "manager.ps1": {
       "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexelray-ide/manager.ps1",
       "sha256": "b409faa2b55e384fc92f1a201ac50deccc8d4136d925fd23e433f78cd4598002"
+    },
+    "install.sh": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexelray-ide/install.sh",
+      "sha256": "00cb2d34cba63f0d8cd9f2075913566385346f2a9c22a17095c3fac397bd3f38"
+    },
+    "uninstall.sh": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexelray-ide/uninstall.sh",
+      "sha256": "f3f5d8aff9561ea2449b3d65a325cb5e738b31320c224829e4d6f21621f22910"
+    },
+    "update.sh": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexelray-ide/update.sh",
+      "sha256": "d8a10de92f5c52c47fb7d91503c28a3a31ae2c8a090eb6b95e93bdc80fbd7425"
     }
   },
   "versions": [
@@ -41,7 +53,10 @@
         "uninstall.ps1": "25c01889e29611ca3c931a196b2eab80ff3bd555fa4c875ce9b7aed342cc461c",
         "update.ps1": "d2a055815f0abe96ef0c3b4ee9c874869475aa3f354814a4864cabf9a0759234",
         "diagnose.ps1": "c9522fe54993f6f69c374e9c28525672554282b26d2fea3da71e15780b740040",
-        "manager.ps1": "b409faa2b55e384fc92f1a201ac50deccc8d4136d925fd23e433f78cd4598002"
+        "manager.ps1": "b409faa2b55e384fc92f1a201ac50deccc8d4136d925fd23e433f78cd4598002",
+        "install.sh": "00cb2d34cba63f0d8cd9f2075913566385346f2a9c22a17095c3fac397bd3f38",
+        "uninstall.sh": "f3f5d8aff9561ea2449b3d65a325cb5e738b31320c224829e4d6f21621f22910",
+        "update.sh": "d8a10de92f5c52c47fb7d91503c28a3a31ae2c8a090eb6b95e93bdc80fbd7425"
       },
       "platforms": {
         "windows": {
@@ -301,9 +316,291 @@
               "addToPath": false
             }
           ]
+        },
+        "linux": {
+          "installDir": "$HOME/.local/opt/vexelray-ide",
+          "arch": "x86_64",
+          "binaries": [
+            {
+              "name": "vexelray-ide",
+              "version": "0.2.0",
+              "kind": "native",
+              "file": "vexelray-ide",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/vexelray-ide-v0.2.0/vexelray-ide",
+              "sha256": "2ec1f2a1027c19c9033eb8bfc30ab2bfd15819ef4d242d9258088b0afa312bfb",
+              "size": 99158272,
+              "installPath": "{installDir}/vexelray-ide",
+              "executable": true,
+              "addToPath": true,
+              "appId": "dev.vexelray.demo.text-editor-vexel-demo",
+              "icon": {
+                "file": "vexelray-ide.png",
+                "url": "https://github.com/sibarum/vexelray-dist/releases/download/vexelray-ide-v0.2.0/vexelray-ide.png",
+                "sha256": "88c7dbf335e23407d431612d3fbbba7da09af4957ab9f4cd5ebf70eae68e74ef",
+                "size": 8748,
+                "installPath": "{installDir}/vexelray-ide.png",
+                "pixels": 256
+              },
+              "fileIcons": [
+                {
+                  "file": "vexelray-ide-file-plain-text.png",
+                  "url": "https://github.com/sibarum/vexelray-dist/releases/download/vexelray-ide-v0.2.0/vexelray-ide-file-plain-text.png",
+                  "sha256": "d0d8ba64c4131d1b26d4ff5e02fd72a31433ed91fa6344250bc753b0b92c2db6",
+                  "size": 2890,
+                  "installPath": "{installDir}/vexelray-ide-file-plain-text.png",
+                  "pixels": 256
+                },
+                {
+                  "file": "vexelray-ide-file-data-and-config.png",
+                  "url": "https://github.com/sibarum/vexelray-dist/releases/download/vexelray-ide-v0.2.0/vexelray-ide-file-data-and-config.png",
+                  "sha256": "5586c10e88e66b48b0801334729647befebd0bd4451484b3234840962c6a16ed",
+                  "size": 3562,
+                  "installPath": "{installDir}/vexelray-ide-file-data-and-config.png",
+                  "pixels": 256
+                },
+                {
+                  "file": "vexelray-ide-file-source-code.png",
+                  "url": "https://github.com/sibarum/vexelray-dist/releases/download/vexelray-ide-v0.2.0/vexelray-ide-file-source-code.png",
+                  "sha256": "dfe1d70ee4508e30c74018dc61e10025b2b388e8052e69a3341cfd82884cc973",
+                  "size": 4005,
+                  "installPath": "{installDir}/vexelray-ide-file-source-code.png",
+                  "pixels": 256
+                },
+                {
+                  "file": "vexelray-ide-vex-terminal.png",
+                  "url": "https://github.com/sibarum/vexelray-dist/releases/download/vexelray-ide-v0.2.0/vexelray-ide-vex-terminal.png",
+                  "sha256": "ec7439ab4fedfef1c5131ca90410abc0b6a102e71242accbf0060882974ba997",
+                  "size": 7112,
+                  "installPath": "{installDir}/vexelray-ide-vex-terminal.png",
+                  "pixels": 256
+                }
+              ],
+              "shortcuts": {
+                "desktop": true,
+                "startMenu": true,
+                "label": "VexelRay IDE",
+                "gui": true
+              },
+              "fileAssociations": [
+                {
+                  "extension": ".txt",
+                  "mimeType": "text/plain",
+                  "ownType": false,
+                  "description": "Text Document",
+                  "icon": "vexelray-ide-file-plain-text.png"
+                },
+                {
+                  "extension": ".log",
+                  "mimeType": "text/plain",
+                  "ownType": false,
+                  "description": "Log File",
+                  "icon": "vexelray-ide-file-plain-text.png"
+                },
+                {
+                  "extension": ".md",
+                  "mimeType": "text/markdown",
+                  "ownType": false,
+                  "description": "Markdown Document",
+                  "icon": "vexelray-ide-file-plain-text.png"
+                },
+                {
+                  "extension": ".markdown",
+                  "mimeType": "text/markdown",
+                  "ownType": false,
+                  "description": "Markdown Document",
+                  "icon": "vexelray-ide-file-plain-text.png"
+                },
+                {
+                  "extension": ".json",
+                  "mimeType": "application/json",
+                  "ownType": false,
+                  "description": "JSON File",
+                  "icon": "vexelray-ide-file-data-and-config.png"
+                },
+                {
+                  "extension": ".jsonc",
+                  "mimeType": "application/x-vexelray-ide-jsonc",
+                  "ownType": true,
+                  "description": "JSON with Comments File",
+                  "icon": "vexelray-ide-file-data-and-config.png"
+                },
+                {
+                  "extension": ".xml",
+                  "mimeType": "application/xml",
+                  "ownType": false,
+                  "description": "XML Document",
+                  "icon": "vexelray-ide-file-data-and-config.png"
+                },
+                {
+                  "extension": ".xsd",
+                  "mimeType": "application/x-vexelray-ide-xsd",
+                  "ownType": true,
+                  "description": "XML Schema",
+                  "icon": "vexelray-ide-file-data-and-config.png"
+                },
+                {
+                  "extension": ".xsl",
+                  "mimeType": "application/x-vexelray-ide-xsl",
+                  "ownType": true,
+                  "description": "XSL Stylesheet",
+                  "icon": "vexelray-ide-file-data-and-config.png"
+                },
+                {
+                  "extension": ".yaml",
+                  "mimeType": "application/yaml",
+                  "ownType": false,
+                  "description": "YAML File",
+                  "icon": "vexelray-ide-file-data-and-config.png"
+                },
+                {
+                  "extension": ".yml",
+                  "mimeType": "application/yaml",
+                  "ownType": false,
+                  "description": "YAML File",
+                  "icon": "vexelray-ide-file-data-and-config.png"
+                },
+                {
+                  "extension": ".ini",
+                  "mimeType": "application/x-vexelray-ide-ini",
+                  "ownType": true,
+                  "description": "Configuration Settings",
+                  "icon": "vexelray-ide-file-data-and-config.png"
+                },
+                {
+                  "extension": ".properties",
+                  "mimeType": "application/x-vexelray-ide-properties",
+                  "ownType": true,
+                  "description": "Properties File",
+                  "icon": "vexelray-ide-file-data-and-config.png"
+                },
+                {
+                  "extension": ".html",
+                  "mimeType": "application/x-vexelray-ide-html",
+                  "ownType": true,
+                  "description": "HTML Document",
+                  "icon": "vexelray-ide-file-source-code.png"
+                },
+                {
+                  "extension": ".htm",
+                  "mimeType": "application/x-vexelray-ide-htm",
+                  "ownType": true,
+                  "description": "HTML Document",
+                  "icon": "vexelray-ide-file-source-code.png"
+                },
+                {
+                  "extension": ".css",
+                  "mimeType": "application/x-vexelray-ide-css",
+                  "ownType": true,
+                  "description": "CSS Stylesheet",
+                  "icon": "vexelray-ide-file-source-code.png"
+                },
+                {
+                  "extension": ".mjs",
+                  "mimeType": "application/x-vexelray-ide-mjs",
+                  "ownType": true,
+                  "description": "JavaScript Module",
+                  "icon": "vexelray-ide-file-source-code.png"
+                },
+                {
+                  "extension": ".cjs",
+                  "mimeType": "application/x-vexelray-ide-cjs",
+                  "ownType": true,
+                  "description": "CommonJS Module",
+                  "icon": "vexelray-ide-file-source-code.png"
+                },
+                {
+                  "extension": ".java",
+                  "mimeType": "application/x-vexelray-ide-java",
+                  "ownType": true,
+                  "description": "Java Source File",
+                  "icon": "vexelray-ide-file-source-code.png"
+                },
+                {
+                  "extension": ".py",
+                  "mimeType": "application/x-vexelray-ide-py",
+                  "ownType": true,
+                  "description": "Python Source File",
+                  "icon": "vexelray-ide-file-source-code.png"
+                },
+                {
+                  "extension": ".pyi",
+                  "mimeType": "application/x-vexelray-ide-pyi",
+                  "ownType": true,
+                  "description": "Python Stub File",
+                  "icon": "vexelray-ide-file-source-code.png"
+                },
+                {
+                  "extension": ".sh",
+                  "mimeType": "application/x-vexelray-ide-sh",
+                  "ownType": true,
+                  "description": "Shell Script",
+                  "icon": "vexelray-ide-vex-terminal.png"
+                },
+                {
+                  "extension": ".bash",
+                  "mimeType": "application/x-vexelray-ide-bash",
+                  "ownType": true,
+                  "description": "Bash Script",
+                  "icon": "vexelray-ide-vex-terminal.png"
+                },
+                {
+                  "extension": ".psd1",
+                  "mimeType": "application/x-vexelray-ide-psd1",
+                  "ownType": true,
+                  "description": "PowerShell Data File",
+                  "icon": "vexelray-ide-vex-terminal.png"
+                },
+                {
+                  "extension": ".diff",
+                  "mimeType": "text/x-diff",
+                  "ownType": false,
+                  "description": "Diff File",
+                  "icon": "vexelray-ide-file-plain-text.png"
+                },
+                {
+                  "extension": ".patch",
+                  "mimeType": "text/x-diff",
+                  "ownType": false,
+                  "description": "Patch File",
+                  "icon": "vexelray-ide-file-plain-text.png"
+                },
+                {
+                  "extension": ".dockerfile",
+                  "mimeType": "application/x-vexelray-ide-dockerfile",
+                  "ownType": true,
+                  "description": "Dockerfile",
+                  "icon": "vexelray-ide-file-plain-text.png"
+                }
+              ]
+            },
+            {
+              "name": "vexelray-ide-ffmpeg-record",
+              "version": "0.2.0",
+              "kind": "archive",
+              "file": "vexelray-ide-ffmpeg-record-linux-x86_64.tar.gz",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/vexelray-ide-v0.2.0/vexelray-ide-ffmpeg-record-linux-x86_64.tar.gz",
+              "sha256": "266b9aea1119ee184fcd6ba66116bf7b06ac2bc2f595980d6ca3140ccfd87e80",
+              "size": 4514255,
+              "installPath": "{installDir}/ffmpeg-record",
+              "executable": false,
+              "addToPath": false
+            },
+            {
+              "name": "notices",
+              "version": "0.2.0",
+              "kind": "file",
+              "file": "THIRD-PARTY-NOTICES.txt",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/vexelray-ide-v0.2.0/THIRD-PARTY-NOTICES.txt",
+              "sha256": "0dee7e63f69f8db02a1c3d0cc87c802e7e935892d5ce3bb46c503805d225c2ef",
+              "size": 107025,
+              "installPath": "{installDir}/THIRD-PARTY-NOTICES.txt",
+              "executable": false,
+              "addToPath": false
+            }
+          ]
         }
       },
-      "updatedAt": "2026-11-16T00:35:59Z"
+      "updatedAt": "2026-11-16T01:38:32Z"
     }
   ]
 }

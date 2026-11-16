@@ -1,10 +1,60 @@
 vexelray-installer-linux	1
 id	pix
 name	Rasterware
-latest	0.1.2
-tool	install.sh	ce8d39a3c0fb7f9186fdc32708a6e7d479adc1149c33b607d4ac1d1b7ce05e0c	https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/pix/install.sh
-tool	uninstall.sh	be575e4f635d36446afa849adfb3b78dd4a42ff56543a31e022653b5dd9fbcda	https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/pix/uninstall.sh
-tool	update.sh	86d9e83fd43d4f7ac4ba21d1a9394a18c9df8b83a063231ef399f19da1932f0c	https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/pix/update.sh
+latest	0.2.0
+tool	install.sh	15ecd9f3d95330b1a008da5e55ea15314e390964c77d624ce9ff29d20e86499a	https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/pix/install.sh
+tool	uninstall.sh	b794733b8329674539ab424790c45d3989fd993b59d7be9d896396a75866eb96	https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/pix/uninstall.sh
+tool	update.sh	09030a1757d158faf69854f7bfc4fb7d67cb590f7af4c1c9946dae18ae858715	https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/pix/update.sh
+version	0.2.0
+dir	0.2.0	$HOME/.local/opt/pix
+arch	0.2.0	x86_64
+bin	0.2.0	pix	native	0.2.0	a7393694b0728ac9e2f8633e4f48cb51fe22c1a997430d97841cf98c00a1005c	66914560	1	pix	https://github.com/sibarum/vexelray-dist/releases/download/pix-v0.2.0/pix	pix
+icon	0.2.0	pix	9c1cbff0b6bc91d1db616262c18f50f4b959c18b7fc41470d4e1fa432f0ff442	256	pix.png	https://github.com/sibarum/vexelray-dist/releases/download/pix-v0.2.0/pix.png	pix.png
+typeicon	0.2.0	pix	f48f894337491198db7b96bae2409254447845e817e2763f3dc6144067f8ac5e	256	pix-file-images.png	https://github.com/sibarum/vexelray-dist/releases/download/pix-v0.2.0/pix-file-images.png	pix-file-images.png
+typeicon	0.2.0	pix	061fbe5edbbfc842c01a611e7bceec147d99600bb51df13be0505be01c95210e	256	pix-file-vector-graphics.png	https://github.com/sibarum/vexelray-dist/releases/download/pix-v0.2.0/pix-file-vector-graphics.png	pix-file-vector-graphics.png
+typeicon	0.2.0	pix	4cc63ad4ab3dad07c63f3cf5a8cf55eb34fb39e4955d010860f9224efe028ad6	256	pix-file-video.png	https://github.com/sibarum/vexelray-dist/releases/download/pix-v0.2.0/pix-file-video.png	pix-file-video.png
+shortcut	0.2.0	pix	1	1	1	Rasterware
+appid	0.2.0	pix	dev.sibarum.pix
+assoc	0.2.0	pix	.png	image/png	0	pix-file-images.png	PNG Image
+assoc	0.2.0	pix	.apng	image/apng	0	pix-file-images.png	Animated PNG Image
+assoc	0.2.0	pix	.jpg	image/jpeg	0	pix-file-images.png	JPEG Image
+assoc	0.2.0	pix	.jpeg	image/jpeg	0	pix-file-images.png	JPEG Image
+assoc	0.2.0	pix	.jfif	image/jpeg	0	pix-file-images.png	JPEG Image
+assoc	0.2.0	pix	.gif	image/gif	0	pix-file-images.png	GIF Image
+assoc	0.2.0	pix	.webp	image/webp	0	pix-file-images.png	WebP Image
+assoc	0.2.0	pix	.avif	image/avif	0	pix-file-images.png	AVIF Image
+assoc	0.2.0	pix	.bmp	image/bmp	0	pix-file-images.png	Bitmap Image
+assoc	0.2.0	pix	.tif	image/tiff	0	pix-file-images.png	TIFF Image
+assoc	0.2.0	pix	.tiff	image/tiff	0	pix-file-images.png	TIFF Image
+assoc	0.2.0	pix	.svg	image/svg+xml	0	pix-file-vector-graphics.png	SVG Image
+assoc	0.2.0	pix	.ico	image/x-icon	0	pix-file-images.png	Icon
+assoc	0.2.0	pix	.tga	application/x-pix-tga	1	pix-file-images.png	Targa Image
+assoc	0.2.0	pix	.qoi	application/x-pix-qoi	1	pix-file-images.png	QOI Image
+assoc	0.2.0	pix	.pnm	application/x-pix-pnm	1	pix-file-images.png	Portable Anymap Image
+assoc	0.2.0	pix	.pbm	application/x-pix-pbm	1	pix-file-images.png	Portable Bitmap Image
+assoc	0.2.0	pix	.pgm	application/x-pix-pgm	1	pix-file-images.png	Portable Graymap Image
+assoc	0.2.0	pix	.ppm	application/x-pix-ppm	1	pix-file-images.png	Portable Pixmap Image
+assoc	0.2.0	pix	.dds	application/x-pix-dds	1	pix-file-images.png	DirectDraw Surface
+assoc	0.2.0	pix	.exr	application/x-pix-exr	1	pix-file-images.png	OpenEXR Image
+assoc	0.2.0	pix	.hdr	application/x-pix-hdr	1	pix-file-images.png	Radiance HDR Image
+assoc	0.2.0	pix	.mp4	video/mp4	0	pix-file-video.png	MP4 Video
+assoc	0.2.0	pix	.m4v	video/x-m4v	0	pix-file-video.png	MPEG-4 Video
+assoc	0.2.0	pix	.mov	video/quicktime	0	pix-file-video.png	QuickTime Movie
+assoc	0.2.0	pix	.mkv	video/x-matroska	0	pix-file-video.png	Matroska Video
+assoc	0.2.0	pix	.webm	video/webm	0	pix-file-video.png	WebM Video
+assoc	0.2.0	pix	.avi	video/x-msvideo	0	pix-file-video.png	AVI Video
+assoc	0.2.0	pix	.wmv	video/x-ms-wmv	0	pix-file-video.png	Windows Media Video
+assoc	0.2.0	pix	.flv	video/x-flv	0	pix-file-video.png	Flash Video
+assoc	0.2.0	pix	.mpg	video/mpeg	0	pix-file-video.png	MPEG Video
+assoc	0.2.0	pix	.mpeg	video/mpeg	0	pix-file-video.png	MPEG Video
+assoc	0.2.0	pix	.ts	video/mp2t	0	pix-file-video.png	MPEG Transport Stream
+assoc	0.2.0	pix	.m2ts	video/mp2t	0	pix-file-video.png	MPEG-2 Transport Stream
+assoc	0.2.0	pix	.mts	video/mp2t	0	pix-file-video.png	AVCHD Video
+assoc	0.2.0	pix	.3gp	video/3gpp	0	pix-file-video.png	3GPP Video
+assoc	0.2.0	pix	.ogv	video/ogg	0	pix-file-video.png	Ogg Video
+bin	0.2.0	pix-ffmpeg	archive	0.2.0	1a9b66bfd7314f5794ec1ba2f4353f9456c55c80caa12eb0fa7c3380f9808044	8131604	0	pix-ffmpeg-linux-x86_64.tar.gz	https://github.com/sibarum/vexelray-dist/releases/download/pix-v0.2.0/pix-ffmpeg-linux-x86_64.tar.gz	ffmpeg
+bin	0.2.0	pix-ffmpeg-record	archive	0.2.0	266b9aea1119ee184fcd6ba66116bf7b06ac2bc2f595980d6ca3140ccfd87e80	4514255	0	pix-ffmpeg-record-linux-x86_64.tar.gz	https://github.com/sibarum/vexelray-dist/releases/download/pix-v0.2.0/pix-ffmpeg-record-linux-x86_64.tar.gz	ffmpeg-record
+bin	0.2.0	notices	file	0.2.0	b869dd67084a0bbc2accc2f4c4064f830602c1ac22a829e6e91b75678fcad213	166799	0	THIRD-PARTY-NOTICES.txt	https://github.com/sibarum/vexelray-dist/releases/download/pix-v0.2.0/THIRD-PARTY-NOTICES.txt	THIRD-PARTY-NOTICES.txt
 version	0.1.2
 dir	0.1.2	$HOME/.local/opt/pix
 arch	0.1.2	x86_64

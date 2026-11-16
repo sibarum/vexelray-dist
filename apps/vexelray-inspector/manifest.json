@@ -29,6 +29,18 @@
     "manager.ps1": {
       "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexelray-inspector/manager.ps1",
       "sha256": "b8ef9804b634ad3c81f7f61d6472f1275239c89b8590c57f45e90aed542e8d76"
+    },
+    "install.sh": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexelray-inspector/install.sh",
+      "sha256": "830c4231d29c4417ffaa0d58822bfb7581ed85075ae7a7734009560bba531eb8"
+    },
+    "uninstall.sh": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexelray-inspector/uninstall.sh",
+      "sha256": "be5c21490c8a465760b6d5063b2b8da6f29958386598640fd81850fa25820f43"
+    },
+    "update.sh": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexelray-inspector/update.sh",
+      "sha256": "ae57cc71573adde61c09bfb9ed62a557a7ecd5419d2c4ad69159778d7a729c48"
     }
   },
   "versions": [
@@ -41,7 +53,10 @@
         "uninstall.ps1": "fe039f1656504a2dc04173600e2bc83d898c784a6d0870e73bfa8974fd54d3f0",
         "update.ps1": "45a621538d4d3906f3e1821724dac01d60e8934a4c155c759f91f14d156b8896",
         "diagnose.ps1": "043c38618724143f03bfe8f5991650626100241a7b77782ad61fcf44320f8dc6",
-        "manager.ps1": "b8ef9804b634ad3c81f7f61d6472f1275239c89b8590c57f45e90aed542e8d76"
+        "manager.ps1": "b8ef9804b634ad3c81f7f61d6472f1275239c89b8590c57f45e90aed542e8d76",
+        "install.sh": "830c4231d29c4417ffaa0d58822bfb7581ed85075ae7a7734009560bba531eb8",
+        "uninstall.sh": "be5c21490c8a465760b6d5063b2b8da6f29958386598640fd81850fa25820f43",
+        "update.sh": "ae57cc71573adde61c09bfb9ed62a557a7ecd5419d2c4ad69159778d7a729c48"
       },
       "platforms": {
         "windows": {
@@ -85,9 +100,66 @@
               "addToPath": false
             }
           ]
+        },
+        "linux": {
+          "installDir": "$HOME/.local/opt/vexelray-inspector",
+          "arch": "x86_64",
+          "binaries": [
+            {
+              "name": "vexelray-inspector",
+              "version": "0.2.0",
+              "kind": "native",
+              "file": "vexelray-inspector",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/vexelray-inspector-v0.2.0/vexelray-inspector",
+              "sha256": "c623e088e1549446a45055a6ae0450c699f91a78632e3df225292d5de1524a2f",
+              "size": 58263808,
+              "installPath": "{installDir}/vexelray-inspector",
+              "executable": true,
+              "addToPath": true,
+              "appId": "dev.sibarum.vexelray-inspector",
+              "icon": {
+                "file": "vexelray-inspector.png",
+                "url": "https://github.com/sibarum/vexelray-dist/releases/download/vexelray-inspector-v0.2.0/vexelray-inspector.png",
+                "sha256": "9c691416f07532e49cce018ffd803c375dfbdcc6370c86563f0cba634c1378ea",
+                "size": 11849,
+                "installPath": "{installDir}/vexelray-inspector.png",
+                "pixels": 256
+              },
+              "shortcuts": {
+                "desktop": true,
+                "startMenu": true,
+                "label": "VexelRay Inspector",
+                "gui": true
+              }
+            },
+            {
+              "name": "vexelray-inspector-ffmpeg-record",
+              "version": "0.2.0",
+              "kind": "archive",
+              "file": "vexelray-inspector-ffmpeg-record-linux-x86_64.tar.gz",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/vexelray-inspector-v0.2.0/vexelray-inspector-ffmpeg-record-linux-x86_64.tar.gz",
+              "sha256": "266b9aea1119ee184fcd6ba66116bf7b06ac2bc2f595980d6ca3140ccfd87e80",
+              "size": 4514255,
+              "installPath": "{installDir}/ffmpeg-record",
+              "executable": false,
+              "addToPath": false
+            },
+            {
+              "name": "notices",
+              "version": "0.2.0",
+              "kind": "file",
+              "file": "THIRD-PARTY-NOTICES.txt",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/vexelray-inspector-v0.2.0/THIRD-PARTY-NOTICES.txt",
+              "sha256": "cc0d2eaf4f977309616bc7b03e14b182fddfea7b30e5d55fd961d71369f941cd",
+              "size": 77821,
+              "installPath": "{installDir}/THIRD-PARTY-NOTICES.txt",
+              "executable": false,
+              "addToPath": false
+            }
+          ]
         }
       },
-      "updatedAt": "2026-11-16T00:40:53Z"
+      "updatedAt": "2026-11-16T01:42:17Z"
     }
   ]
 }

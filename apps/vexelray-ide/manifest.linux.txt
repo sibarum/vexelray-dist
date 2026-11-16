@@ -1,0 +1,48 @@
+vexelray-installer-linux	1
+id	vexelray-ide
+name	VexelRay IDE
+replaces	text-editor
+latest	0.2.0
+tool	install.sh	00cb2d34cba63f0d8cd9f2075913566385346f2a9c22a17095c3fac397bd3f38	https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexelray-ide/install.sh
+tool	uninstall.sh	f3f5d8aff9561ea2449b3d65a325cb5e738b31320c224829e4d6f21621f22910	https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexelray-ide/uninstall.sh
+tool	update.sh	d8a10de92f5c52c47fb7d91503c28a3a31ae2c8a090eb6b95e93bdc80fbd7425	https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexelray-ide/update.sh
+version	0.2.0
+dir	0.2.0	$HOME/.local/opt/vexelray-ide
+arch	0.2.0	x86_64
+bin	0.2.0	vexelray-ide	native	0.2.0	2ec1f2a1027c19c9033eb8bfc30ab2bfd15819ef4d242d9258088b0afa312bfb	99158272	1	vexelray-ide	https://github.com/sibarum/vexelray-dist/releases/download/vexelray-ide-v0.2.0/vexelray-ide	vexelray-ide
+icon	0.2.0	vexelray-ide	88c7dbf335e23407d431612d3fbbba7da09af4957ab9f4cd5ebf70eae68e74ef	256	vexelray-ide.png	https://github.com/sibarum/vexelray-dist/releases/download/vexelray-ide-v0.2.0/vexelray-ide.png	vexelray-ide.png
+typeicon	0.2.0	vexelray-ide	d0d8ba64c4131d1b26d4ff5e02fd72a31433ed91fa6344250bc753b0b92c2db6	256	vexelray-ide-file-plain-text.png	https://github.com/sibarum/vexelray-dist/releases/download/vexelray-ide-v0.2.0/vexelray-ide-file-plain-text.png	vexelray-ide-file-plain-text.png
+typeicon	0.2.0	vexelray-ide	5586c10e88e66b48b0801334729647befebd0bd4451484b3234840962c6a16ed	256	vexelray-ide-file-data-and-config.png	https://github.com/sibarum/vexelray-dist/releases/download/vexelray-ide-v0.2.0/vexelray-ide-file-data-and-config.png	vexelray-ide-file-data-and-config.png
+typeicon	0.2.0	vexelray-ide	dfe1d70ee4508e30c74018dc61e10025b2b388e8052e69a3341cfd82884cc973	256	vexelray-ide-file-source-code.png	https://github.com/sibarum/vexelray-dist/releases/download/vexelray-ide-v0.2.0/vexelray-ide-file-source-code.png	vexelray-ide-file-source-code.png
+typeicon	0.2.0	vexelray-ide	ec7439ab4fedfef1c5131ca90410abc0b6a102e71242accbf0060882974ba997	256	vexelray-ide-vex-terminal.png	https://github.com/sibarum/vexelray-dist/releases/download/vexelray-ide-v0.2.0/vexelray-ide-vex-terminal.png	vexelray-ide-vex-terminal.png
+shortcut	0.2.0	vexelray-ide	1	1	1	VexelRay IDE
+appid	0.2.0	vexelray-ide	dev.vexelray.demo.text-editor-vexel-demo
+assoc	0.2.0	vexelray-ide	.txt	text/plain	0	vexelray-ide-file-plain-text.png	Text Document
+assoc	0.2.0	vexelray-ide	.log	text/plain	0	vexelray-ide-file-plain-text.png	Log File
+assoc	0.2.0	vexelray-ide	.md	text/markdown	0	vexelray-ide-file-plain-text.png	Markdown Document
+assoc	0.2.0	vexelray-ide	.markdown	text/markdown	0	vexelray-ide-file-plain-text.png	Markdown Document
+assoc	0.2.0	vexelray-ide	.json	application/json	0	vexelray-ide-file-data-and-config.png	JSON File
+assoc	0.2.0	vexelray-ide	.jsonc	application/x-vexelray-ide-jsonc	1	vexelray-ide-file-data-and-config.png	JSON with Comments File
+assoc	0.2.0	vexelray-ide	.xml	application/xml	0	vexelray-ide-file-data-and-config.png	XML Document
+assoc	0.2.0	vexelray-ide	.xsd	application/x-vexelray-ide-xsd	1	vexelray-ide-file-data-and-config.png	XML Schema
+assoc	0.2.0	vexelray-ide	.xsl	application/x-vexelray-ide-xsl	1	vexelray-ide-file-data-and-config.png	XSL Stylesheet
+assoc	0.2.0	vexelray-ide	.yaml	application/yaml	0	vexelray-ide-file-data-and-config.png	YAML File
+assoc	0.2.0	vexelray-ide	.yml	application/yaml	0	vexelray-ide-file-data-and-config.png	YAML File
+assoc	0.2.0	vexelray-ide	.ini	application/x-vexelray-ide-ini	1	vexelray-ide-file-data-and-config.png	Configuration Settings
+assoc	0.2.0	vexelray-ide	.properties	application/x-vexelray-ide-properties	1	vexelray-ide-file-data-and-config.png	Properties File
+assoc	0.2.0	vexelray-ide	.html	application/x-vexelray-ide-html	1	vexelray-ide-file-source-code.png	HTML Document
+assoc	0.2.0	vexelray-ide	.htm	application/x-vexelray-ide-htm	1	vexelray-ide-file-source-code.png	HTML Document
+assoc	0.2.0	vexelray-ide	.css	application/x-vexelray-ide-css	1	vexelray-ide-file-source-code.png	CSS Stylesheet
+assoc	0.2.0	vexelray-ide	.mjs	application/x-vexelray-ide-mjs	1	vexelray-ide-file-source-code.png	JavaScript Module
+assoc	0.2.0	vexelray-ide	.cjs	application/x-vexelray-ide-cjs	1	vexelray-ide-file-source-code.png	CommonJS Module
+assoc	0.2.0	vexelray-ide	.java	application/x-vexelray-ide-java	1	vexelray-ide-file-source-code.png	Java Source File
+assoc	0.2.0	vexelray-ide	.py	application/x-vexelray-ide-py	1	vexelray-ide-file-source-code.png	Python Source File
+assoc	0.2.0	vexelray-ide	.pyi	application/x-vexelray-ide-pyi	1	vexelray-ide-file-source-code.png	Python Stub File
+assoc	0.2.0	vexelray-ide	.sh	application/x-vexelray-ide-sh	1	vexelray-ide-vex-terminal.png	Shell Script
+assoc	0.2.0	vexelray-ide	.bash	application/x-vexelray-ide-bash	1	vexelray-ide-vex-terminal.png	Bash Script
+assoc	0.2.0	vexelray-ide	.psd1	application/x-vexelray-ide-psd1	1	vexelray-ide-vex-terminal.png	PowerShell Data File
+assoc	0.2.0	vexelray-ide	.diff	text/x-diff	0	vexelray-ide-file-plain-text.png	Diff File
+assoc	0.2.0	vexelray-ide	.patch	text/x-diff	0	vexelray-ide-file-plain-text.png	Patch File
+assoc	0.2.0	vexelray-ide	.dockerfile	application/x-vexelray-ide-dockerfile	1	vexelray-ide-file-plain-text.png	Dockerfile
+bin	0.2.0	vexelray-ide-ffmpeg-record	archive	0.2.0	266b9aea1119ee184fcd6ba66116bf7b06ac2bc2f595980d6ca3140ccfd87e80	4514255	0	vexelray-ide-ffmpeg-record-linux-x86_64.tar.gz	https://github.com/sibarum/vexelray-dist/releases/download/vexelray-ide-v0.2.0/vexelray-ide-ffmpeg-record-linux-x86_64.tar.gz	ffmpeg-record
+bin	0.2.0	notices	file	0.2.0	0dee7e63f69f8db02a1c3d0cc87c802e7e935892d5ce3bb46c503805d225c2ef	107025	0	THIRD-PARTY-NOTICES.txt	https://github.com/sibarum/vexelray-dist/releases/download/vexelray-ide-v0.2.0/THIRD-PARTY-NOTICES.txt	THIRD-PARTY-NOTICES.txt

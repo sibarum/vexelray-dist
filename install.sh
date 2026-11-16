@@ -9,7 +9,7 @@
 # SHA-256 the manifest records, and runs it.
 #
 # Options, as environment variables for the sh that runs this (curl -fsSL <url> | INSTALL_ONLY=a,b sh):
-#   INSTALL_ONLY=a,b           install only these applications (text-editor, pix, mainframe, calculator, inspector); an optional one is
+#   INSTALL_ONLY=a,b           install only these applications (vexplore, vexelray-ide, pix, mainframe, calculator, vexelray-inspector); an optional one is
 #                              installed only when named here, or kept up to date once installed
 #   INSTALL_NO_SHORTCUTS=1     passed on to every application's installer
 #   INSTALL_NO_PATH=1          "
@@ -28,15 +28,13 @@ VI_SUITE='VexelRay'
 
 # vi_member ID NAME MANIFEST-URL PINNED-VERSION OPTIONAL HAS-LINUX REGISTRY-DIR, in install order
 vi_members() {
-    vi_member 'vexplore' 'Vexplore' 'https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexplore/manifest.linux.txt' '-' 0 0 '-'
-    vi_member 'text-editor' 'Vex' 'https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/text-editor/manifest.linux.txt' '-' 0 1 '$XDG_DATA_HOME/vexelray-installer/installs'
-    vi_member 'pix' 'Pix' 'https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/pix/manifest.linux.txt' '-' 0 1 '$XDG_DATA_HOME/vexelray-installer/installs'
+    vi_member 'vexplore' 'Vexplore' 'https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexplore/manifest.linux.txt' '-' 0 1 '$XDG_DATA_HOME/vexelray-installer/installs'
+    vi_member 'vexelray-ide' 'VexelRay IDE' 'https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexelray-ide/manifest.linux.txt' '-' 0 1 '$XDG_DATA_HOME/vexelray-installer/installs'
+    vi_member 'pix' 'Rasterware' 'https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/pix/manifest.linux.txt' '-' 0 1 '$XDG_DATA_HOME/vexelray-installer/installs'
     vi_member 'mainframe' 'MainFrame' 'https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/mainframe/manifest.linux.txt' '-' 0 1 '$XDG_DATA_HOME/vexelray-installer/installs'
     vi_member 'calculator' 'Calculator' 'https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/calculator/manifest.linux.txt' '-' 0 1 '$XDG_DATA_HOME/vexelray-installer/installs'
-    vi_member 'fluid-sim' 'Fluid Sim' 'https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/fluid-sim/manifest.linux.txt' '-' 1 0 '-'
-    vi_member 'rigid-sim' 'Rigid Sim' 'https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/rigid-sim/manifest.linux.txt' '-' 1 0 '-'
     vi_member 'maistro' 'Maistro' 'https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/maistro/manifest.linux.txt' '-' 1 0 '-'
-    vi_member 'inspector' 'VexelRay Inspector' 'https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/inspector/manifest.linux.txt' '-' 1 1 '$XDG_DATA_HOME/vexelray-installer/installs'
+    vi_member 'vexelray-inspector' 'VexelRay Inspector' 'https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexelray-inspector/manifest.linux.txt' '-' 1 1 '$XDG_DATA_HOME/vexelray-installer/installs'
 }
 
 set -u

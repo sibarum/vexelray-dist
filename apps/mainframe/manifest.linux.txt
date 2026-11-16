@@ -1,10 +1,19 @@
 vexelray-installer-linux	1
 id	mainframe
 name	MainFrame
-latest	0.1.2
+latest	0.2.0
 tool	install.sh	77048f003b7acbcd88fd7805d3f8e3888c8000ad1f316d6e9d9150dfacbe15b7	https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/mainframe/install.sh
 tool	uninstall.sh	a132980a72227bd27b65e0826ba5d23cb9017d55af6b0958d1bffaa8f07d9935	https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/mainframe/uninstall.sh
 tool	update.sh	fc459867b026b7c55a9bf29bbe733b8adfd3682c3d506b1209847deaa903cf77	https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/mainframe/update.sh
+version	0.2.0
+dir	0.2.0	$HOME/.local/opt/mainframe
+arch	0.2.0	x86_64
+bin	0.2.0	mainframe	native	0.2.0	31adf6b2f2857d75f3bba463b5a10cf07970b96048d4402f4348551ad911003f	58657024	1	mainframe	https://github.com/sibarum/vexelray-dist/releases/download/mainframe-v0.2.0/mainframe	mainframe
+icon	0.2.0	mainframe	fc35b9ba563e0c510a6ededf29e093cefd41fd6fe4d531bd19527b0e0a7ed4f8	256	mainframe.png	https://github.com/sibarum/vexelray-dist/releases/download/mainframe-v0.2.0/mainframe.png	mainframe.png
+shortcut	0.2.0	mainframe	1	1	1	MainFrame
+appid	0.2.0	mainframe	dev.mainframe.mainframe
+bin	0.2.0	mainframe-ffmpeg-record	archive	0.2.0	266b9aea1119ee184fcd6ba66116bf7b06ac2bc2f595980d6ca3140ccfd87e80	4514255	0	mainframe-ffmpeg-record-linux-x86_64.tar.gz	https://github.com/sibarum/vexelray-dist/releases/download/mainframe-v0.2.0/mainframe-ffmpeg-record-linux-x86_64.tar.gz	ffmpeg-record
+bin	0.2.0	notices	file	0.2.0	18b94570dee8c9e72956cb6a666564f82eed460d69562dc2dc0b1fb3e7a2a816	77334	0	THIRD-PARTY-NOTICES.txt	https://github.com/sibarum/vexelray-dist/releases/download/mainframe-v0.2.0/THIRD-PARTY-NOTICES.txt	THIRD-PARTY-NOTICES.txt
 version	0.1.2
 dir	0.1.2	$HOME/.local/opt/mainframe
 arch	0.1.2	x86_64

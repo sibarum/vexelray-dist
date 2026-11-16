@@ -1,0 +1,16 @@
+vexelray-installer-linux	1
+id	vexplore
+name	Vexplore
+latest	0.2.0
+tool	install.sh	f19463d76e063c459a153e27dbb259b6bfd2e18992ab69a3365159a1f93e6a98	https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexplore/install.sh
+tool	uninstall.sh	2721a725e4210e03f329157a14ad0d8043067b4957ac5e07990b75a30fa49d65	https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexplore/uninstall.sh
+tool	update.sh	d1d0ec6eaf0fb44cdb44d858a309b79b9b308126147f47365116894622e6e683	https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexplore/update.sh
+version	0.2.0
+dir	0.2.0	$HOME/.local/opt/vexplore
+arch	0.2.0	x86_64
+bin	0.2.0	vexplore	native	0.2.0	80412978f199a3e9803ad0e1005be69e8991be3d037ca7ba8c947ec7833f684c	63703296	1	vexplore	https://github.com/sibarum/vexelray-dist/releases/download/vexplore-v0.2.0/vexplore	vexplore
+icon	0.2.0	vexplore	75792deafd220ef4ffbf6815d5a5e79941ccd835e64113c4452dcbabbe52dfc3	256	vexplore.png	https://github.com/sibarum/vexelray-dist/releases/download/vexplore-v0.2.0/vexplore.png	vexplore.png
+shortcut	0.2.0	vexplore	1	1	1	Vexplore
+appid	0.2.0	vexplore	dev.sibarum.vexplore
+bin	0.2.0	vexplore-ffmpeg-record	archive	0.2.0	266b9aea1119ee184fcd6ba66116bf7b06ac2bc2f595980d6ca3140ccfd87e80	4514255	0	vexplore-ffmpeg-record-linux-x86_64.tar.gz	https://github.com/sibarum/vexelray-dist/releases/download/vexplore-v0.2.0/vexplore-ffmpeg-record-linux-x86_64.tar.gz	ffmpeg-record
+bin	0.2.0	notices	file	0.2.0	5306943398c2559c64a7fbc980c411758837348c1f172a13f284d2e23c1d44cc	166354	0	THIRD-PARTY-NOTICES.txt	https://github.com/sibarum/vexelray-dist/releases/download/vexplore-v0.2.0/THIRD-PARTY-NOTICES.txt	THIRD-PARTY-NOTICES.txt

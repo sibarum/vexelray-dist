@@ -26,6 +26,18 @@
     "manager.ps1": {
       "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexplore/manager.ps1",
       "sha256": "341188f21adc17e0c77fa36837c888b09b2c3e0b8641735c1142525c45d04d48"
+    },
+    "install.sh": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexplore/install.sh",
+      "sha256": "f19463d76e063c459a153e27dbb259b6bfd2e18992ab69a3365159a1f93e6a98"
+    },
+    "uninstall.sh": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexplore/uninstall.sh",
+      "sha256": "2721a725e4210e03f329157a14ad0d8043067b4957ac5e07990b75a30fa49d65"
+    },
+    "update.sh": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexplore/update.sh",
+      "sha256": "d1d0ec6eaf0fb44cdb44d858a309b79b9b308126147f47365116894622e6e683"
     }
   },
   "versions": [
@@ -38,7 +50,10 @@
         "uninstall.ps1": "e7c5d17895d4dd3839e5b2f955dc6716c55840f39029c43eb693a9b3fdcd01fd",
         "update.ps1": "53c919ba912c5dbff62131a8cc85bc3c2b1094cca9454ae80c31b6544376665f",
         "diagnose.ps1": "5186e6636908f34affcf69446b515f2043b7e452a70d88704bd850d2f1e51883",
-        "manager.ps1": "341188f21adc17e0c77fa36837c888b09b2c3e0b8641735c1142525c45d04d48"
+        "manager.ps1": "341188f21adc17e0c77fa36837c888b09b2c3e0b8641735c1142525c45d04d48",
+        "install.sh": "f19463d76e063c459a153e27dbb259b6bfd2e18992ab69a3365159a1f93e6a98",
+        "uninstall.sh": "2721a725e4210e03f329157a14ad0d8043067b4957ac5e07990b75a30fa49d65",
+        "update.sh": "d1d0ec6eaf0fb44cdb44d858a309b79b9b308126147f47365116894622e6e683"
       },
       "platforms": {
         "windows": {
@@ -94,9 +109,66 @@
               "addToPath": false
             }
           ]
+        },
+        "linux": {
+          "installDir": "$HOME/.local/opt/vexplore",
+          "arch": "x86_64",
+          "binaries": [
+            {
+              "name": "vexplore",
+              "version": "0.2.0",
+              "kind": "native",
+              "file": "vexplore",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/vexplore-v0.2.0/vexplore",
+              "sha256": "80412978f199a3e9803ad0e1005be69e8991be3d037ca7ba8c947ec7833f684c",
+              "size": 63703296,
+              "installPath": "{installDir}/vexplore",
+              "executable": true,
+              "addToPath": true,
+              "appId": "dev.sibarum.vexplore",
+              "icon": {
+                "file": "vexplore.png",
+                "url": "https://github.com/sibarum/vexelray-dist/releases/download/vexplore-v0.2.0/vexplore.png",
+                "sha256": "75792deafd220ef4ffbf6815d5a5e79941ccd835e64113c4452dcbabbe52dfc3",
+                "size": 8485,
+                "installPath": "{installDir}/vexplore.png",
+                "pixels": 256
+              },
+              "shortcuts": {
+                "desktop": true,
+                "startMenu": true,
+                "label": "Vexplore",
+                "gui": true
+              }
+            },
+            {
+              "name": "vexplore-ffmpeg-record",
+              "version": "0.2.0",
+              "kind": "archive",
+              "file": "vexplore-ffmpeg-record-linux-x86_64.tar.gz",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/vexplore-v0.2.0/vexplore-ffmpeg-record-linux-x86_64.tar.gz",
+              "sha256": "266b9aea1119ee184fcd6ba66116bf7b06ac2bc2f595980d6ca3140ccfd87e80",
+              "size": 4514255,
+              "installPath": "{installDir}/ffmpeg-record",
+              "executable": false,
+              "addToPath": false
+            },
+            {
+              "name": "notices",
+              "version": "0.2.0",
+              "kind": "file",
+              "file": "THIRD-PARTY-NOTICES.txt",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/vexplore-v0.2.0/THIRD-PARTY-NOTICES.txt",
+              "sha256": "5306943398c2559c64a7fbc980c411758837348c1f172a13f284d2e23c1d44cc",
+              "size": 166354,
+              "installPath": "{installDir}/THIRD-PARTY-NOTICES.txt",
+              "executable": false,
+              "addToPath": false
+            }
+          ]
         }
       },
-      "updatedAt": "2026-11-16T00:35:17Z"
+      "updatedAt": "2026-11-16T01:37:28Z"
     },
     {
       "version": "0.1.2",
