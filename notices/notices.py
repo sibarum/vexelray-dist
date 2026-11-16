@@ -196,7 +196,7 @@ APPS = {
                  "as public domain or under MIT No Attribution, and asks for no notice."),
     "text-editor": ("text-editor-vexel-demo",
                     EVERY_APP + ["noto-styles", "jdk-xml", "tm4e", "vscode-grammars", "joni", "jcodings", "gson",
-                                 "snakeyaml"], False, ""),
+                                 "snakeyaml", "javaparser"], False, ""),
     "pix": ("Pix", EVERY_APP[:3] + ["press-start-2p"] + EVERY_APP[3:] + ["jdk-xml"], True,
             "The ffmpeg folder next to {name} holds FFmpeg's libraries, which {name} uses to show a frame of a video and "
             "play its sound. They are not part of pix.exe. FFmpeg is licensed under the GNU Lesser General Public "
@@ -205,10 +205,10 @@ APPS = {
             "Reid) built in, which plays the sound; it is offered as public domain or under MIT No Attribution, "
             "and asks for no notice."),
     "mainframe": ("mainframe", EVERY_APP + ["jdk-xml"], False, ""),
-    "calculator": ("calculator-vexel-demo", EVERY_APP, False, ""),
+    "calculator": ("calculator-vexel-demo", EVERY_APP + ["jdk-xml"], False, ""),
     "fluid-sim": ("vexelray-sim-fluid", SIMS, False, ""),
     "rigid-sim": ("vexelray-sim-rigid", SIMS, False, ""),
-    "maistro": ("vexelray-maistro", EVERY_APP, False, ""),
+    "maistro": ("vexelray-maistro", EVERY_APP + ["jdk-xml"], False, ""),
     "inspector": ("vexelray-inspector", EVERY_APP + ["jdk-xml"], False, ""),
 }
 
