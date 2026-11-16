@@ -115,6 +115,20 @@ C = {
         ["dev.sibarum.pix.Wordmark"],
         "The wordmark in the title bar is a 79 by 7 pixel picture of the word RASTERWARE in this font's capitals. "
         "The font itself is not included."),
+    "jacquard-24": Component(
+        "Jacquard 24 font", "", "https://github.com/scfried/soft-type-jacquard",
+        ["OFL-1.1"],
+        ["Copyright 2023 The Soft Type Project Authors (https://github.com/scfried/soft-type-jacquard)"],
+        ["dev.vexelray.demo.editor.Wordmark"],
+        "The title bar's wordmark is the letters I, D and E traced from this font and drawn as a signed-distance "
+        "field. The font itself is not included."),
+    "cinzel": Component(
+        "Cinzel font", "", "https://github.com/NDISCOVER/Cinzel",
+        ["OFL-1.1"],
+        ["Copyright 2020 The Cinzel Project Authors (https://github.com/NDISCOVER/Cinzel)"],
+        ["dev.sibarum.inspector.Wordmark"],
+        "The wordmark in the title bar is a drawing of the letters INSPECT and R traced from this font's Bold "
+        "capitals, built into the program as a signed distance field. The font itself is not included."),
     "nfd": Component(
         "nativefiledialog-extended (nfd.dll)", "", "https://github.com/btzy/nativefiledialog-extended",
         ["Zlib"],
@@ -196,7 +210,7 @@ APPS = {
                  "as public domain or under MIT No Attribution, and asks for no notice."),
     "text-editor": ("text-editor-vexel-demo",
                     EVERY_APP + ["noto-styles", "jdk-xml", "tm4e", "vscode-grammars", "joni", "jcodings", "gson",
-                                 "snakeyaml", "javaparser"], False, ""),
+                                 "snakeyaml", "javaparser", "jacquard-24"], False, ""),
     "pix": ("Pix", EVERY_APP[:3] + ["press-start-2p"] + EVERY_APP[3:] + ["jdk-xml"], True,
             "The ffmpeg folder next to {name} holds FFmpeg's libraries, which {name} uses to show a frame of a video and "
             "play its sound. They are not part of pix.exe. FFmpeg is licensed under the GNU Lesser General Public "
@@ -209,7 +223,7 @@ APPS = {
     "fluid-sim": ("vexelray-sim-fluid", SIMS, False, ""),
     "rigid-sim": ("vexelray-sim-rigid", SIMS, False, ""),
     "maistro": ("vexelray-maistro", EVERY_APP + ["jdk-xml"], False, ""),
-    "inspector": ("vexelray-inspector", EVERY_APP + ["jdk-xml"], False, ""),
+    "inspector": ("vexelray-inspector", EVERY_APP[:3] + ["cinzel"] + EVERY_APP[3:] + ["jdk-xml"], False, ""),
 }
 
 # Every app records its windows to video (the title bar's camera), through ffmpeg-wrapper-record's encoder, which its
