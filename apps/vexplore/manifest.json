@@ -5,11 +5,11 @@
   "publisher": "sibarum",
   "description": "A file explorer that suggests instead of asking.",
   "repo": "sibarum/vexelray-dist",
-  "latest": "0.1.2",
+  "latest": "0.2.0",
   "tools": {
     "install.ps1": {
       "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexplore/install.ps1",
-      "sha256": "1426e1a0e41904853c392a78520ec30061264ed806e2dfcd7e23faa3592d64a3"
+      "sha256": "b03f425a43fd81b34ec54611153591b5f68926b094918252c13f66d430565fc6"
     },
     "uninstall.ps1": {
       "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexplore/uninstall.ps1",
@@ -29,6 +29,75 @@
     }
   },
   "versions": [
+    {
+      "version": "0.2.0",
+      "publishedAt": "2026-11-16T00:30:12Z",
+      "notes": "",
+      "installer": {
+        "install.ps1": "b03f425a43fd81b34ec54611153591b5f68926b094918252c13f66d430565fc6",
+        "uninstall.ps1": "e7c5d17895d4dd3839e5b2f955dc6716c55840f39029c43eb693a9b3fdcd01fd",
+        "update.ps1": "53c919ba912c5dbff62131a8cc85bc3c2b1094cca9454ae80c31b6544376665f",
+        "diagnose.ps1": "5186e6636908f34affcf69446b515f2043b7e452a70d88704bd850d2f1e51883",
+        "manager.ps1": "341188f21adc17e0c77fa36837c888b09b2c3e0b8641735c1142525c45d04d48"
+      },
+      "platforms": {
+        "windows": {
+          "installDir": "%LOCALAPPDATA%\\Programs\\Vexplore",
+          "binaries": [
+            {
+              "name": "vexplore",
+              "version": "0.2.0",
+              "kind": "native",
+              "file": "vexplore.exe",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/vexplore-v0.2.0/vexplore.exe",
+              "sha256": "926fcfdf3632a40197ef6f5dcf5e479ad3cc1fa2078d608ad4077419c2584c72",
+              "size": 62836736,
+              "installPath": "{installDir}\\vexplore.exe",
+              "executable": true,
+              "addToPath": true,
+              "icon": {
+                "file": "vexplore.ico",
+                "url": "https://github.com/sibarum/vexelray-dist/releases/download/vexplore-v0.2.0/vexplore.ico",
+                "sha256": "a24f59cc8fb21271cfbdfa87b35b9c45ed461bef5f7603584942fd046fb5f806",
+                "size": 22384,
+                "installPath": "{installDir}\\vexplore.ico"
+              },
+              "shortcuts": {
+                "desktop": true,
+                "startMenu": true,
+                "label": "Vexplore",
+                "gui": false
+              }
+            },
+            {
+              "name": "vexplore-ffmpeg-record",
+              "version": "0.2.0",
+              "kind": "archive",
+              "file": "vexplore-ffmpeg-record-windows-x86_64.zip",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/vexplore-v0.2.0/vexplore-ffmpeg-record-windows-x86_64.zip",
+              "sha256": "904daaf622230c6eed6acda668d3912f3f6f8676a7665c747592b3c7c8af795f",
+              "size": 5731674,
+              "installPath": "{installDir}\\ffmpeg-record",
+              "executable": false,
+              "addToPath": false
+            },
+            {
+              "name": "notices",
+              "version": "0.2.0",
+              "kind": "file",
+              "file": "THIRD-PARTY-NOTICES.txt",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/vexplore-v0.2.0/THIRD-PARTY-NOTICES.txt",
+              "sha256": "5306943398c2559c64a7fbc980c411758837348c1f172a13f284d2e23c1d44cc",
+              "size": 166354,
+              "installPath": "{installDir}\\THIRD-PARTY-NOTICES.txt",
+              "executable": false,
+              "addToPath": false
+            }
+          ]
+        }
+      },
+      "updatedAt": "2026-11-16T00:35:17Z"
+    },
     {
       "version": "0.1.2",
       "publishedAt": "2026-10-25T19:18:31Z",

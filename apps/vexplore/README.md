@@ -12,7 +12,7 @@ irm https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexplore/i
 ```
 
 That is the whole install. A window opens where you can change the folder and choose shortcuts,
-PATH and file types, then press **Install**. It downloads Vexplore 0.1.2, checks every file
+PATH and file types, then press **Install**. It downloads Vexplore 0.2.0, checks every file
 against the SHA-256 in the [install manifest](https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexplore/manifest.json), and installs for your user only.
 
 What it does:
@@ -48,10 +48,9 @@ the PATH entry or file types back, set that variable to `'0'` and run the instal
 
 | File | Kind | Version | Size | Installed to |
 | --- | --- | --- | --- | --- |
-| `vexplore.exe` | native executable | 0.1.2 | 64.4 MB | `%LOCALAPPDATA%\Programs\Vexplore\vexplore.exe` |
-| `vexplore-ffmpeg-windows-x86_64.zip` | archive (unpacked) | 0.1.2 | 52.1 MB | `%LOCALAPPDATA%\Programs\Vexplore\ffmpeg\` |
-| `vexplore-ffmpeg-record-windows-x86_64.zip` | archive (unpacked) | 0.1.2 | 5.5 MB | `%LOCALAPPDATA%\Programs\Vexplore\ffmpeg-record\` |
-| `THIRD-PARTY-NOTICES.txt` | file | 0.1.2 | 0.1 MB | `%LOCALAPPDATA%\Programs\Vexplore\THIRD-PARTY-NOTICES.txt` |
+| `vexplore.exe` | native executable | 0.2.0 | 59.9 MB | `%LOCALAPPDATA%\Programs\Vexplore\vexplore.exe` |
+| `vexplore-ffmpeg-record-windows-x86_64.zip` | archive (unpacked) | 0.2.0 | 5.5 MB | `%LOCALAPPDATA%\Programs\Vexplore\ffmpeg-record\` |
+| `THIRD-PARTY-NOTICES.txt` | file | 0.2.0 | 0.2 MB | `%LOCALAPPDATA%\Programs\Vexplore\THIRD-PARTY-NOTICES.txt` |
 
 Everything installed is recorded in `%LOCALAPPDATA%\Programs\Vexplore\install-manifest.json`, and a copy
 in `%LOCALAPPDATA%\vexelray-installer\installs\vexplore.json`.
@@ -112,9 +111,9 @@ Read it first - it is one file: [`install.ps1`](https://raw.githubusercontent.co
 accepted when their SHA-256 matches the manifest, and the manifest and script live in this
 repository.
 
-macOS and Linux installers are planned; the manifest is already organised per platform.
+A macOS installer is planned; the manifest is already organised per platform.
 
 ## Versions
 
-Current version: **0.1.2**. The full history of published versions, with the files,
+Current version: **0.2.0**. The full history of published versions, with the files,
 sizes and checksums of each, is in [`manifest.json`](https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexplore/manifest.json).

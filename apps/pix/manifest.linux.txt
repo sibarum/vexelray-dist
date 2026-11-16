@@ -1,6 +1,6 @@
 vexelray-installer-linux	1
 id	pix
-name	Pix
+name	Rasterware
 latest	0.1.2
 tool	install.sh	ce8d39a3c0fb7f9186fdc32708a6e7d479adc1149c33b607d4ac1d1b7ce05e0c	https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/pix/install.sh
 tool	uninstall.sh	be575e4f635d36446afa849adfb3b78dd4a42ff56543a31e022653b5dd9fbcda	https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/pix/uninstall.sh

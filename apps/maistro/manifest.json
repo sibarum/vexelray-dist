@@ -5,11 +5,11 @@
   "publisher": "sibarum",
   "description": "A desktop client for Claude Code, on the VexelRay stack: the conversation beside a mind map its replies grow. Needs the Claude Code CLI, logged in.",
   "repo": "sibarum/vexelray-dist",
-  "latest": "0.1.2",
+  "latest": "0.1.3",
   "tools": {
     "install.ps1": {
       "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/maistro/install.ps1",
-      "sha256": "85765c543603650b2989e25cb56ddfbfc00a833527ea3b63ac1f72842daabe6c"
+      "sha256": "31f3778ca12aa5c839946378e2a2aaee52399c633b578b87b30edde8f1e76008"
     },
     "uninstall.ps1": {
       "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/maistro/uninstall.ps1",
@@ -29,6 +29,75 @@
     }
   },
   "versions": [
+    {
+      "version": "0.1.3",
+      "publishedAt": "2026-11-16T00:30:15Z",
+      "notes": "",
+      "installer": {
+        "install.ps1": "31f3778ca12aa5c839946378e2a2aaee52399c633b578b87b30edde8f1e76008",
+        "uninstall.ps1": "1396202122772594e21d40f4b0f46bcf2a1198ab526e42dfdb30b5143aa5e5cf",
+        "update.ps1": "e67f9a7d9bd710226d47cda9e210fc258811dd75365a8aeff13fc331b3146342",
+        "diagnose.ps1": "f1ac84dc32fd747e8cb9c6f0c5a753be9f24a22b80997b2f03d674232bf65483",
+        "manager.ps1": "2bc532afc5bbd7c8830e7e9b57a108f8e5470c2c65342386072d2572a8e3a042"
+      },
+      "platforms": {
+        "windows": {
+          "installDir": "%LOCALAPPDATA%\\Programs\\Maistro",
+          "binaries": [
+            {
+              "name": "maistro",
+              "version": "0.1.3",
+              "kind": "native",
+              "file": "maistro.exe",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/maistro-v0.1.3/maistro.exe",
+              "sha256": "f8548dedef966068722fd93fcdc231f12e3139a7f07662f6bd6e36b6358e6673",
+              "size": 57184256,
+              "installPath": "{installDir}\\maistro.exe",
+              "executable": true,
+              "addToPath": true,
+              "icon": {
+                "file": "maistro.ico",
+                "url": "https://github.com/sibarum/vexelray-dist/releases/download/maistro-v0.1.3/maistro.ico",
+                "sha256": "e2d3676361befe98a58749642da2ad4f035fbcdbd19e81a3f54641c26ba08fef",
+                "size": 25680,
+                "installPath": "{installDir}\\maistro.ico"
+              },
+              "shortcuts": {
+                "desktop": true,
+                "startMenu": true,
+                "label": "Maistro",
+                "gui": false
+              }
+            },
+            {
+              "name": "maistro-ffmpeg-record",
+              "version": "0.1.3",
+              "kind": "archive",
+              "file": "maistro-ffmpeg-record-windows-x86_64.zip",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/maistro-v0.1.3/maistro-ffmpeg-record-windows-x86_64.zip",
+              "sha256": "904daaf622230c6eed6acda668d3912f3f6f8676a7665c747592b3c7c8af795f",
+              "size": 5731674,
+              "installPath": "{installDir}\\ffmpeg-record",
+              "executable": false,
+              "addToPath": false
+            },
+            {
+              "name": "notices",
+              "version": "0.1.3",
+              "kind": "file",
+              "file": "THIRD-PARTY-NOTICES.txt",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/maistro-v0.1.3/THIRD-PARTY-NOTICES.txt",
+              "sha256": "5d440c23d8c935526676196e744982109242b65e8fef48d28501cc64de45abe2",
+              "size": 77326,
+              "installPath": "{installDir}\\THIRD-PARTY-NOTICES.txt",
+              "executable": false,
+              "addToPath": false
+            }
+          ]
+        }
+      },
+      "updatedAt": "2026-11-16T00:39:53Z"
+    },
     {
       "version": "0.1.2",
       "publishedAt": "2026-10-25T19:18:35Z",

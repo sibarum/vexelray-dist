@@ -12,7 +12,7 @@ irm https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/mainframe/
 ```
 
 That is the whole install. A window opens where you can change the folder and choose shortcuts,
-PATH and file types, then press **Install**. It downloads MainFrame 0.1.2, checks every file
+PATH and file types, then press **Install**. It downloads MainFrame 0.2.0, checks every file
 against the SHA-256 in the [install manifest](https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/mainframe/manifest.json), and installs for your user only.
 
 What it does:
@@ -48,9 +48,9 @@ the PATH entry or file types back, set that variable to `'0'` and run the instal
 
 | File | Kind | Version | Size | Installed to |
 | --- | --- | --- | --- | --- |
-| `mainframe.exe` | native executable | 0.1.2 | 45.4 MB | `%LOCALAPPDATA%\Programs\MainFrame\mainframe.exe` |
-| `mainframe-ffmpeg-record-windows-x86_64.zip` | archive (unpacked) | 0.1.2 | 5.5 MB | `%LOCALAPPDATA%\Programs\MainFrame\ffmpeg-record\` |
-| `THIRD-PARTY-NOTICES.txt` | file | 0.1.2 | 0.1 MB | `%LOCALAPPDATA%\Programs\MainFrame\THIRD-PARTY-NOTICES.txt` |
+| `mainframe.exe` | native executable | 0.2.0 | 55.7 MB | `%LOCALAPPDATA%\Programs\MainFrame\mainframe.exe` |
+| `mainframe-ffmpeg-record-windows-x86_64.zip` | archive (unpacked) | 0.2.0 | 5.5 MB | `%LOCALAPPDATA%\Programs\MainFrame\ffmpeg-record\` |
+| `THIRD-PARTY-NOTICES.txt` | file | 0.2.0 | 0.1 MB | `%LOCALAPPDATA%\Programs\MainFrame\THIRD-PARTY-NOTICES.txt` |
 
 Everything installed is recorded in `%LOCALAPPDATA%\Programs\MainFrame\install-manifest.json`, and a copy
 in `%LOCALAPPDATA%\vexelray-installer\installs\mainframe.json`.
@@ -197,5 +197,5 @@ A macOS installer is planned; the manifest is already organised per platform.
 
 ## Versions
 
-Current version: **0.1.2**. The full history of published versions, with the files,
+Current version: **0.2.0**. The full history of published versions, with the files,
 sizes and checksums of each, is in [`manifest.json`](https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/mainframe/manifest.json).

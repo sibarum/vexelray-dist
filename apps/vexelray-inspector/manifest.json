@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "id": "vexelray-inspector",
+  "name": "VexelRay Inspector",
+  "publisher": "sibarum",
+  "description": "DevTools for VexelRay applications: plain panels on a timeline that can be rewound.",
+  "repo": "sibarum/vexelray-dist",
+  "replaces": [
+    "inspector"
+  ],
+  "latest": "0.2.0",
+  "tools": {
+    "install.ps1": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexelray-inspector/install.ps1",
+      "sha256": "5e4f568ad1c542842c981d8d766e9917aaf133253ebdab01f893b3719e7b9e92"
+    },
+    "uninstall.ps1": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexelray-inspector/uninstall.ps1",
+      "sha256": "fe039f1656504a2dc04173600e2bc83d898c784a6d0870e73bfa8974fd54d3f0"
+    },
+    "update.ps1": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexelray-inspector/update.ps1",
+      "sha256": "45a621538d4d3906f3e1821724dac01d60e8934a4c155c759f91f14d156b8896"
+    },
+    "diagnose.ps1": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexelray-inspector/diagnose.ps1",
+      "sha256": "043c38618724143f03bfe8f5991650626100241a7b77782ad61fcf44320f8dc6"
+    },
+    "manager.ps1": {
+      "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/vexelray-inspector/manager.ps1",
+      "sha256": "b8ef9804b634ad3c81f7f61d6472f1275239c89b8590c57f45e90aed542e8d76"
+    }
+  },
+  "versions": [
+    {
+      "version": "0.2.0",
+      "publishedAt": "2026-11-16T00:30:16Z",
+      "notes": "",
+      "installer": {
+        "install.ps1": "5e4f568ad1c542842c981d8d766e9917aaf133253ebdab01f893b3719e7b9e92",
+        "uninstall.ps1": "fe039f1656504a2dc04173600e2bc83d898c784a6d0870e73bfa8974fd54d3f0",
+        "update.ps1": "45a621538d4d3906f3e1821724dac01d60e8934a4c155c759f91f14d156b8896",
+        "diagnose.ps1": "043c38618724143f03bfe8f5991650626100241a7b77782ad61fcf44320f8dc6",
+        "manager.ps1": "b8ef9804b634ad3c81f7f61d6472f1275239c89b8590c57f45e90aed542e8d76"
+      },
+      "platforms": {
+        "windows": {
+          "installDir": "%LOCALAPPDATA%\\Programs\\VexelRay Inspector",
+          "binaries": [
+            {
+              "name": "vexelray-inspector",
+              "version": "0.2.0",
+              "kind": "native",
+              "file": "vexelray-inspector.exe",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/vexelray-inspector-v0.2.0/vexelray-inspector.exe",
+              "sha256": "c46e81f22078906e070cc450695fdb8a4fc78499615adda5ee536614f23b0f7b",
+              "size": 57774080,
+              "installPath": "{installDir}\\vexelray-inspector.exe",
+              "executable": true,
+              "addToPath": true,
+              "icon": {
+                "file": "vexelray-inspector.ico",
+                "url": "https://github.com/sibarum/vexelray-dist/releases/download/vexelray-inspector-v0.2.0/vexelray-inspector.ico",
+                "sha256": "4ab25f36d6245733e4928219ecb6365d9082506be96ca857e57228fdb6b26cf1",
+                "size": 33023,
+                "installPath": "{installDir}\\vexelray-inspector.ico"
+              },
+              "shortcuts": {
+                "desktop": true,
+                "startMenu": true,
+                "label": "VexelRay Inspector",
+                "gui": false
+              }
+            },
+            {
+              "name": "vexelray-inspector-ffmpeg-record",
+              "version": "0.2.0",
+              "kind": "archive",
+              "file": "vexelray-inspector-ffmpeg-record-windows-x86_64.zip",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/vexelray-inspector-v0.2.0/vexelray-inspector-ffmpeg-record-windows-x86_64.zip",
+              "sha256": "904daaf622230c6eed6acda668d3912f3f6f8676a7665c747592b3c7c8af795f",
+              "size": 5731674,
+              "installPath": "{installDir}\\ffmpeg-record",
+              "executable": false,
+              "addToPath": false
+            }
+          ]
+        }
+      },
+      "updatedAt": "2026-11-16T00:40:53Z"
+    }
+  ]
+}

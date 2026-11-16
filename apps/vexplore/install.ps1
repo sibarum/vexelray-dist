@@ -130,8 +130,10 @@ function ViNotifyAssoc {
 
 # Writes the ProgID and lists it under the extension's OpenWithProgids ("Open with"). It becomes the
 # extension's default only when neither the user's nor the machine's classes name one already; the
-# record keeps whether it did, so removal clears only what this install set.
-function ViAssocAdd($fa, [string]$command, [string]$icon) {
+# record keeps whether it did, so removal clears only what this install set. FriendlyAppName on
+# shell\open is the name "Open with" gives the program; without it Windows takes the exe's
+# FileDescription, or else its file name.
+function ViAssocAdd($fa, [string]$command, [string]$icon, [string]$appName) {
     $classes = [Microsoft.Win32.Registry]::CurrentUser.CreateSubKey('Software\Classes')
     try {
         $pk = $classes.CreateSubKey($fa.progId)
@@ -139,6 +141,10 @@ function ViAssocAdd($fa, [string]$command, [string]$icon) {
             $pk.SetValue('', [string]$fa.description)
             if ($icon) { $ik = $pk.CreateSubKey('DefaultIcon'); $ik.SetValue('', "$icon,0"); $ik.Close() }
             else { $pk.DeleteSubKeyTree('DefaultIcon', $false) }
+            $ok = $pk.CreateSubKey('shell\open')
+            try {
+                if ($appName) { $ok.SetValue('FriendlyAppName', $appName) } else { $ok.DeleteValue('FriendlyAppName', $false) }
+            } finally { $ok.Close() }
             $ck = $pk.CreateSubKey('shell\open\command'); $ck.SetValue('', $command); $ck.Close()
         } finally { $pk.Close() }
         $ek = $classes.CreateSubKey($fa.extension)
@@ -161,6 +167,17 @@ function ViAssocAdd($fa, [string]$command, [string]$icon) {
         } finally { $ek.Close() }
     } finally { $classes.Close() }
     [ordered]@{ extension = $fa.extension; progId = $fa.progId; isDefault = $isDefault; contentType = $ctype }
+}
+
+# Drops the shell's cached name for an exe, so Open with, Task Manager and the taskbar read it again from
+# the exe that is there now; an older build's name, or its file name, otherwise outlives the update.
+function ViForgetAppName([string]$exe) {
+    $mk = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\MuiCache', $true)
+    if (-not $mk) { return }
+    try {
+        $mk.DeleteValue("$exe.FriendlyAppName", $false)
+        $mk.DeleteValue("$exe.ApplicationCompany", $false)
+    } finally { $mk.Close() }
 }
 
 # Undoes ViAssocAdd for one install-record entry; leaves anything another program put on the extension.
@@ -1417,7 +1434,7 @@ function ViInvokeInstall {
                     try {
                         $had = @($old.fileAssociations | Where-Object { $_ -and $_.progId -eq $fa.progId }).Count -gt 0
                         if (-not $had) { ViTxLog $tx @{ op = 'assoc'; a = [ordered]@{ extension = $fa.extension; progId = $fa.progId; contentType = $null } } }
-                        $a = ViAssocAdd $fa $cmd $ficon
+                        $a = ViAssocAdd $fa $cmd $ficon $appName
                         if (-not $had) { ViTxLog $tx @{ op = 'assoc'; a = $a } }
                         $associations += $a
                         ViInfo ("Opens {0} files{1}" -f $fa.extension, $(if ($a.isDefault) { ' (default)' } else { ' (listed under Open with)' }))
@@ -1522,6 +1539,9 @@ function ViInvokeInstall {
                     try { ViAssocRemove $a } catch { ViWarn "Could not unregister $($a.extension): $($_.Exception.Message)" }
                 }
             }
+        }
+        foreach ($s in $staged) {
+            if ($s.Bin.kind -eq 'native') { try { ViForgetAppName $s.Target } catch { } }
         }
         if ($associations.Count -gt 0 -or @($old.fileAssociations | Where-Object { $_ }).Count -gt 0) { ViNotifyAssoc }
 

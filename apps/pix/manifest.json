@@ -1,31 +1,31 @@
 {
   "schemaVersion": 1,
   "id": "pix",
-  "name": "Pix",
+  "name": "Rasterware",
   "publisher": "sibarum",
   "description": "An image viewer: one picture, as large as the window allows, and the rest of its folder a key press away.",
   "repo": "sibarum/vexelray-dist",
-  "latest": "0.1.2",
+  "latest": "0.2.0",
   "tools": {
     "install.ps1": {
       "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/pix/install.ps1",
-      "sha256": "6eded71acd9429b82c0f010be0958c731f5be23b88a6ab0986b791e08d601e4a"
+      "sha256": "615b84843b3876feb338f92652a2f2187162520ba871c069de58b4a7269638a7"
     },
     "uninstall.ps1": {
       "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/pix/uninstall.ps1",
-      "sha256": "e6229a6bea78ba036751d96850c1b4cee8e92d91964be3a1e6b7979b1f4ec0b9"
+      "sha256": "c711282a901b2105fa2056856648e90e50a85e06af6174dfca06adddfa561292"
     },
     "update.ps1": {
       "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/pix/update.ps1",
-      "sha256": "3fae125a1948742dcb44004bb61fd23455cc7e85d012e962f1025bd94b332965"
+      "sha256": "7cdab93515b9b2aed034f997c30ba69612ed19799ba30e4e6ba62ee25c036aa3"
     },
     "diagnose.ps1": {
       "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/pix/diagnose.ps1",
-      "sha256": "45205d1e8388adb1357cac7883dbfc1bd726028864f458c1ad60dc45f83aafd9"
+      "sha256": "9ca0989ba5955769849e8f72222b72443b43174d37eb657ac294be352341508e"
     },
     "manager.ps1": {
       "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/pix/manager.ps1",
-      "sha256": "9d0359b7cae6e51d2d59f82190f7369e8c0917e4e1046a02622d5a67a3f41ffe"
+      "sha256": "328156e72b30a6054c27fcb028f6237ad512466b28f4e53ead6c30371bf6b999"
     },
     "install.sh": {
       "url": "https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/pix/install.sh",
@@ -41,6 +41,362 @@
     }
   },
   "versions": [
+    {
+      "version": "0.2.0",
+      "publishedAt": "2026-11-16T00:30:13Z",
+      "notes": "",
+      "installer": {
+        "install.ps1": "615b84843b3876feb338f92652a2f2187162520ba871c069de58b4a7269638a7",
+        "uninstall.ps1": "c711282a901b2105fa2056856648e90e50a85e06af6174dfca06adddfa561292",
+        "update.ps1": "7cdab93515b9b2aed034f997c30ba69612ed19799ba30e4e6ba62ee25c036aa3",
+        "diagnose.ps1": "9ca0989ba5955769849e8f72222b72443b43174d37eb657ac294be352341508e",
+        "manager.ps1": "328156e72b30a6054c27fcb028f6237ad512466b28f4e53ead6c30371bf6b999"
+      },
+      "platforms": {
+        "windows": {
+          "installDir": "%LOCALAPPDATA%\\Programs\\Rasterware",
+          "binaries": [
+            {
+              "name": "pix",
+              "version": "0.2.0",
+              "kind": "native",
+              "file": "pix.exe",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/pix-v0.2.0/pix.exe",
+              "sha256": "615b20c110c67b6ae12e27f29250560dd538a28f4f22182496f994ce8dd538a4",
+              "size": 65916928,
+              "installPath": "{installDir}\\pix.exe",
+              "executable": true,
+              "addToPath": true,
+              "icon": {
+                "file": "pix.ico",
+                "url": "https://github.com/sibarum/vexelray-dist/releases/download/pix-v0.2.0/pix.ico",
+                "sha256": "be311a92f5b889b6ac3e03e0c3a0192a8b5aa9660fadaff044770c5d7dc33efb",
+                "size": 30442,
+                "installPath": "{installDir}\\pix.ico"
+              },
+              "fileIcons": [
+                {
+                  "file": "pix-file-images.ico",
+                  "url": "https://github.com/sibarum/vexelray-dist/releases/download/pix-v0.2.0/pix-file-images.ico",
+                  "sha256": "27bda321c536410ae303af16a5cb150a65eeef8251708d25a82625ea47b44438",
+                  "size": 8222,
+                  "installPath": "{installDir}\\pix-file-images.ico"
+                },
+                {
+                  "file": "pix-file-vector-graphics.ico",
+                  "url": "https://github.com/sibarum/vexelray-dist/releases/download/pix-v0.2.0/pix-file-vector-graphics.ico",
+                  "sha256": "c3015aff35a79fa8e48360fd2f6bf29bb174252e0fdf1cfc7463b3aad0dc629b",
+                  "size": 6975,
+                  "installPath": "{installDir}\\pix-file-vector-graphics.ico"
+                },
+                {
+                  "file": "pix-file-video.ico",
+                  "url": "https://github.com/sibarum/vexelray-dist/releases/download/pix-v0.2.0/pix-file-video.ico",
+                  "sha256": "8c9fd32669b1ede6cb2e21b219db0c5f3cd5de9f841770d577e41c5d5e5fd3c8",
+                  "size": 6816,
+                  "installPath": "{installDir}\\pix-file-video.ico"
+                }
+              ],
+              "shortcuts": {
+                "desktop": true,
+                "startMenu": true,
+                "label": "Rasterware",
+                "gui": false
+              },
+              "fileAssociations": [
+                {
+                  "extension": ".png",
+                  "progId": "pix.png",
+                  "description": "PNG Image",
+                  "contentType": "image/png",
+                  "icon": "pix-file-images.ico"
+                },
+                {
+                  "extension": ".apng",
+                  "progId": "pix.apng",
+                  "description": "Animated PNG Image",
+                  "contentType": "image/apng",
+                  "icon": "pix-file-images.ico"
+                },
+                {
+                  "extension": ".jpg",
+                  "progId": "pix.jpg",
+                  "description": "JPEG Image",
+                  "contentType": "image/jpeg",
+                  "icon": "pix-file-images.ico"
+                },
+                {
+                  "extension": ".jpeg",
+                  "progId": "pix.jpeg",
+                  "description": "JPEG Image",
+                  "contentType": "image/jpeg",
+                  "icon": "pix-file-images.ico"
+                },
+                {
+                  "extension": ".jfif",
+                  "progId": "pix.jfif",
+                  "description": "JPEG Image",
+                  "contentType": "image/jpeg",
+                  "icon": "pix-file-images.ico"
+                },
+                {
+                  "extension": ".gif",
+                  "progId": "pix.gif",
+                  "description": "GIF Image",
+                  "contentType": "image/gif",
+                  "icon": "pix-file-images.ico"
+                },
+                {
+                  "extension": ".webp",
+                  "progId": "pix.webp",
+                  "description": "WebP Image",
+                  "contentType": "image/webp",
+                  "icon": "pix-file-images.ico"
+                },
+                {
+                  "extension": ".avif",
+                  "progId": "pix.avif",
+                  "description": "AVIF Image",
+                  "contentType": "image/avif",
+                  "icon": "pix-file-images.ico"
+                },
+                {
+                  "extension": ".bmp",
+                  "progId": "pix.bmp",
+                  "description": "Bitmap Image",
+                  "contentType": "image/bmp",
+                  "icon": "pix-file-images.ico"
+                },
+                {
+                  "extension": ".tif",
+                  "progId": "pix.tif",
+                  "description": "TIFF Image",
+                  "contentType": "image/tiff",
+                  "icon": "pix-file-images.ico"
+                },
+                {
+                  "extension": ".tiff",
+                  "progId": "pix.tiff",
+                  "description": "TIFF Image",
+                  "contentType": "image/tiff",
+                  "icon": "pix-file-images.ico"
+                },
+                {
+                  "extension": ".svg",
+                  "progId": "pix.svg",
+                  "description": "SVG Image",
+                  "contentType": "image/svg+xml",
+                  "icon": "pix-file-vector-graphics.ico"
+                },
+                {
+                  "extension": ".ico",
+                  "progId": "pix.ico",
+                  "description": "Icon",
+                  "contentType": "image/x-icon",
+                  "icon": "pix-file-images.ico"
+                },
+                {
+                  "extension": ".tga",
+                  "progId": "pix.tga",
+                  "description": "Targa Image",
+                  "icon": "pix-file-images.ico"
+                },
+                {
+                  "extension": ".qoi",
+                  "progId": "pix.qoi",
+                  "description": "QOI Image",
+                  "icon": "pix-file-images.ico"
+                },
+                {
+                  "extension": ".pnm",
+                  "progId": "pix.pnm",
+                  "description": "Portable Anymap Image",
+                  "icon": "pix-file-images.ico"
+                },
+                {
+                  "extension": ".pbm",
+                  "progId": "pix.pbm",
+                  "description": "Portable Bitmap Image",
+                  "icon": "pix-file-images.ico"
+                },
+                {
+                  "extension": ".pgm",
+                  "progId": "pix.pgm",
+                  "description": "Portable Graymap Image",
+                  "icon": "pix-file-images.ico"
+                },
+                {
+                  "extension": ".ppm",
+                  "progId": "pix.ppm",
+                  "description": "Portable Pixmap Image",
+                  "icon": "pix-file-images.ico"
+                },
+                {
+                  "extension": ".dds",
+                  "progId": "pix.dds",
+                  "description": "DirectDraw Surface",
+                  "icon": "pix-file-images.ico"
+                },
+                {
+                  "extension": ".exr",
+                  "progId": "pix.exr",
+                  "description": "OpenEXR Image",
+                  "icon": "pix-file-images.ico"
+                },
+                {
+                  "extension": ".hdr",
+                  "progId": "pix.hdr",
+                  "description": "Radiance HDR Image",
+                  "icon": "pix-file-images.ico"
+                },
+                {
+                  "extension": ".mp4",
+                  "progId": "pix.mp4",
+                  "description": "MP4 Video",
+                  "contentType": "video/mp4",
+                  "icon": "pix-file-video.ico"
+                },
+                {
+                  "extension": ".m4v",
+                  "progId": "pix.m4v",
+                  "description": "MPEG-4 Video",
+                  "contentType": "video/x-m4v",
+                  "icon": "pix-file-video.ico"
+                },
+                {
+                  "extension": ".mov",
+                  "progId": "pix.mov",
+                  "description": "QuickTime Movie",
+                  "contentType": "video/quicktime",
+                  "icon": "pix-file-video.ico"
+                },
+                {
+                  "extension": ".mkv",
+                  "progId": "pix.mkv",
+                  "description": "Matroska Video",
+                  "contentType": "video/x-matroska",
+                  "icon": "pix-file-video.ico"
+                },
+                {
+                  "extension": ".webm",
+                  "progId": "pix.webm",
+                  "description": "WebM Video",
+                  "contentType": "video/webm",
+                  "icon": "pix-file-video.ico"
+                },
+                {
+                  "extension": ".avi",
+                  "progId": "pix.avi",
+                  "description": "AVI Video",
+                  "contentType": "video/x-msvideo",
+                  "icon": "pix-file-video.ico"
+                },
+                {
+                  "extension": ".wmv",
+                  "progId": "pix.wmv",
+                  "description": "Windows Media Video",
+                  "contentType": "video/x-ms-wmv",
+                  "icon": "pix-file-video.ico"
+                },
+                {
+                  "extension": ".flv",
+                  "progId": "pix.flv",
+                  "description": "Flash Video",
+                  "contentType": "video/x-flv",
+                  "icon": "pix-file-video.ico"
+                },
+                {
+                  "extension": ".mpg",
+                  "progId": "pix.mpg",
+                  "description": "MPEG Video",
+                  "contentType": "video/mpeg",
+                  "icon": "pix-file-video.ico"
+                },
+                {
+                  "extension": ".mpeg",
+                  "progId": "pix.mpeg",
+                  "description": "MPEG Video",
+                  "contentType": "video/mpeg",
+                  "icon": "pix-file-video.ico"
+                },
+                {
+                  "extension": ".ts",
+                  "progId": "pix.ts",
+                  "description": "MPEG Transport Stream",
+                  "contentType": "video/mp2t",
+                  "icon": "pix-file-video.ico"
+                },
+                {
+                  "extension": ".m2ts",
+                  "progId": "pix.m2ts",
+                  "description": "MPEG-2 Transport Stream",
+                  "contentType": "video/mp2t",
+                  "icon": "pix-file-video.ico"
+                },
+                {
+                  "extension": ".mts",
+                  "progId": "pix.mts",
+                  "description": "AVCHD Video",
+                  "contentType": "video/mp2t",
+                  "icon": "pix-file-video.ico"
+                },
+                {
+                  "extension": ".3gp",
+                  "progId": "pix.3gp",
+                  "description": "3GPP Video",
+                  "contentType": "video/3gpp",
+                  "icon": "pix-file-video.ico"
+                },
+                {
+                  "extension": ".ogv",
+                  "progId": "pix.ogv",
+                  "description": "Ogg Video",
+                  "contentType": "video/ogg",
+                  "icon": "pix-file-video.ico"
+                }
+              ]
+            },
+            {
+              "name": "pix-ffmpeg",
+              "version": "0.2.0",
+              "kind": "archive",
+              "file": "pix-ffmpeg-windows-x86_64.zip",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/pix-v0.2.0/pix-ffmpeg-windows-x86_64.zip",
+              "sha256": "cb8a6a77b98bba22cb374037efc9e6c054ecb21b9103f755d6c3505686362e2b",
+              "size": 10125474,
+              "installPath": "{installDir}\\ffmpeg",
+              "executable": false,
+              "addToPath": false
+            },
+            {
+              "name": "pix-ffmpeg-record",
+              "version": "0.2.0",
+              "kind": "archive",
+              "file": "pix-ffmpeg-record-windows-x86_64.zip",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/pix-v0.2.0/pix-ffmpeg-record-windows-x86_64.zip",
+              "sha256": "904daaf622230c6eed6acda668d3912f3f6f8676a7665c747592b3c7c8af795f",
+              "size": 5731674,
+              "installPath": "{installDir}\\ffmpeg-record",
+              "executable": false,
+              "addToPath": false
+            },
+            {
+              "name": "notices",
+              "version": "0.2.0",
+              "kind": "file",
+              "file": "THIRD-PARTY-NOTICES.txt",
+              "url": "https://github.com/sibarum/vexelray-dist/releases/download/pix-v0.2.0/THIRD-PARTY-NOTICES.txt",
+              "sha256": "b869dd67084a0bbc2accc2f4c4064f830602c1ac22a829e6e91b75678fcad213",
+              "size": 166799,
+              "installPath": "{installDir}\\THIRD-PARTY-NOTICES.txt",
+              "executable": false,
+              "addToPath": false
+            }
+          ]
+        }
+      },
+      "updatedAt": "2026-11-16T00:37:00Z"
+    },
     {
       "version": "0.1.2",
       "publishedAt": "2026-10-25T19:18:32Z",

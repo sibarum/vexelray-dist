@@ -17,7 +17,7 @@
 #   manager.cmd -Remove <id>       remove one in the console
 #   add -CloseApps to close what is running from an install folder first
 
-$InstallerCfg = '{"id":"pix","name":"Pix","publisher":"sibarum","description":"An image viewer: one picture, as large as the window allows, and the rest of its folder a key press away.","manifestUrl":"https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/pix/manifest.json","registryDir":"%LOCALAPPDATA%\\vexelray-installer\\installs","issuesUrl":"https://github.com/sibarum/vexelray-dist/issues/new"}' | ConvertFrom-Json
+$InstallerCfg = '{"id":"pix","name":"Rasterware","publisher":"sibarum","description":"An image viewer: one picture, as large as the window allows, and the rest of its folder a key press away.","manifestUrl":"https://raw.githubusercontent.com/sibarum/vexelray-dist/main/apps/pix/manifest.json","registryDir":"%LOCALAPPDATA%\\vexelray-installer\\installs","issuesUrl":"https://github.com/sibarum/vexelray-dist/issues/new"}' | ConvertFrom-Json
 
 function ViExpand([string]$p) { [Environment]::ExpandEnvironmentVariables($p) }
 function ViSha([string]$p) { (Get-FileHash -Algorithm SHA256 -LiteralPath $p).Hash.ToLowerInvariant() }
